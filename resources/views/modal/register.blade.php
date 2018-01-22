@@ -43,6 +43,20 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
+                                <select name="suffix" class="form-control" data-error="Please select review center">
+                                    <option value="">Select Suffix...</option>
+                                    <option value="">None</option>
+                                    <option>Sr.</option>
+                                    <option>Jr.</option>
+                                    <option>I</option>
+                                    <option>II</option>
+                                    <option>III</option>
+                                </select>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
                                 <input type="date" name="dob" class="form-control" placeholder="Enter your birthday" required data-error="Enter your birthday">
                                 <div class="help-block with-errors"></div>
                             </div>
@@ -67,6 +81,9 @@
                             <div class="form-group">
                                 <select name="province" class="form-control" required data-error="Please select province">
                                     <option value="">Select Province...</option>
+                                    @foreach($provinces as $prov)
+                                        <option value="{{ $prov->provCode }}">{{ $prov->desc }}</option>
+                                    @endforeach
                                 </select>
                                 <div class="help-block with-errors"></div>
                             </div>
@@ -95,7 +112,7 @@
                         <legend>Account Information</legend>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <input type="text" name="username" class="form-control" required placeholder="Enter username"  data-error="Please enter username">
+                                <input autocomplete="off" type="text" name="username" class="form-control" required placeholder="Enter username"  data-error="Please enter username">
                                 <div class="help-block with-errors"></div>
                             </div>
                         </div>
