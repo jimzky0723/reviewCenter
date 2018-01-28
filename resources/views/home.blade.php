@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="keywords" content="Bootstrap, Parallax, Template, Registration, Landing">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="author" content="Grayrids">
     <title>Philippine Exam Review Centers</title>
 
@@ -55,7 +56,12 @@
                         <a class="nav-link page-scroll" href="#contact">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link page-scroll" href="#loginModal" data-toggle="modal">Login</a>
+                        <?php $user = \Illuminate\Support\Facades\Session::get('access'); ?>
+                        @if($user)
+                            <a class="nav-link page-scroll" href="{{ asset('validate') }}">Login</a>
+                        @else
+                            <a class="nav-link page-scroll" href="#loginModal" data-toggle="modal">Login</a>
+                        @endif
                     </li>
                 </ul>
             </div>
@@ -79,7 +85,11 @@
                 <a class="page-scroll" href="#contact">Contact</a>
             </li>
             <li>
-                <a class="page-scroll" href="#loginModal" data-toggle="modal">Login</a>
+                @if($user)
+                    <a class="page-scroll" href="{{ asset('validate') }}">Login</a>
+                @else
+                    <a class="page-scroll" href="#loginModal" data-toggle="modal">Login</a>
+                @endif
             </li>
         </ul>
         <!-- Mobile Menu End -->
@@ -462,5 +472,6 @@
 <script src="{{ asset('public') }}/js/contact-form-script.js"></script>
 <script src="{{ asset('public') }}/js/main.js"></script>
 
+@include('script.login')
 </body>
 </html>

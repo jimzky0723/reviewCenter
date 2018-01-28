@@ -20,12 +20,12 @@ class CreateUsersTable extends Migration
             $table->string('suffix',10);
             $table->date('dob');
             $table->string('contact',20);
-            $table->string('email')->unique();
+            $table->string('email');
             $table->integer('barangay_id');
             $table->integer('muncity_id');
             $table->integer('province_id');
             $table->integer('region_id');
-            $table->integer('username');
+            $table->string('username');
             $table->string('password');
             $table->timestamps();
         });

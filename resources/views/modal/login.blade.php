@@ -8,18 +8,18 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="contactForm">
+            <form id="loginForm">
                 <div class="modal-body">
 
                     <div class="col-md-12">
                         <div class="form-group">
-                            <input type="text" name="username" class="form-control" required placeholder="Enter username"  data-error="Please enter username">
+                            <input type="text" name="username" autocomplete="off" class=" username form-control" required placeholder="Enter username"  data-error="Please enter username">
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
-                            <input type="password" name="password" class="form-control" required placeholder="Enter password" data-error="Please enter password">
+                            <input type="password" id="password" class="password form-control" required placeholder="Enter password" data-error="Please enter password">
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
