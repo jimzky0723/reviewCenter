@@ -33,6 +33,27 @@ class CenterCtrl extends Controller
         return view('admin.addCenter');
     }
 
+    public function edit($id)
+    {
+        $center = Center::select(
+                'center.id',
+                'code',
+                'desc',
+                'provCode',
+                'muncityCode',
+                'barangayCode',
+                'limit',
+                'users.username',
+                'users.contact',
+                'users.email',
+                'users.id as user_id'
+            )
+            ->leftJoin('users','users.id','=','center.user_id')
+            ->where('center.id',$id)
+            ->first();
+        return view('admin.editCenter',['center'=>$center]);
+    }
+
     public function save(Request $req)
     {
         $data = array(
@@ -45,11 +66,12 @@ class CenterCtrl extends Controller
 
         $check = User::where('username',$req->username)->first();
         if($check){
-            $data['barangay'] = $req->barangay;
+            $data['barangayCode'] = $req->barangay;
             $data['num'] = $req->num;
             $data['username'] = $req->username;
             $data['password'] = $req->password;
             $data['contact'] = $req->contact;
+            $data['email'] = $req->email;
 
             return redirect()->back()->with([
                     'status' => 'duplicateUsername','data' => $data]);
@@ -58,11 +80,12 @@ class CenterCtrl extends Controller
         $validateCenter = Center::where($data)->first();
         if($validateCenter)
         {
-            $data['barangay'] = $req->barangay;
+            $data['barangayCode'] = $req->barangay;
             $data['num'] = $req->num;
             $data['username'] = $req->username;
             $data['password'] = $req->password;
             $data['contact'] = $req->contact;
+            $data['email'] = $req->email;
 
             return redirect()->back()->with([
                 'status' => 'duplicateEntry','data' => $data]);
@@ -94,12 +117,94 @@ class CenterCtrl extends Controller
             $c->provCode = $req->province;
             $c->muncityCode = $req->muncity;
             $c->barangayCode = $req->barangay;
-            $c->contact = $req->barangay;
             $c->user_id = $user_id;
             $c->save();
 
             return redirect()->back()->with('status','saved');
         }
 
+    }
+
+    public function update(Request $req)
+    {
+        $data = array(
+            'code' => $req->code,
+            'desc' => $req->name,
+            'provCode' => $req->province,
+            'muncityCode' => $req->muncity
+        );
+
+        $regCode = Province::where('provCode',$req->province)->first()->regCode;
+
+        $check = User::where('username',$req->username)
+            ->where('id','!=',$req->userID)
+            ->first();
+
+        if($check){
+            $data['barangayCode'] = $req->barangay;
+            $data['num'] = $req->num;
+            $data['username'] = $req->username;
+            $data['password'] = $req->password;
+            $data['contact'] = $req->contact;
+            $data['email'] = $req->email;
+
+            return redirect()->back()->with([
+                'status' => 'duplicateUsername','data' => $data]);
+        }
+
+        $validateCenter = Center::where($data)
+            ->where('id','!=',$req->currentID)
+            ->first();
+        if($validateCenter)
+        {
+            $data['barangayCode'] = $req->barangay;
+            $data['num'] = $req->num;
+            $data['username'] = $req->username;
+            $data['password'] = $req->password;
+            $data['contact'] = $req->contact;
+            $data['email'] = $req->email;
+
+            return redirect()->back()->with([
+                'status' => 'duplicateEntry','data' => $data]);
+        }
+
+        if(!$check && !$validateCenter)
+        {
+            $password = isset($req->password) ? bcrypt($req->password) : User::find($req->userID)->password;
+            User::where('id',$req->userID)
+                ->update([
+                    'username' => $req->username,
+                    'password' => $password,
+                    'fname' => $req->name,
+                    'email' => $req->email,
+                    'barangay_id' => $req->barangay,
+                    'muncity_id' => $req->muncity,
+                    'province_id' => $req->province,
+                    'region_id' => $regCode
+                ]);
+
+            Center::where('id',$req->currentID)
+                ->update([
+                    'code' => $req->code,
+                    'desc' => $req->name,
+                    'limit' => $req->num,
+                    'regCode' => $regCode,
+                    'provCode' => $req->province,
+                    'muncityCode' => $req->muncity,
+                    'barangayCode' => $req->barangay
+                ]);
+
+            return redirect()->back()->with('status','saved');
+        }
+    }
+
+    public function delete(Request $req)
+    {
+        $id = $req->currentID;
+        $name = Center::find($id)->desc;
+        Center::where('id',$id)
+            ->delete();
+        return redirect('admin/center')->with([
+            'status' => 'deleted','name' => $name]);
     }
 }

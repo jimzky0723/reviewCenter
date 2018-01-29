@@ -32,6 +32,12 @@
             z-index:9999;
             display: none;
         }
+        .modal-header {
+            padding:5px 10px 5px 20px !important;
+        }
+        .modal-footer {
+            padding:10px !important;
+        }
     </style>
 </head>
 
@@ -200,6 +206,7 @@
 
         <!-- page content -->
         @yield('content')
+        @include('modal.delete')
         <!-- /page content -->
 
         <!-- footer content -->

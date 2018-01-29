@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Center extends Migration
+class Instructor extends Migration
 {
     /**
      * Run the migrations.
@@ -12,16 +12,11 @@ class Center extends Migration
      */
     public function up()
     {
-        Schema::create('center', function (Blueprint $table) {
+        Schema::create('instructor', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('code',100);
-            $table->string('desc',100);
-            $table->integer('limit');
-            $table->integer('regCode');
-            $table->integer('provCode');
-            $table->integer('muncityCode');
-            $table->integer('barangayCode');
             $table->integer('user_id');
+            $table->integer('center_id');
+            $table->integer('class_id');
             $table->timestamps();
         });
     }
@@ -33,6 +28,6 @@ class Center extends Migration
      */
     public function down()
     {
-        Schema::drop('center');
+        Schema::drop('instructor');
     }
 }

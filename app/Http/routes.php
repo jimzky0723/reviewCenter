@@ -27,6 +27,9 @@ Route::get('admin/home', 'admin\HomeCtrl@index');
 Route::get('admin/center', 'admin\CenterCtrl@index');
 Route::get('admin/center/add', 'admin\CenterCtrl@add');
 Route::post('admin/center/save','admin\CenterCtrl@save');
+Route::get('admin/center/{id}','admin\CenterCtrl@edit');
+Route::post('admin/center/update','admin\CenterCtrl@update');
+Route::post('admin/center/delete','admin\CenterCtrl@delete');
 //..ADMIN PAGE
 
 //VALIDATE LOGIN

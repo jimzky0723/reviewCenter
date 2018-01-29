@@ -1,5 +1,15 @@
 @extends('panel')
 @section('content')
+<?php
+    $status = session('status');
+    $name = session('name');
+?>
+    <style>
+        .title-info {
+            text-decoration: dotted;
+            font-weight: bold;
+        }
+    </style>
     <div class="right_col" role="main">
         <div class="">
             <div class="page-title">
@@ -20,7 +30,13 @@
             </div>
 
             <div class="clearfix"></div>
-
+            @if($status === 'deleted')
+                <div class="alert alert-success alert-dismissible fade in" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                    </button>
+                    <strong>{{ $name }} is successfully deleted!</strong>
+                </div>
+            @endif
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
@@ -36,7 +52,7 @@
                             <table class="table table-striped table-hover">
                                 <thead>
                                     <tr>
-                                        <td></td>
+                                        <td>ID #</td>
                                         <th>Code</th>
                                         <th>Name</th>
                                         <th>Location</th>
@@ -51,14 +67,10 @@
                                         $muncity = \App\Muncity::where('muncityCode',$center->muncityCode)->first()->desc;
                                         $province = \App\Province::where('provCode',$center->provCode)->first()->desc;
                                     ?>
+
                                     <tr>
-                                        <td>
-                                            <strong>
-                                                <a href="#" class="btn btn-primary btn-xs">
-                                                    <i class="fa fa-eye"></i> View
-                                                </a>
-                                            </strong>
-                                        </td>
+
+                                        <td><a href="{{ url('admin/center/'.$center->id) }}" class="title-info text-success">{{ str_pad($center->id, 4, '0', STR_PAD_LEFT) }}</a></td>
                                         <td>{{ $center->code }}</td>
                                         <td>{{ $center->desc }}</td>
                                         <td>{{ $muncity }}, {{ $province }}</td>
