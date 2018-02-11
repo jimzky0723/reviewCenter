@@ -62,6 +62,7 @@ class ClassCtrl extends Controller
     {
         $center_id = Session::get('center');
         $instructors = User::where('center_id',$center_id)
+                ->where('level','instructor')
                 ->orderBy('lname','asc')
                 ->get();
 
