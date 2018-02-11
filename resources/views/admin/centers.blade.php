@@ -76,11 +76,15 @@
                                         <td>{{ $muncity }}, {{ $province }}</td>
                                         <td>{{ $center->limit }}</td>
                                         <?php
-                                            $no_instructor = \App\Instructor::where('center_id',$center->id)->count();
-                                            $no_student = \App\Student::where('center_id',$center->id)->count();
+                                            $no_instructor = \App\User::where('center_id',$center->id)
+                                                ->where('level','instructor')
+                                                ->count();
+                                            $no_reviewee = \App\User::where('center_id',$center->id)
+                                                ->where('level','reviewee')
+                                                ->count();
                                         ?>
                                         <td>{{ $no_instructor }}</td>
-                                        <td>{{ $no_student }}</td>
+                                        <td>{{ $no_reviewee }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>
