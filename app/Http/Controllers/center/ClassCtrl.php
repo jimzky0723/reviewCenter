@@ -176,6 +176,7 @@ class ClassCtrl extends Controller
         $current = Reviewee::select('reviewee.user_id','users.*')
             ->leftJoin('users','users.id','=','reviewee.user_id')
             ->where('reviewee.class_id',$id)
+            ->where('level','reviewee')
             ->get();
         $ids = [];
         foreach($current as $row)
