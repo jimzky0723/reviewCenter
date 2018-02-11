@@ -16,7 +16,6 @@ class Instructor extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('center_id');
-            $table->integer('class_id');
             $table->timestamps();
         });
     }

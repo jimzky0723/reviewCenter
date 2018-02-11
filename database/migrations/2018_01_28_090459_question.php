@@ -15,12 +15,8 @@ class Question extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('quiz_id');
+            $table->string('unique_id')->unique();
             $table->string('question');
-            $table->string('answer');
-            $table->string('choice1');
-            $table->string('choice2');
-            $table->string('choice3');
-            $table->string('choice4');
             $table->timestamps();
         });
     }

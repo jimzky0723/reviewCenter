@@ -52,7 +52,7 @@
                             <table class="table table-striped table-hover">
                                 <thead>
                                     <tr>
-                                        <td>ID #</td>
+                                        <th>ID #</th>
                                         <th>Code</th>
                                         <th>Name</th>
                                         <th>Location</th>
@@ -74,9 +74,13 @@
                                         <td>{{ $center->code }}</td>
                                         <td>{{ $center->desc }}</td>
                                         <td>{{ $muncity }}, {{ $province }}</td>
-                                        <td>{{ $center->limit }} Max Reviewers</td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{ $center->limit }}</td>
+                                        <?php
+                                            $no_instructor = \App\Instructor::where('center_id',$center->id)->count();
+                                            $no_student = \App\Student::where('center_id',$center->id)->count();
+                                        ?>
+                                        <td>{{ $no_instructor }}</td>
+                                        <td>{{ $no_student }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>

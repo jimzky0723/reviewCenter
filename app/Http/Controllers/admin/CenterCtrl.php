@@ -23,7 +23,8 @@ class CenterCtrl extends Controller
         $centers = Center::orderBy('desc','asc')
             ->paginate(15);
         return view('admin.centers',[
-            'centers' => $centers
+            'centers' => $centers,
+            'title' => 'List of Review Centers'
         ]);
     }
 
@@ -201,8 +202,12 @@ class CenterCtrl extends Controller
     public function delete(Request $req)
     {
         $id = $req->currentID;
-        $name = Center::find($id)->desc;
+        $center = Center::find($id);
+        $name = $center->desc;
+        $user_id = $center->user_id;
         Center::where('id',$id)
+            ->delete();
+        User::where('id',$user_id)
             ->delete();
         return redirect('admin/center')->with([
             'status' => 'deleted','name' => $name]);

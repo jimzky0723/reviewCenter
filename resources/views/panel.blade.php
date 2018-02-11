@@ -29,7 +29,7 @@
             height:100%;
             top:0px;
             left:0px;
-            z-index:9999;
+            z-index:999999999;
             display: none;
         }
         .modal-header {
@@ -38,12 +38,15 @@
         .modal-footer {
             padding:10px !important;
         }
+        .text-strong {
+            font-weight: bold;
+        }
     </style>
 </head>
 
 <body class="nav-md">
+<div class="loading"></div>
 <div class="container body">
-    <div class="loading"></div>
     <div class="main_container">
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
@@ -65,53 +68,18 @@
                 </div>
                 <!-- /menu profile quick info -->
                 <div class="clearfix"></div>
+                @if($user->level==='admin')
+                    @include('nav.admin')
+                @elseif($user->level==='center')
+                    @include('nav.center')
+                @elseif($user->level==='instructor')
+                    @include('nav.instructor')
+                @elseif($user->level==='reviewee')
+                    @include('nav.reviewee')
+                @endif
 
 
-                <!-- sidebar menu -->
-                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-                    <div class="menu_section">
-                        <br />
-                        <h3>Main Menu</h3>
-                        <ul class="nav side-menu">
-                            <li><a href="{{ asset('admin/home') }}"><i class="fa fa-home"></i> Dashboard</a></li>
-                            <li><a href="{{ asset('admin/center') }}"><i class="fa fa-building"></i> Review Centers</a></li>
-                            <li><a href="{{ asset('admin/announcements') }}"><i class="fa fa-bullhorn"></i> Announcements</a></li>
-                        </ul>
-                    </div>
-                    <div class="menu_section">
-                        <h3>Instructors and Students</h3>
-                        <ul class="nav side-menu">
-                            <li><a href="#"><i class="fa fa-user"></i> Instructors</a></li>
-                            <li><a href="#"><i class="fa fa-group"></i> Students</a></li>
-                        </ul>
-                    </div>
-                    <div class="menu_section">
-                        <h3>Settings</h3>
-                        <ul class="nav side-menu">
-                            <li><a href="#"><i class="fa fa-gear"></i> Change Password</a></li>
-                            <li><a href="{{ asset('logout') }}"><i class="fa fa-sign-out"></i> Logout</a></li>
-                        </ul>
-                    </div>
 
-                </div>
-                <!-- /sidebar menu -->
-
-                <!-- /menu footer buttons -->
-                <div class="sidebar-footer hidden-small">
-                    <a data-toggle="tooltip" data-placement="top" title="Settings">
-                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                    </a>
-                    <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                        <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-                    </a>
-                    <a data-toggle="tooltip" data-placement="top" title="Lock">
-                        <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-                    </a>
-                    <a data-toggle="tooltip" data-placement="top" title="Logout">
-                        <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-                    </a>
-                </div>
-                <!-- /menu footer buttons -->
             </div>
         </div>
 
@@ -207,6 +175,8 @@
         <!-- page content -->
         @yield('content')
         @include('modal.delete')
+        @include('modal.accept')
+        @include('modal.deleteFile')
         <!-- /page content -->
 
         <!-- footer content -->

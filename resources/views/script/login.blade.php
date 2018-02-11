@@ -35,7 +35,7 @@
                 success: function(data){
                     if(data==='success')
                     {
-                        window.location.replace("{{ asset('admin/home') }}");
+                        window.location.replace("{{ asset('validate') }}");
                     }else{
                         btn.html('LOGIN');
                         btn.attr('disabled',false);

@@ -19,8 +19,10 @@ class CreateUsersTable extends Migration
             $table->string('lname',100);
             $table->string('suffix',10);
             $table->date('dob');
+            $table->string('sex',20);
             $table->string('contact',20);
             $table->string('email');
+            $table->integer('center_id');
             $table->integer('barangay_id');
             $table->integer('muncity_id');
             $table->integer('province_id');
