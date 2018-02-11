@@ -18,8 +18,11 @@ class UserSeeder extends Seeder
             'dob' => '1990-09-23',
             'contact' => '418-4822',
             'email' => 'jimmy.lomocso@gmail.com',
+            'center_id' => 0,
             'username' => 'admin',
-            'password' => bcrypt('admin')
+            'password' => bcrypt('admin'),
+            'level' => 'admin',
+            'status' => 'registered'
         ]);
     }
 }

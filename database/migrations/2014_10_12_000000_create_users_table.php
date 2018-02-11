@@ -29,6 +29,8 @@ class CreateUsersTable extends Migration
             $table->integer('region_id');
             $table->string('username');
             $table->string('password');
+            $table->string('level');
+            $table->string('status');
             $table->timestamps();
         });
     }
