@@ -34,12 +34,12 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>
-                                <a class="btn btn-default btn-sm" href="{{ url('instructor/class') }}">
+                                <a class="btn btn-default btn-sm" href="{{ url('instructor/lesson/'.$class_id) }}">
                                     <i class="fa fa-arrow-left"></i>
-                                    {{ $class_name }}</a> My Quizzes
+                                    Back</a> My Quizzes
                             </h2>
                             <div class="pull-right">
-                                <a href="{{ url('instructor/quiz/'.$class_id.'/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> Add New</a>
+                                <a href="{{ url('instructor/quiz/'.$lesson_id.'/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> Add New</a>
                             </div>
                             <div class="clearfix"></div>
                         </div>

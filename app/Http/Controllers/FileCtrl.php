@@ -14,7 +14,6 @@ class FileCtrl extends Controller
     public function __construct()
     {
         $this->middleware('access');
-        $this->middleware('instructor');
     }
     public function index()
     {
@@ -29,7 +28,7 @@ class FileCtrl extends Controller
                 'Content-Type: text/csv',
             );
             $path = 'public/'.$file;
-            echo "<script>window.close();</script>";
+
             return response()->download($path, 'format.csv', $headers);
 
         }

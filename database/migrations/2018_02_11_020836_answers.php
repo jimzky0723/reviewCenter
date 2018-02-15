@@ -29,6 +29,6 @@ class Answers extends Migration
      */
     public function down()
     {
-        Schema::drop('questions');
+        Schema::drop('answer');
     }
 }

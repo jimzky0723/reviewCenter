@@ -14,7 +14,7 @@ class Quiz extends Migration
     {
         Schema::create('quiz', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('class_id');
+            $table->integer('lesson_id');
             $table->integer('code');
             $table->dateTime('date_open');
             $table->timestamps();

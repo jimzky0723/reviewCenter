@@ -63,7 +63,14 @@
                     </div>
                     <div class="profile_info">
                         <span>Welcome,</span>
-                        <h2>{{ $user->fname }}</h2>
+                        @if($user->level=='center')
+                            <h2>REVIEW CENTER</h2>
+                        @elseif($user->level=='admin')
+                            <h2>Administrator</h2>
+                        @else
+                            <h2>{{ strtoupper($user->level) }}</h2>
+                        @endif
+
                     </div>
                 </div>
                 <!-- /menu profile quick info -->

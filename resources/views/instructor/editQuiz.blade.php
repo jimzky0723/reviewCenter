@@ -45,7 +45,7 @@
                                 <div class="ln_solid"></div>
                                 <div class="form-group">
                                     <div class="col-md-6 col-md-offset-3">
-                                        <a href="{{ url('instructor/quiz/'.$class_id) }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Back</a>
+                                        <a href="{{ url('instructor/quiz/'.$lesson_id) }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Back</a>
                                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-trash"></i> Delete</button>
                                         <button type="submit" class="btn btn-success"><i class="fa fa-send"></i> Update</button>
                                     </div>

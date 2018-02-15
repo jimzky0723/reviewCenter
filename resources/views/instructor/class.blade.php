@@ -45,7 +45,7 @@
                                         <th>Class Name</th>
                                         <th>Reviewee</th>
                                         <th>Lessons</th>
-                                        <th>Quiz</th>
+                                        <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -55,8 +55,6 @@
                                         $countReviewee = \App\Reviewee::where('class_id',$row->id)
                                             ->count();
                                         $countLesson = \App\Lesson::where('class_id',$row->id)
-                                            ->count();
-                                        $countQuiz = \App\Quiz::where('class_id',$row->id)
                                             ->count();
                                     ?>
                                     <tr>
@@ -68,22 +66,18 @@
                                             {{ $row->code }}
                                         </td>
                                         <td>
-                                            <a class="btn btn-sm btn-success" href="{{ url('instructor/reviewee/'.$row->id) }}">
                                             <i class="fa fa-users"></i>
                                             {{ $countReviewee }}
-                                            </a>
+                                            Reviewee{{ ($countReviewee>1) ? 's':'' }}
                                         </td>
                                         <td>
-                                            <a class="btn btn-sm btn-info" href="{{ url('instructor/lesson/'.$row->id) }}">
                                             <i class="fa fa-book"></i>
                                             {{ $countLesson }}
-                                            </a>
+                                            Lesson{{ ($countLesson>1) ? 's':'' }}
                                         </td>
                                         <td>
-                                            <a class="btn btn-sm btn-warning" href="{{ url('instructor/quiz/'.$row->id) }}">
-                                            <i class="fa fa-puzzle-piece"></i>
-                                            {{ $countQuiz }}
-                                            </a>
+                                            <a href="{{ url('instructor/reviewee/'.$row->id) }}" class="btn btn-info btn-xs"><i class="fa fa-user-plus"></i> View Reviewees </a>
+                                            <a href="{{ url('instructor/lesson/'.$row->id) }}" class="btn btn-success btn-xs"><i class="fa fa-plus"></i> View Lessons </a>
                                         </td>
                                     </tr>
                                     @endforeach

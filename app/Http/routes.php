@@ -110,8 +110,8 @@ Route::get('destroy/file/{id}','FileCtrl@destroy');
 Route::get('instructor/lesson/{id}','instructor\LessonCtrl@index');
 Route::post('instructor/lesson/search/{id}','instructor\LessonCtrl@searchLesson');
 
-Route::get('instructor/quiz/{class_id}','instructor\QuizCtrl@index');
-Route::get('instructor/quiz/{class_id}/create','instructor\QuizCtrl@create');
+Route::get('instructor/quiz/{lesson_id}','instructor\QuizCtrl@index');
+Route::get('instructor/quiz/{lesson_id}/create','instructor\QuizCtrl@create');
 Route::post('instructor/quiz/store','instructor\QuizCtrl@store');
 Route::get('instructor/quiz/show/{quiz_id}','instructor\QuizCtrl@show');
 Route::post('instructor/quiz/update/{quiz_id}','instructor\QuizCtrl@update');
@@ -129,4 +129,14 @@ Route::get('/instructor/question/{question_id}/show','instructor\QuestionCtrl@sh
 Route::get('reviewee/home','reviewee\HomeCtrl@index');
 
 Route::get('reviewee/class','reviewee\ClassCtrl@index');
+Route::get('reviewee/class/{class_id}','reviewee\ClassCtrl@show');
+
+Route::get('reviewee/lesson/{lesson_id}','reviewee\LessonCtrl@show');
+
+Route::get('reviewee/lesson/finish/{lesson_id}','reviewee\LessonCtrl@finish');
+
+Route::get('reviewee/quiz/{lesson_id}','reviewee\LessonCtrl@quiz');
+
+Route::get('reviewee/quiz/take/{quiz_id}','reviewee\QuizCtrl@take_quiz');
+Route::post('reviewee/quiz/take/{quiz_id}','reviewee\QuizCtrl@get_score');
 //..REVIEWEE PAGE

@@ -33,7 +33,7 @@
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <input type="hidden" name="code" value="{{ $last_id }}" />
-                                        <input type="hidden" name="class_id" value="{{ $class_id }}" />
+                                        <input type="hidden" name="lesson_id" value="{{ $lesson_id }}" />
                                         <input disabled="disabled" type="text" value="Quiz-{{ str_pad($last_id,4,0,STR_PAD_LEFT) }}" class="form-control col-md-7 col-xs-12">
                                     </div>
                                 </div>
@@ -47,7 +47,7 @@
                                 <div class="ln_solid"></div>
                                 <div class="form-group">
                                     <div class="col-md-6 col-md-offset-3">
-                                        <a href="{{ url('instructor/quiz/'.$class_id) }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Back</a>
+                                        <a href="{{ url('instructor/quiz/'.$lesson_id) }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Back</a>
                                         <button type="submit" class="btn btn-success"><i class="fa fa-send"></i> Submit</button>
                                     </div>
                                 </div>

@@ -45,7 +45,7 @@ class LessonCtrl extends Controller
         if($keyword){
             $data = $data->where('title','like',"%$keyword%");
         }
-        $data = $data->paginate(20);
+        $data = $data->orderBy('date_open','asc')->paginate(20);
         return view('instructor.lesson',[
             'title' => 'My Lessons',
             'data' => $data,
@@ -152,5 +152,6 @@ class LessonCtrl extends Controller
         return redirect('instructor/lesson/'.$class_id)->with([
             'status' => 'deleted','name' => $name]);
     }
+
 
 }

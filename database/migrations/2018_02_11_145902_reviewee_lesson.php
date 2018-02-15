@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Grade extends Migration
+class RevieweeLesson extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,10 @@ class Grade extends Migration
      */
     public function up()
     {
-        Schema::create('grade', function (Blueprint $table) {
+        Schema::create('reviewee_lesson', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('student_id');
-            $table->integer('score');
-            $table->integer('total');
-            $table->double('percentage');
-            $table->integer('quiz_id');
+            $table->integer('lesson_id');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ class Grade extends Migration
      */
     public function down()
     {
-        Schema::drop('grade');
+        Schema::drop('reviewee_lesson');
     }
 }

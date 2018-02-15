@@ -57,7 +57,7 @@
                             <h2>
                                 <a class="btn btn-default btn-sm" href="{{ url('instructor/class') }}">
                                     <i class="fa fa-arrow-left"></i>
-                                {{ $className }}</a> My Lessons</h2>
+                                Back</a> My Lessons</h2>
                             <div class="pull-right">
                                 <a href="{{ url('instructor/lesson/'.$classID.'/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> Add New</a>
                             </div>
@@ -72,6 +72,7 @@
                                         <th>Title</th>
                                         <th>Summary</th>
                                         <th>Date Open</th>
+                                        <th>Quiz</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -80,6 +81,7 @@
                                         $id = str_pad($row->id,4,"0",STR_PAD_LEFT);
                                         $summary = \App\Http\Controllers\instructor\LessonCtrl::string_limit_words($row->content,10);
                                         $open = date('M d, Y',strtotime($row->date_open));
+                                        $countQuiz = \App\Quiz::where('lesson_id',$row->id)->count();
                                     ?>
                                     <tr>
                                         <td class="text-warning">
@@ -90,6 +92,12 @@
                                         <td>{{ $row->title }}</td>
                                         <td>{!!  nl2br($summary)  !!}...</td>
                                         <td>{{ $open }}</td>
+                                        <td>
+                                            <a class="btn btn-sm btn-warning" href="{{ url('instructor/quiz/'.$row->id) }}">
+                                                <i class="fa fa-puzzle-piece"></i>
+                                                {{ $countQuiz }}
+                                            </a>
+                                        </td>
                                     </tr>
                                     @endforeach
                                     </tbody>

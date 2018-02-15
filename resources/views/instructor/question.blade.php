@@ -52,7 +52,7 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>
-                                <a class="btn btn-default btn-sm" href="{{ url('instructor/quiz/'.$class_id) }}">
+                                <a class="btn btn-default btn-sm" href="{{ url('instructor/quiz/'.$lesson_id) }}">
                                     <i class="fa fa-arrow-left"></i>
                                     {{ $quiz_name }}</a> Questions
                             </h2>

@@ -58,7 +58,7 @@
                             <h2>
                                 <a class="btn btn-default btn-sm" href="{{ url('instructor/class') }}">
                                 <i class="fa fa-arrow-left"></i>
-                                {{ $className }}</a> My Reviewees</h2>
+                                Back</a> My Reviewees</h2>
 
                             <div class="clearfix"></div>
                         </div>

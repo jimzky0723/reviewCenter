@@ -31,7 +31,7 @@ class QuestionCtrl extends Controller
             'quiz_id' => $quiz_id,
             'quiz_name' => $quiz_name,
             'title' => 'Questions',
-            'class_id' => $quiz->class_id
+            'lesson_id' => $quiz->lesson_id
         ]);
     }
 
