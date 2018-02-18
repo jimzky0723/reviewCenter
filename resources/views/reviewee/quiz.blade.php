@@ -32,14 +32,15 @@
                                 @endif
                                 @foreach($data as $row)
                                     <?php
-                                    $current_date = date('Y-m-d');
+                                        $hour = str_pad($row->hour,2,0,STR_PAD_LEFT);
+                                        $min = str_pad($row->minute,2,0,STR_PAD_LEFT);
                                     ?>
                                     <div class="col-md-4 col-sm-4 col-xs-12 profile_details">
                                         <div class="well profile_view">
                                             <div class="col-sm-12">
                                                 <h4 class="brief"><i>Quiz-{{ str_pad($row->code,4,0,STR_PAD_LEFT) }}</i></h4>
                                                 <div class="left col-xs-12">
-                                                    <p><strong>Date Available: </strong> {{ date('M d, Y',strtotime($row->date_open)) }} </p>
+                                                    <p><strong>Time Limit: </strong> {{ $hour }} hour{{ ($hour>1) ? 's':'' }} and {{ $min }} minute{{ ($min>1) ? 's':'' }}</p>
                                                     <?php
                                                         $count_item = \App\Question::where('quiz_id',$row->id)->count();
                                                     ?>
@@ -54,15 +55,9 @@
                                                     ->first();
                                             ?>
                                             @if(!$valid_quiz)
-                                                @if($current_date >= $row->date_open)
                                                 <a href="{{ url('reviewee/quiz/take/'.$row->id) }}" class="btn btn-success btn-sm">
                                                     <i class="fa fa-puzzle-piece"> </i> Start Quiz
                                                 </a>
-                                                @else
-                                                <a href="#" class="btn btn-warning btn-sm">
-                                                    <i class="fa fa-puzzle-piece"> </i> Not Available
-                                                </a>
-                                                @endif
                                             @else
                                                 <a href="#" class="btn btn-info btn-sm">
                                                     <?php

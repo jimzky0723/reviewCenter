@@ -38,12 +38,21 @@
                                     </div>
                                 </div>
                                 <div class="item form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Date Open <span class="required">*</span>
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Time Limit <span class="required">*</span>
                                     </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input value="{{ date('m/d/Y') }}" name="date_open" id="dateOpen" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group">
+                                        <input type="text" class="form-control" name="hour" min="0" value="0" placeholder="Enter Hour(s)">
+                                        <span class="form-control-feedback right" aria-hidden="true">hr</span>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-3 col-sm-3 col-xs-12"></div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group">
+                                        <input type="text" class="form-control" name="minute" min="0" value="0" placeholder="Enter Minute(s)">
+                                        <span class="form-control-feedback right" aria-hidden="true">min</span>
                                     </div>
                                 </div>
+
                                 <div class="ln_solid"></div>
                                 <div class="form-group">
                                     <div class="col-md-6 col-md-offset-3">
