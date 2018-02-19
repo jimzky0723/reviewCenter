@@ -50,7 +50,7 @@
                                     <tr>
                                         <th>Quiz Code</th>
                                         <th>Total Item</th>
-                                        <th>Time Limit (hr:min)</th>
+                                        <th>Time Limit</th>
                                         <th>Questions</th>
                                     </tr>
                                     </thead>
@@ -59,7 +59,6 @@
                                     <?php
                                         $code = str_pad($row->code,4,0,STR_PAD_LEFT);
                                         $count_item = \App\Question::where('quiz_id',$row->id)->count();
-                                        $hour = str_pad($row->hour,2,0,STR_PAD_LEFT);
                                         $min = str_pad($row->minute,2,0,STR_PAD_LEFT);
                                     ?>
                                     <tr>
@@ -70,7 +69,7 @@
                                             </a>
                                         <td>{{ $count_item }}</td>
                                         <td>
-                                            {{ $hour }}:{{ $min }}
+                                            {{ $row->minute }} minute{{ ($row->minute>1) ? 's':'' }}
                                         </td>
                                         <td>
                                             <a href="{{ url('instructor/question/'.$row->id) }}" class="btn btn-xs btn-success">

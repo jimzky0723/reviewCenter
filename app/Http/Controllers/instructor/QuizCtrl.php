@@ -58,7 +58,6 @@ class QuizCtrl extends Controller
         $q = new Quiz();
         $q->code =  $req->code;
         $q->lesson_id = $req->lesson_id;
-        $q->hour = $req->hour;
         $q->minute = $req->minute;
         $q->save();
         return redirect()->back()->with('status','saved');
@@ -78,8 +77,7 @@ class QuizCtrl extends Controller
     {
         Quiz::where('id',$id)
             ->update([
-                'hour' => $req->hour,
-                'minute' => $req->minute,
+                'minute' => $req->minute
             ]);
         $code = Quiz::find($id)->code;
         return redirect()->back()->with([

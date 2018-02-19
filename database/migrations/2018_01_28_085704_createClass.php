@@ -12,7 +12,7 @@ class CreateClass extends Migration
      */
     public function up()
     {
-        Schema::create('studentClass', function (Blueprint $table) {
+        Schema::create('classes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('instructor_id');
             $table->string('code');
@@ -28,6 +28,6 @@ class CreateClass extends Migration
      */
     public function down()
     {
-        Schema::drop('studentClass');
+        Schema::drop('classes');
     }
 }

@@ -16,7 +16,6 @@ class Quiz extends Migration
             $table->increments('id');
             $table->integer('lesson_id');
             $table->integer('code');
-            $table->integer('hour');
             $table->integer('minute');
             $table->timestamps();
         });

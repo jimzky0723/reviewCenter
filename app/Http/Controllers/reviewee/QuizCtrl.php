@@ -22,6 +22,13 @@ class QuizCtrl extends Controller
 
     public function take_quiz($quiz_id)
     {
+        $user = Session::get('access');
+        $check_quiz = RevieweeQuiz::where('quiz_id',$quiz_id)
+            ->where('user_id',$user->id)
+            ->first();
+        if($check_quiz){
+            return redirect('reviewee/quiz/'.$quiz_id);
+        }
         $quiz = Quiz::find($quiz_id);
         $questions = Question::where('quiz_id',$quiz_id)
                 ->inRandomOrder()
@@ -66,5 +73,15 @@ class QuizCtrl extends Controller
             ->lesson_id;
 
         return redirect('reviewee/quiz/'.$lesson_id)->with('status','done_quiz');
+    }
+
+    public function timer(Request $req)
+    {
+        Session::put('quiz_timer',$req->timer);
+    }
+
+    public function answer(Request $req)
+    {
+        Session::put($req->question_id,$req->answer_id);
     }
 }

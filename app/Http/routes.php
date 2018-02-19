@@ -143,4 +143,7 @@ Route::get('reviewee/quiz/{lesson_id}','reviewee\LessonCtrl@quiz');
 
 Route::get('reviewee/quiz/take/{quiz_id}','reviewee\QuizCtrl@take_quiz');
 Route::post('reviewee/quiz/take/{quiz_id}','reviewee\QuizCtrl@get_score');
+
+Route::post('reviewee/quiz/store/time/','reviewee\QuizCtrl@timer');
+Route::post('reviewee/quiz/store/answer/','reviewee\QuizCtrl@answer');
 //..REVIEWEE PAGE
