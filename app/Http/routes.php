@@ -65,6 +65,10 @@ Route::post('admin/center/save','admin\CenterCtrl@save');
 Route::get('admin/center/{id}','admin\CenterCtrl@edit');
 Route::post('admin/center/update','admin\CenterCtrl@update');
 Route::post('admin/center/delete','admin\CenterCtrl@delete');
+
+Route::get('admin/announcements',function(){
+    echo 'to be updated...';
+});
 //..ADMIN PAGE
 
 //CENTER PAGE
