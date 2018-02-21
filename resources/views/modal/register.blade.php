@@ -8,7 +8,8 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="contactForm">
+            <form method="post" action="{{ url('store') }}">
+                {{ csrf_field() }}
                 <div class="modal-body">
                     <fieldset>
                         <legend>Review Centers</legend>
@@ -16,6 +17,9 @@
                             <div class="form-group">
                                 <select name="center" class="form-control" required data-error="Please select review center">
                                     <option value="">Select Review Center...</option>
+                                    @foreach($centers as $row)
+                                    <option value="{{ $row->id }}">{{ $row->desc }}</option>
+                                    @endforeach
                                 </select>
                                 <div class="help-block with-errors"></div>
                             </div>
@@ -57,6 +61,16 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
+                                <select name="sex" id="sex" class="form-control" required data-error="Please select sex">
+                                    <option value="">Select Sex...</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                </select>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
                                 <input type="date" name="dob" class="form-control" placeholder="Enter your birthday" required data-error="Enter your birthday">
                                 <div class="help-block with-errors"></div>
                             </div>
@@ -79,7 +93,7 @@
                         <legend>Address</legend>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <select name="province" class="form-control" required data-error="Please select province">
+                                <select name="province" id="province" class="form-control" required data-error="Please select province">
                                     <option value="">Select Province...</option>
                                     @foreach($provinces as $prov)
                                         <option value="{{ $prov->provCode }}">{{ $prov->desc }}</option>
@@ -91,7 +105,7 @@
 
                         <div class="col-md-12">
                             <div class="form-group">
-                                <select name="muncity" class="form-control" required data-error="Please select municipality / city">
+                                <select name="muncity" id="muncity" class="form-control" required data-error="Please select municipality / city">
                                     <option value="">Select Municipality / City...</option>
                                 </select>
                                 <div class="help-block with-errors"></div>
@@ -100,7 +114,7 @@
 
                         <div class="col-md-12">
                             <div class="form-group">
-                                <select name="barangay" class="form-control" required data-error="Please select barangay">
+                                <select name="barangay" id="barangay" class="form-control" required data-error="Please select barangay">
                                     <option value="">Select Barangay...</option>
                                 </select>
                                 <div class="help-block with-errors"></div>
@@ -125,7 +139,7 @@
                     </fieldset>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-common">Submit</button>
+                    <button type="submit" style="cursor: pointer" class="btn btn-common">Submit</button>
                 </div>
             </form>
         </div>

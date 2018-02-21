@@ -51,7 +51,7 @@
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="{{ asset('admin/home') }}" class="site_title"><i class="fa fa-paw"></i> <span>PHERC</span></a>
+                    <a href="{{ asset('admin/home') }}" class="site_title"><img src="{{ url('public/img/small_logo.png') }}" width="35"> <span>PHERC</span></a>
                 </div>
 
                 <div class="clearfix"></div>

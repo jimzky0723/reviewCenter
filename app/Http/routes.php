@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'HomeCtrl@index');
+Route::post('/store', 'HomeCtrl@store');
 
 //PARAMETERS
 Route::post('param/checkProfile','Parameter@checkProfile');

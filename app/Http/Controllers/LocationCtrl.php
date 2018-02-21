@@ -12,7 +12,7 @@ class LocationCtrl extends Controller
 {
     public function __construct()
     {
-        $this->middleware('access');
+
     }
 
     public function muncity($provCode)

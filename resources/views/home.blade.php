@@ -228,81 +228,101 @@
                     <a class="filter active btn btn-common" data-filter="all">
                         All
                     </a>
-                    <a class="filter btn btn-common" data-filter=".luzon">
-                        Luzon
+                    {{--<a class="filter btn btn-common" data-filter=".luzon">--}}
+                        {{--Luzon--}}
+                    {{--</a>--}}
+                    {{--<a class="filter btn btn-common" data-filter=".visayas">--}}
+                        {{--Visayas--}}
+                    {{--</a>--}}
+                    {{--<a class="filter btn btn-common" data-filter=".mindanao">--}}
+                        {{--Mindanao--}}
+                    {{--</a>--}}
+                    @foreach($registered as $row)
+                    <a class="filter btn btn-common" data-filter=".{{ $row->regCode }}">
+                        {{ $row->desc }}
                     </a>
-                    <a class="filter btn btn-common" data-filter=".visayas">
-                        Visayas
-                    </a>
-                    <a class="filter btn btn-common" data-filter=".mindanao">
-                        Mindanao
-                    </a>
+                    @endforeach
                 </div>
                 <!-- Portfolio Controller/Buttons Ends-->
             </div>
-
+            <style>
+                .info {
+                    margin-top:30%;
+                }
+            </style>
             <!-- Portfolio Recent Projects -->
             <div id="portfolio" class="row">
-                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 mix luzon print">
+                @foreach($centers as $row)
+                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 mix print {{ $row->regCode }}">
                     <div class="portfolio-item">
                         <div class="shot-item">
                             <img src="{{ asset('public') }}/img/portfolio/img1.jpg" alt="" />
-                            <a class="overlay lightbox" href="img/portfolio/img1.jpg">
-                                <i class="lnr lnr-eye item-icon"></i>
+
+                            <a class="overlay">
+                                <div class="info">
+                                    {{ $row->desc }}<br />
+                                    Capacity: {{ $row->limit }} Reviewees<br />
+                                    <?php
+                                        $count = \App\Reviewee::where('center_id',$row->id)->count();
+                                        $available = $row->limit - $count;
+                                    ?>
+                                    Available: {{ $available }} Slots<br />
+                                </div>
                             </a>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 mix visayas print">
-                    <div class="portfolio-item">
-                        <div class="shot-item">
-                            <img src="{{ asset('public') }}/img/portfolio/img2.jpg" alt="" />
-                            <a class="overlay lightbox" href="img/portfolio/img2.jpg">
-                                <i class="lnr lnr-eye item-icon"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 mix mindanao">
-                    <div class="portfolio-item">
-                        <div class="shot-item">
-                            <img src="{{ asset('public') }}/img/portfolio/img3.jpg" alt="" />
-                            <a class="overlay lightbox" href="img/portfolio/img3.jpg">
-                                <i class="lnr lnr-eye item-icon"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 mix luzon design">
-                    <div class="portfolio-item">
-                        <div class="shot-item">
-                            <img src="{{ asset('public') }}/img/portfolio/img4.jpg" alt="" />
-                            <a class="overlay lightbox" href="img/portfolio/img4.jpg">
-                                <i class="lnr lnr-eye item-icon"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 mix visayas">
-                    <div class="portfolio-item">
-                        <div class="shot-item">
-                            <img src="{{ asset('public') }}/img/portfolio/img5.jpg" alt="" />
-                            <a class="overlay lightbox" href="img/portfolio/img5.jpg">
-                                <i class="lnr lnr-eye item-icon"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 mix print mindanao">
-                    <div class="portfolio-item">
-                        <div class="shot-item">
-                            <img src="{{ asset('public') }}/img/portfolio/img6.jpg" alt="" />
-                            <a class="overlay lightbox" href="img/portfolio/img6.jpg">
-                                <i class="lnr lnr-eye item-icon"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
+                {{--<div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 mix visayas print">--}}
+                    {{--<div class="portfolio-item">--}}
+                        {{--<div class="shot-item">--}}
+                            {{--<img src="{{ asset('public') }}/img/portfolio/img2.jpg" alt="" />--}}
+                            {{--<a class="overlay lightbox" href="img/portfolio/img2.jpg">--}}
+                                {{--<i class="lnr lnr-eye item-icon"></i>--}}
+                            {{--</a>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+                {{--<div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 mix mindanao">--}}
+                    {{--<div class="portfolio-item">--}}
+                        {{--<div class="shot-item">--}}
+                            {{--<img src="{{ asset('public') }}/img/portfolio/img3.jpg" alt="" />--}}
+                            {{--<a class="overlay lightbox" href="img/portfolio/img3.jpg">--}}
+                                {{--<i class="lnr lnr-eye item-icon"></i>--}}
+                            {{--</a>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+                {{--<div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 mix luzon design">--}}
+                    {{--<div class="portfolio-item">--}}
+                        {{--<div class="shot-item">--}}
+                            {{--<img src="{{ asset('public') }}/img/portfolio/img4.jpg" alt="" />--}}
+                            {{--<a class="overlay lightbox" href="img/portfolio/img4.jpg">--}}
+                                {{--<i class="lnr lnr-eye item-icon"></i>--}}
+                            {{--</a>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+                {{--<div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 mix visayas">--}}
+                    {{--<div class="portfolio-item">--}}
+                        {{--<div class="shot-item">--}}
+                            {{--<img src="{{ asset('public') }}/img/portfolio/img5.jpg" alt="" />--}}
+                            {{--<a class="overlay lightbox" href="img/portfolio/img5.jpg">--}}
+                                {{--<i class="lnr lnr-eye item-icon"></i>--}}
+                            {{--</a>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+                {{--<div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 mix print mindanao">--}}
+                    {{--<div class="portfolio-item">--}}
+                        {{--<div class="shot-item">--}}
+                            {{--<img src="{{ asset('public') }}/img/portfolio/img6.jpg" alt="" />--}}
+                            {{--<a class="overlay lightbox" href="img/portfolio/img6.jpg">--}}
+                                {{--<i class="lnr lnr-eye item-icon"></i>--}}
+                            {{--</a>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
             </div>
         </div>
     </div>
@@ -448,8 +468,12 @@
         <div class="double-bounce2"></div>
     </div>
 </div>
+<?php
+$status = session('status');
+?>
 @include('modal.register')
 @include('modal.login')
+@include('modal.status')
 <!-- jQuery first, then Tether, then Bootstrap JS. -->
 <script src="{{ asset('public') }}/js/jquery-min.js"></script>
 <script src="{{ asset('public') }}/js/popper.min.js"></script>
@@ -473,5 +497,11 @@
 <script src="{{ asset('public') }}/js/main.js"></script>
 
 @include('script.login')
+@include('script.location')
+@if($status)
+<script>
+    $('#statusModal').modal('show');
+</script>
+@endif
 </body>
 </html>

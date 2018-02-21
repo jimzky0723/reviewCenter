@@ -36,6 +36,11 @@
                     if(data==='success')
                     {
                         window.location.replace("{{ asset('validate') }}");
+                    }else if(data==='pending'){
+                        btn.html('LOGIN');
+                        btn.attr('disabled',false);
+                        error = errorMsg('Your account is not yet activated!');
+                        $('.username').siblings('.help-block').html(error);
                     }else{
                         btn.html('LOGIN');
                         btn.attr('disabled',false);

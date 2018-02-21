@@ -1,7 +1,7 @@
 <script>
-    var province = "{{ ($data['provCode']) ? $data['provCode']: '' }}";
-    var muncity = "{{ ($data['muncityCode']) ? $data['muncityCode']: '' }}";
-    var barangay = "{{ ($data['barangayCode']) ? $data['barangayCode']: '' }}";
+    var province = "{{ isset($data['provCode']) ? $data['provCode']: '' }}";
+    var muncity = "{{ isset($data['muncityCode']) ? $data['muncityCode']: '' }}";
+    var barangay = "{{ isset($data['barangayCode']) ? $data['barangayCode']: '' }}";
 
     if(province){
         filterProvince(province);
