@@ -6,7 +6,7 @@
         <ul class="nav side-menu">
             <li><a href="{{ asset('center/home') }}"><i class="fa fa-home"></i> Dashboard</a></li>
             <li><a href="{{ asset('center/announcements') }}"><i class="fa fa-bullhorn"></i> Announcements</a></li>
-            <li><a href="{{ asset('center/class') }}"><i class="fa fa-book"></i> Classes</a></li>
+            <li><a href="{{ asset('center/class') }}"><i class="fa fa-book"></i> Subjects</a></li>
         </ul>
     </div>
     <div class="menu_section">

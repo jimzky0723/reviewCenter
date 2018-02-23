@@ -38,8 +38,7 @@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Class Code <span class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="hidden" value="{{ $record->code }}" name="code">
-                                        <input readonly type="text" value="{{ $record->code }}" class="code form-control col-md-7 col-xs-12">
+                                        <input name="code" type="text" value="{{ $record->code }}" class="code form-control col-md-7 col-xs-12">
                                     </div>
                                 </div>
                                 <div class="item form-group">
@@ -56,6 +55,21 @@
                                                 <option {{ ($record->instructor_id==$row->id) ? 'selected': '' }} value="{{ $row->id }}">{{ $row->lname}}, {{ $row->fname }} - {{ $count }} Class{{ ($count<2) ? '':'es' }}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Date Range <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <?php
+                                            $date_open = date('m/d/Y',strtotime($record->date_open));
+                                            $date_close = date('m/d/Y',strtotime($record->date_close));
+                                            $daterange = "$date_open - $date_close";
+                                            if($record->date_open==='0000-00-00' && $record->date_close==='0000-00-00'){
+                                                $daterange = null;
+                                            }
+                                        ?>
+                                        <input name="date_range" value="{{ $daterange }}" id="reservation" class="date-picker form-control col-md-7 col-xs-12" type="text">
                                     </div>
                                 </div>
                                 <div class="ln_solid"></div>
@@ -81,7 +95,7 @@
         <p class="text-danger">Are you sure you want to delete this record?</p>
 @endsection
 @section('js')
-    @include('script.date')
+    @include('script.daterange')
     <script src="{{ asset('public/panel') }}/vendors/validator/validator.js"></script>
     <script>
         // initialize the validator function

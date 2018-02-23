@@ -70,6 +70,7 @@
                                         <th>ID #</th>
                                         <th>Class</th>
                                         <th>Instructor</th>
+                                        <th>Date Range</th>
                                         <th>Reviewee</th>
                                     </tr>
                                     </thead>
@@ -94,6 +95,14 @@
                                         </td>
                                         <td>{{ $row->code }}</td>
                                         <td>{{ $fullname }}</td>
+                                        <td>
+                                            @if($row->date_open==='0000-00-00' && $row->date_close==='0000-00-00')
+                                                N/A
+                                            @else
+                                                {{ date('M d, Y',strtotime($row->date_open)) }} -
+                                                {{ date('M d, Y',strtotime($row->date_close)) }}
+                                            @endif
+                                        </td>
                                         <td>
                                             <a href="{{ url('center/class/enroll/'.$row->id) }}">
                                             <i class="fa fa-group"></i>

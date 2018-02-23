@@ -20,7 +20,7 @@
                 <div class="alert alert-success alert-dismissible fade in" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
                     </button>
-                    <strong>1 Class added!</strong>
+                    <strong>1 Subject added!</strong>
                 </div>
             @endif
             <div class="row">
@@ -35,11 +35,10 @@
                                 {{ csrf_field() }}
 
                                 <div class="item form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Class Code <span class="required">*</span>
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Subject Code <span class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="hidden" value="Class {{ $className }}" name="code">
-                                        <input readonly type="text" value="Class {{ $className }}" class="code form-control col-md-7 col-xs-12">
+                                        <input type="text" name="code" class="code form-control col-md-7 col-xs-12" required="required">
                                     </div>
                                 </div>
                                 <div class="item form-group">
@@ -53,11 +52,19 @@
                                                 <?php
                                                     $count = \App\Classes::where('instructor_id',$row->id)->count();
                                                 ?>
-                                                <option value="{{ $row->id }}">{{ $row->lname}}, {{ $row->fname }} - {{ $count }} Class{{ ($count<2) ? '':'es' }}</option>
+                                                <option value="{{ $row->id }}">{{ $row->lname}}, {{ $row->fname }} - {{ $count }} Subject{{ ($count<2) ? '':'s' }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Date Range <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input name="date_range" id="reservation" class="date-picker form-control col-md-7 col-xs-12" type="text">
+                                    </div>
+                                </div>
+
                                 <div class="ln_solid"></div>
                                 <div class="form-group">
                                     <div class="col-md-6 col-md-offset-3">
@@ -75,7 +82,7 @@
 @endsection
 @include('modal.addProfile')
 @section('js')
-    @include('script.date')
+    @include('script.daterange')
     <script src="{{ asset('public/panel') }}/vendors/validator/validator.js"></script>
     <script>
         // initialize the validator function

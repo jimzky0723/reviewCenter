@@ -261,7 +261,7 @@
                             <a class="overlay">
                                 <div class="info">
                                     {{ $row->desc }}<br />
-                                    Capacity: {{ $row->limit }} Reviewees<br />
+                                    Capacity: {{ $row->limit }} Students<br />
                                     <?php
                                         $count = \App\Reviewee::where('center_id',$row->id)->count();
                                         $available = $row->limit - $count;
@@ -273,56 +273,7 @@
                     </div>
                 </div>
                 @endforeach
-                {{--<div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 mix visayas print">--}}
-                    {{--<div class="portfolio-item">--}}
-                        {{--<div class="shot-item">--}}
-                            {{--<img src="{{ asset('public') }}/img/portfolio/img2.jpg" alt="" />--}}
-                            {{--<a class="overlay lightbox" href="img/portfolio/img2.jpg">--}}
-                                {{--<i class="lnr lnr-eye item-icon"></i>--}}
-                            {{--</a>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 mix mindanao">--}}
-                    {{--<div class="portfolio-item">--}}
-                        {{--<div class="shot-item">--}}
-                            {{--<img src="{{ asset('public') }}/img/portfolio/img3.jpg" alt="" />--}}
-                            {{--<a class="overlay lightbox" href="img/portfolio/img3.jpg">--}}
-                                {{--<i class="lnr lnr-eye item-icon"></i>--}}
-                            {{--</a>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 mix luzon design">--}}
-                    {{--<div class="portfolio-item">--}}
-                        {{--<div class="shot-item">--}}
-                            {{--<img src="{{ asset('public') }}/img/portfolio/img4.jpg" alt="" />--}}
-                            {{--<a class="overlay lightbox" href="img/portfolio/img4.jpg">--}}
-                                {{--<i class="lnr lnr-eye item-icon"></i>--}}
-                            {{--</a>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 mix visayas">--}}
-                    {{--<div class="portfolio-item">--}}
-                        {{--<div class="shot-item">--}}
-                            {{--<img src="{{ asset('public') }}/img/portfolio/img5.jpg" alt="" />--}}
-                            {{--<a class="overlay lightbox" href="img/portfolio/img5.jpg">--}}
-                                {{--<i class="lnr lnr-eye item-icon"></i>--}}
-                            {{--</a>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 mix print mindanao">--}}
-                    {{--<div class="portfolio-item">--}}
-                        {{--<div class="shot-item">--}}
-                            {{--<img src="{{ asset('public') }}/img/portfolio/img6.jpg" alt="" />--}}
-                            {{--<a class="overlay lightbox" href="img/portfolio/img6.jpg">--}}
-                                {{--<i class="lnr lnr-eye item-icon"></i>--}}
-                            {{--</a>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
+
             </div>
         </div>
     </div>

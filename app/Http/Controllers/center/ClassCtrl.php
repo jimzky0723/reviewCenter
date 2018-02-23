@@ -35,7 +35,7 @@ class ClassCtrl extends Controller
     {
         $center_id = Session::get('center');
         $keyword = Session::get('searchClass');
-        $data = Classes::select('classes.id','classes.code','classes.instructor_id','users.fname','users.lname')
+        $data = Classes::select('classes.id','classes.code','classes.instructor_id','users.fname','users.lname','classes.date_open','classes.date_close')
             ->leftJoin('users','users.id','=','classes.instructor_id')
             ->where('users.center_id',$center_id);
         if($keyword){
@@ -48,7 +48,7 @@ class ClassCtrl extends Controller
         $data = $data->orderBy('code','asc')
             ->paginate(20);
         return view('center.class',[
-            'title' => 'List of Classes',
+            'title' => 'List of Subjects',
             'record' => $data
         ]);
     }
@@ -78,7 +78,7 @@ class ClassCtrl extends Controller
         $last_id_name = str_pad($last_id, 3, '0', STR_PAD_LEFT);
 
         return view('center.addClass',[
-            'title' => 'Add New Class',
+            'title' => 'Add New Subject',
             'instructors' => $instructors,
             'className' => $last_id_name.'-'.date('Y')
         ]);
@@ -95,11 +95,20 @@ class ClassCtrl extends Controller
         $instructor_id = $request->instructor;
         $code = $request->code;
         $center_id = Session::get('center');
+        $date_open = '0000-00-00';
+        $date_close = '0000-00-00';
+        if($request->date_range){
+            $range = explode(" - ",$request->date_range);
+            $date_open = date('Y-m-d',strtotime($range[0]));
+            $date_close = date('Y-m-d',strtotime($range[1]));
+        }
 
         $q = new Classes();
         $q->instructor_id = $instructor_id;
         $q->code = $code;
         $q->center_id = $center_id;
+        $q->date_open = $date_open;
+        $q->date_close = $date_close;
         $q->save();
 
         return redirect()->back()->with('status','saved');
@@ -147,9 +156,19 @@ class ClassCtrl extends Controller
      */
     public function update(Request $request, $id)
     {
+        $date_open = '0000-00-00';
+        $date_close = '0000-00-00';
+        if($request->date_range){
+            $range = explode(" - ",$request->date_range);
+            $date_open = date('Y-m-d',strtotime($range[0]));
+            $date_close = date('Y-m-d',strtotime($range[1]));
+        }
         Classes::where('id',$id)
             ->update([
-                'instructor_id' => $request->instructor
+                'instructor_id' => $request->instructor,
+                'code' => $request->code,
+                'date_open' => $date_open,
+                'date_close' => $date_close
             ]);
         return redirect()->back()->with('status','saved');
     }
