@@ -43,16 +43,16 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>
-                                <a href="{{ url('center/class') }}">{{ $className }}</a> >
-                                Enroll Reviewee</h2>
+                                <a href="{{ url('center/class') }}" class="btn btn-default btn-sm"><i class="fa fa-arrow-left"></i> Back</a>
+                                Enroll Student:<small class="text-strong text-primary">{{ $className }}</small></h2>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
                             <div class="" role="tabpanel" data-example-id="togglable-tabs">
                                 <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                                    <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Current Reviewees</a>
+                                    <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Current Students</a>
                                     </li>
-                                    <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">List of Reviewees</a>
+                                    <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">List of Students</a>
                                     </li>
                                 </ul>
                                 <div id="myTabContent" class="tab-content">
@@ -161,7 +161,7 @@
                                             <div class="alert alert-warning alert-dismissible fade in" role="alert">
                                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
                                                 </button>
-                                                <strong><i class="fa fa-info-circle"></i> No reviewee found!</strong>
+                                                <strong><i class="fa fa-info-circle"></i> No student found!</strong>
                                             </div>
                                         @endif
                                     </div>

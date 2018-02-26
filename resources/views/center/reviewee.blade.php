@@ -55,7 +55,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Reviewee</h2>
+                            <h2>Students</h2>
                             <div class="pull-right">
                                 <form method="post" action="{{ url('center/reviewee/search') }}">
                                 <a href="{{ url('center/reviewee/create') }}" class="btn btn-success"><i class="fa fa-user-plus"></i> Add New</a>

@@ -51,7 +51,7 @@ class RevieweeCtrl extends Controller
             ->orderBy('status','desc')
             ->paginate(20);
         return view('center.reviewee',[
-            'title' => 'List of Reviewee',
+            'title' => 'List of Students',
             'record' => $data
         ]);
     }
@@ -64,7 +64,7 @@ class RevieweeCtrl extends Controller
     public function create()
     {
         return view('center.addReviewee',[
-            'title' => 'Add Reviewee'
+            'title' => 'Add Student'
         ]);
     }
 
@@ -128,7 +128,7 @@ class RevieweeCtrl extends Controller
         }
 
         return view('center.editReviewee',[
-            'title' => 'Edit Reviewee',
+            'title' => 'Edit Student',
             'user' => $data
         ]);
     }

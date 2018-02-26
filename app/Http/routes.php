@@ -13,6 +13,7 @@
 
 Route::get('/', 'HomeCtrl@index');
 Route::post('/store', 'HomeCtrl@store');
+Route::get('/subjects/{center_id}', 'HomeCtrl@show_subjects');
 
 //PARAMETERS
 Route::post('param/checkProfile','Parameter@checkProfile');
@@ -144,6 +145,7 @@ Route::get('reviewee/quiz/{lesson_id}','reviewee\LessonCtrl@quiz');
 
 Route::get('reviewee/quiz/take/{quiz_id}','reviewee\QuizCtrl@take_quiz');
 Route::post('reviewee/quiz/take/{quiz_id}','reviewee\QuizCtrl@get_score');
+Route::get('reviewee/quiz/review/{quiz_id}','reviewee\QuizCtrl@review_quiz');
 
 Route::post('reviewee/quiz/store/time/','reviewee\QuizCtrl@timer');
 Route::post('reviewee/quiz/store/answer/','reviewee\QuizCtrl@answer');

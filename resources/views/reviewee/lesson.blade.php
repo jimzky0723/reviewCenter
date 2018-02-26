@@ -2,6 +2,7 @@
 @section('content')
     <?php
     $status = session('status');
+    $user = Session::get('access');
     ?>
     <style>
         .profile_details:nth-child(3n) {
@@ -55,20 +56,39 @@
                                         <div class="col-xs-12 bottom text-center">
                                             <div class="col-xs-12 col-sm-6 emphasis">
                                                 <p class="ratings">
-                                                    <a>0.0</a>
-                                                    <a href="#"><span class="fa fa-star-o"></span></a>
-                                                    <a href="#"><span class="fa fa-star-o"></span></a>
-                                                    <a href="#"><span class="fa fa-star-o"></span></a>
-                                                    <a href="#"><span class="fa fa-star-o"></span></a>
-                                                    <a href="#"><span class="fa fa-star-o"></span></a>
-                                                    <a href="#"><span class="fa fa-star-o"></span></a>
+                                                    <?php
+                                                        $count_quiz = \App\Quiz::leftJoin('lesson','lesson.id','=','quiz.lesson_id')
+                                                            ->where('lesson.id',$lesson->id)
+                                                            ->count();
+                                                        $total_score = \App\Grade::leftJoin('quiz','quiz.id','=','grade.quiz_id')
+                                                            ->leftJoin('lesson','lesson.id','=','quiz.lesson_id')
+                                                            ->where('lesson.id',$lesson->id)
+                                                            ->where('grade.student_id',$user->id)
+                                                            ->sum('grade.percentage');
+                                                        $grade = $total_score / $count_quiz;
+                                                        if($grade<100)
+                                                        {
+                                                            $grade = number_format($grade,1);
+                                                        }
+
+                                                        if($grade==0)
+                                                        {
+                                                            $grade = 'N/A';
+                                                        }
+                                                        $fail = 'fa fa-star-o';
+                                                        $pass = 'fa fa-star';
+                                                    ?>
+                                                    <a href="#"><span class="{{ ($grade >= 50) ? $pass : $fail }}"></span></a>
+                                                    <a href="#"><span class="{{ ($grade >= 60) ? $pass : $fail }}"></span></a>
+                                                    <a href="#"><span class="{{ ($grade >= 70) ? $pass : $fail }}"></span></a>
+                                                    <a href="#"><span class="{{ ($grade >= 80) ? $pass : $fail }}"></span></a>
+                                                    <a href="#"><span class="{{ ($grade >= 90) ? $pass : $fail }}"></span></a>
                                                 </p>
                                             </div>
                                             <div class="col-xs-12 col-sm-6 emphasis">
                                                 @if($current_date>=$lesson->date_open)
-                                                <button type="button" class="btn btn-success btn-xs">No Grade</button>
+                                                <button type="button" class="btn btn-success btn-xs">Grade: {{ $grade }}</button>
                                                 <?php
-                                                    $user = Session::get('access');
                                                     $check_reviewee_lesson = \App\RevieweeLesson::where('user_id',$user->id)
                                                         ->where('lesson_id',$lesson->id)
                                                         ->first();
@@ -86,7 +106,7 @@
                                                         @endif
                                                     @else
                                                         <a href="{{ url('reviewee/lesson/'.$lesson->id) }}" class="btn btn-primary btn-xs">
-                                                            <i class="fa fa-book"> </i> View Lesson
+                                                            <i class="fa fa-book"> </i> Lessons
                                                         </a>
                                                     @endif
                                                 @endif

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\reviewee;
 
+use App\Classes;
+use App\Grade;
 use App\Lesson;
 use App\Reviewee;
 use Illuminate\Http\Request;
@@ -27,6 +29,13 @@ class ClassCtrl extends Controller
         {
             return 'denied';
         }
+        $date_now = date('Y-m-d');
+        $classes = Classes::find($class_id);
+        if($date_now > $classes->date_close && $classes->date_close!='0000-00-00')
+        {
+            return 'denied';
+        }
+
     }
 
     public function index()
@@ -34,7 +43,7 @@ class ClassCtrl extends Controller
         $user = Session::get('access');
         $class = Reviewee::where('user_id',$user->id)->get();
         return view('reviewee.class',[
-            'title' => 'My Classes',
+            'title' => 'My Subjects',
             'class' => $class
         ]);
     }
@@ -49,6 +58,7 @@ class ClassCtrl extends Controller
         $lessons = Lesson::where('class_id',$class_id)
             ->orderBy('date_open','asc')
             ->get();
+
         return view('reviewee.lesson',[
             'title' => 'My Lessons',
             'lessons' => $lessons

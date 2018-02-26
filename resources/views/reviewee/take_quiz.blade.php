@@ -43,7 +43,7 @@
                             <div class="pull-right">
                                 Time Left:
                                 <span class="timer timer-up">
-                                    {{ (Session::get('quiz_timer')) ? Session::get('quiz_timer') : $quiz->minute.':00' }}
+                                    {{ (Session::get('quiz_timer_'.$quiz_id)) ? Session::get('quiz_timer_'.$quiz_id) : $quiz->minute.':00' }}
                                 </span>
                             </div>
                             <div class="clearfix"></div>
@@ -75,7 +75,7 @@
                                                 <hr />
                                                 @foreach($choices as $ch)
                                                     <label class="item">
-                                                        <input type="radio" {{ ($question==$ch->id) ? 'checked':'' }} data-question="question_{{ $row->id }}" data-answer="{{ $ch->id }}" name="question_{{ $row->id }}" value="{{ $ch->value }}" class="choice">
+                                                        <input type="radio" {{ ($question==$ch->id) ? 'checked':'' }} data-question="question_{{ $row->id }}" data-answer="{{ $ch->id }}" name="question_{{ $row->id }}" value="{{ $ch->id }}" class="choice">
                                                         {{ $ch->choice }}
                                                     </label>
                                                     <br />
@@ -148,7 +148,7 @@
         $(this).parent().parent().toggle();
     });
     <?php
-        $timer = Session::get('quiz_timer');
+        $timer = Session::get('quiz_timer_'.$quiz_id);
         if($timer){
             echo "var timer2='$timer';";
         }else{
@@ -185,10 +185,10 @@
                 type: "POST",
                 data: {
                     timer: '0:00',
+                    quiz_id: "{{ $quiz_id }}",
                     _token: "{{ csrf_token() }}"
                 },
                 success: function(data){
-
                 }
             });
             $('.timer').html('0:00').removeClass('timer-up').addClass('timer-down');
@@ -202,6 +202,7 @@
                 type: "POST",
                 data: {
                     timer: timer2,
+                    quiz_id: "{{ $quiz_id }}",
                     _token: "{{ csrf_token() }}"
                 },
                 success: function(data){

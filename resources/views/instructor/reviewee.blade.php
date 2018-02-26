@@ -58,7 +58,7 @@
                             <h2>
                                 <a class="btn btn-default btn-sm" href="{{ url('instructor/class') }}">
                                 <i class="fa fa-arrow-left"></i>
-                                Back</a> My Reviewees</h2>
+                                Back</a> My Students</h2>
 
                             <div class="clearfix"></div>
                         </div>
@@ -83,6 +83,24 @@
                                             $age = \App\Http\Controllers\Parameter::getAge($row->dob);
                                             $muncity = \App\Muncity::where('muncityCode',$row->muncity_id)->first()->desc;
                                             $province = \App\Province::where('provCode',$row->province_id)->first()->desc;
+
+                                            $count_quiz = \App\Quiz::leftJoin('lesson','lesson.id','=','quiz.lesson_id')
+                                                    ->where('lesson.class_id',$classID)
+                                                    ->count();
+                                            $total_socre = \App\Grade::leftJoin('quiz','quiz.id','=','grade.quiz_id')
+                                                    ->leftJoin('lesson','lesson.id','=','quiz.lesson_id')
+                                                    ->where('lesson.class_id',$classID)
+                                                    ->where('grade.student_id',$row->id)
+                                                    ->sum('grade.percentage');
+                                            $grade = number_format($total_socre / $count_quiz,1);
+                                            $class = ($grade > 74) ? 'text-success':'text-danger';
+                                            $value = ($grade > 74) ? 'Passed':'Failed';
+                                            if($grade==0)
+                                            {
+                                                $grade = 'N/A';
+                                                $class = 'text-warning';
+                                                $value = 'No grade';
+                                            }
                                             ?>
                                             <td>
                                                 {{ $str1 }}-{{ $str2 }}
@@ -97,8 +115,8 @@
                                                 <br />
                                                 <small class="text-danger">{{ $row->contact }} / {{ $row->email }}</small>
                                             </td>
-                                            <td class="text-warning">75.45</td>
-                                            <td class="text-success">Passed</td>
+                                            <td class="text-warning">{{$grade }}</td>
+                                            <td class="{{ $class }}">{{ $value }}</td>
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -111,7 +129,7 @@
                                 <div class="alert alert-warning alert-dismissible fade in" role="alert">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
                                     </button>
-                                    <strong><i class="fa fa-info-circle"></i> No reviewee found!</strong>
+                                    <strong><i class="fa fa-info-circle"></i> No student found!</strong>
                                 </div>
                             @endif
                         </div>

@@ -67,6 +67,8 @@
                             <h2>REVIEW CENTER</h2>
                         @elseif($user->level=='admin')
                             <h2>Administrator</h2>
+                        @elseif($user->level=='reviewee')
+                            <h2>STUDENT</h2>
                         @else
                             <h2>{{ strtoupper($user->level) }}</h2>
                         @endif

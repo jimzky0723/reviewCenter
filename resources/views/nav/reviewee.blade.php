@@ -6,7 +6,7 @@
         <ul class="nav side-menu">
             <li><a href="{{ asset('reviewee/home') }}"><i class="fa fa-home"></i> Dashboard</a></li>
             <li><a href="{{ asset('reviewee/announcements') }}"><i class="fa fa-bullhorn"></i> Announcements</a></li>
-            <li><a href="{{ asset('reviewee/class') }}"><i class="fa fa-book"></i> My Class</a></li>
+            <li><a href="{{ asset('reviewee/class') }}"><i class="fa fa-book"></i> My Subjects</a></li>
         </ul>
     </div>
     <div class="menu_section">

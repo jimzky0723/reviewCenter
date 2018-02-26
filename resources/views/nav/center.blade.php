@@ -13,7 +13,7 @@
         <h3>Instructors and Reviewees</h3>
         <ul class="nav side-menu">
             <li><a href="{{ asset('center/instructor') }}"><i class="fa fa-user"></i> Instructors</a></li>
-            <li><a href="{{ asset('center/reviewee') }}"><i class="fa fa-group"></i> Reviewee</a></li>
+            <li><a href="{{ asset('center/reviewee') }}"><i class="fa fa-group"></i> Students</a></li>
         </ul>
     </div>
     <div class="menu_section">

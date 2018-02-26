@@ -25,7 +25,7 @@ class ClassCtrl extends Controller
         $data = Classes::where('instructor_id',$user->id)->paginate(20);
         return view('instructor.class',[
             'data' => $data,
-            'title' => 'My Class'
+            'title' => 'My Subjects'
         ]);
     }
     public function searchReviewee(Request $req,$id)
@@ -60,7 +60,7 @@ class ClassCtrl extends Controller
         }
         $data = $data->paginate(20);
         return view('instructor.reviewee',[
-            'title' => 'My Reviewees',
+            'title' => 'My Students',
             'data' => $data,
             'className' => Classes::find($id)->code,
             'classID' => $id

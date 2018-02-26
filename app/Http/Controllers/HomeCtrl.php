@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Center;
+use App\Classes;
 use App\Province;
 use App\Region;
+use App\Reviewee;
 use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\DB;
 
 class HomeCtrl extends Controller
 {
@@ -45,6 +48,7 @@ class HomeCtrl extends Controller
             return redirect()->back()->with('status','duplicate');
         }
 
+
         $region_id = Province::where('provCode',$req->province)->first()->regCode;
 
         $q = new User();
@@ -67,6 +71,32 @@ class HomeCtrl extends Controller
         $q->status = 'pending';
         $q->save();
 
+        $data = array();
+        $user_id = User::where('username',$req->username)
+                ->first()
+                ->id;
+        foreach($req->subjects as $class_id){
+            $data[] =  [
+                'user_id' => $user_id,
+                'center_id' => $req->center,
+                'class_id' => $class_id
+            ];
+        }
+        Reviewee::insert($data);
         return redirect()->back()->with('status','saved');
+    }
+
+    public function show_subjects($center_id)
+    {
+        $date_now = date('Y-m-d');
+        $subjects = Classes::select('id','code',DB::raw('DATE_FORMAT(date_close,"%b %d, %Y") as date_close'))
+                ->where('center_id',$center_id)
+                ->where(function($q) use($date_now){
+                    $q = $q->orwhere('date_close','>=',$date_now)
+                            ->orwhere('date_close','=','0000-00-00');
+                })
+                ->orderBy('code','asc')
+                ->get();
+        return $subjects;
     }
 }

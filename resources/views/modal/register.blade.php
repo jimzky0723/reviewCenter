@@ -8,6 +8,14 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <style>
+                .input {
+                    cursor: pointer;
+                }
+                .hide {
+                    display: none;
+                }
+            </style>
             <form method="post" action="{{ url('store') }}">
                 {{ csrf_field() }}
                 <div class="modal-body">
@@ -15,7 +23,7 @@
                         <legend>Review Centers</legend>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <select name="center" class="form-control" required data-error="Please select review center">
+                                <select name="center" id="filter_center" class="form-control" required data-error="Please select review center">
                                     <option value="">Select Review Center...</option>
                                     @foreach($centers as $row)
                                     <option value="{{ $row->id }}">{{ $row->desc }}</option>
@@ -23,6 +31,20 @@
                                 </select>
                                 <div class="help-block with-errors"></div>
                             </div>
+
+                        </div>
+                    </fieldset>
+                    <fieldset class="show_subjects hide">
+                        <legend>Select Subjects</legend>
+                        <div class="col-md-12 list_subjects">
+                            <ul>
+
+                                <li><label class="input text-success">
+                                        <input type="checkbox" name="subjects[]"/> Information Technology 102
+                                    </label>
+                                    <small>(Robert Quingking)</small>
+                                </li>
+                            </ul>
                         </div>
                     </fieldset>
                     <fieldset>

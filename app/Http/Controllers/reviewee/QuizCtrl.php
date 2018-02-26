@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\reviewee;
 
+use App\Answers;
 use App\Grade;
 use App\Question;
 use App\Quiz;
@@ -23,6 +24,7 @@ class QuizCtrl extends Controller
     public function take_quiz($quiz_id)
     {
         $user = Session::get('access');
+        //dd(Session::all());
         $check_quiz = RevieweeQuiz::where('quiz_id',$quiz_id)
             ->where('user_id',$user->id)
             ->first();
@@ -43,14 +45,15 @@ class QuizCtrl extends Controller
 
     public function get_score(Request $req,$quiz_id)
     {
-        $student_id = Session::get('access')->id;
 
+        $student_id = Session::get('access')->id;
+        Session::forget('quiz_timer_'.$quiz_id);
         $questions = Question::where('quiz_id',$quiz_id)->get();
         $check = 0;
         foreach($questions as $row){
            $item = 'question_'.$row->id;
-
-           $choice = $req->$item;
+            Session::forget($item);
+            $choice = Answers::find($req->$item)->value;
            if($choice=='1'){
                 $check++;
            }
@@ -72,12 +75,30 @@ class QuizCtrl extends Controller
         $lesson_id = Quiz::find($quiz_id)
             ->lesson_id;
 
-        return redirect('reviewee/quiz/'.$lesson_id)->with('status','done_quiz');
+        Session::put('review_questions',$_POST);
+        return redirect('reviewee/quiz/review/'.$quiz_id);
     }
 
+    public function review_quiz($quiz_id)
+    {
+        $user = Session::get('access');
+        $valid = RevieweeQuiz::where('user_id',$user->id)
+                ->where('quiz_id',$quiz_id)
+                ->first();
+        if(!$valid){
+            return redirect('reviewee/class')->with('status','denied');
+        }
+        $post = Session::get('review_questions');
+        $quiz = Quiz::find($quiz_id);
+        return view('reviewee.review_quiz',[
+            'questions' => $post,
+            'quiz' => $quiz,
+            'lesson_id' =>$quiz->lesson_id
+        ]);
+    }
     public function timer(Request $req)
     {
-        Session::put('quiz_timer',$req->timer);
+        Session::put('quiz_timer_'.$req->quiz_id,$req->timer);
     }
 
     public function answer(Request $req)

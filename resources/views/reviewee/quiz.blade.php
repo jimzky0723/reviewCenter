@@ -67,7 +67,7 @@
                                                             ->first()
                                                             ->percentage;
                                                     ?>
-                                                    Grade: {{ $grade }}
+                                                    Grade: {{ number_format($grade,1) }}
                                                 </a>
                                             @endif
                                             </div>

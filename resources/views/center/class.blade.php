@@ -48,7 +48,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Classes</h2>
+                            <h2>Subjects</h2>
                             <div class="pull-right">
 
                                 <form method="post" action="{{ url('center/class/search') }}">
@@ -68,10 +68,10 @@
                                     <thead>
                                     <tr>
                                         <th>ID #</th>
-                                        <th>Class</th>
+                                        <th>Subject Code</th>
                                         <th>Instructor</th>
                                         <th>Date Range</th>
-                                        <th>Reviewee</th>
+                                        <th>Students</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -120,7 +120,7 @@
                                 <div class="alert alert-warning alert-dismissible fade in" role="alert">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
                                     </button>
-                                    <strong><i class="fa fa-info-circle"></i> No class found!</strong>
+                                    <strong><i class="fa fa-info-circle"></i> No subject found!</strong>
                                 </div>
                             @endif
                         </div>

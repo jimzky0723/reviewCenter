@@ -33,7 +33,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>My Class</h2>
+                            <h2>My Subjects</h2>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
@@ -42,10 +42,9 @@
                                     <thead>
                                     <tr>
                                         <th>ID #</th>
-                                        <th>Class Name</th>
-                                        <th>Reviewee</th>
+                                        <th>Subject Code</th>
+                                        <th>Students</th>
                                         <th>Lessons</th>
-                                        <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -66,18 +65,18 @@
                                             {{ $row->code }}
                                         </td>
                                         <td>
-                                            <i class="fa fa-users"></i>
-                                            {{ $countReviewee }}
-                                            Reviewee{{ ($countReviewee>1) ? 's':'' }}
+                                            <a href="{{ url('instructor/reviewee/'.$row->id) }}" class="btn btn-info btn-sm">
+                                                <i class="fa fa-users"></i>
+                                                {{ $countReviewee }}
+                                                Student{{ ($countReviewee>1) ? 's':'' }}
+                                            </a>
                                         </td>
                                         <td>
-                                            <i class="fa fa-book"></i>
-                                            {{ $countLesson }}
-                                            Lesson{{ ($countLesson>1) ? 's':'' }}
-                                        </td>
-                                        <td>
-                                            <a href="{{ url('instructor/reviewee/'.$row->id) }}" class="btn btn-info btn-xs"><i class="fa fa-user-plus"></i> View Reviewees </a>
-                                            <a href="{{ url('instructor/lesson/'.$row->id) }}" class="btn btn-success btn-xs"><i class="fa fa-plus"></i> View Lessons </a>
+                                            <a href="{{ url('instructor/lesson/'.$row->id) }}" class="btn btn-success btn-sm">
+                                                <i class="fa fa-book"></i>
+                                                {{ $countLesson }}
+                                                Lesson{{ ($countLesson>1) ? 's':'' }}
+                                            </a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -91,7 +90,7 @@
                                 <div class="alert alert-warning alert-dismissible fade in" role="alert">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
                                     </button>
-                                    <strong><i class="fa fa-info-circle"></i> No class found!</strong>
+                                    <strong><i class="fa fa-info-circle"></i> No subject found!</strong>
                                 </div>
                             @endif
                         </div>
