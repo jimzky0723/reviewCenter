@@ -93,7 +93,9 @@
                                             <a href="{{ url('center/class/'.$row->id) }}">{{ $id }}
                                             </a>
                                         </td>
-                                        <td>{{ $row->code }}</td>
+                                        <td>{{ $row->code }}<br />
+                                            <small class="text-success">{{ $row->desc }}</small>
+                                        </td>
                                         <td>{{ $fullname }}</td>
                                         <td>
                                             @if($row->date_open==='0000-00-00' && $row->date_close==='0000-00-00')

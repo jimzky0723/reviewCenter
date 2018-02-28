@@ -5,7 +5,16 @@
         <h3>Main Menu</h3>
         <ul class="nav side-menu">
             <li><a href="{{ asset('reviewee/home') }}"><i class="fa fa-home"></i> Dashboard</a></li>
-            <li><a href="{{ asset('reviewee/announcements') }}"><i class="fa fa-bullhorn"></i> Announcements</a></li>
+            <?php
+                $count = \App\Http\Controllers\reviewee\AnnouncementCtrl::countAnnoucement();
+            ?>
+            <li>
+                <a href="{{ asset('reviewee/announcement') }}"><i class="fa fa-bullhorn"></i> Announcements
+                @if($count>0)
+                    <span class="label label-success pull-right">{{ $count }} New</span>
+                @endif
+                </a>
+            </li>
             <li><a href="{{ asset('reviewee/class') }}"><i class="fa fa-book"></i> My Subjects</a></li>
         </ul>
     </div>

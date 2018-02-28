@@ -86,12 +86,15 @@ Route::post('center/instructor/search', 'center\InstructorCtrl@search');
 
 Route::resource('center/reviewee', 'center\RevieweeCtrl');
 Route::post('center/reviewee/accept', 'center\RevieweeCtrl@accept');
+Route::post('center/reviewee/ignore', 'center\RevieweeCtrl@ignore');
 Route::post('center/reviewee/search', 'center\RevieweeCtrl@search');
 
 Route::resource('center/class', 'center\ClassCtrl');
 Route::get('center/class/enroll/{id}', 'center\ClassCtrl@enroll');
 Route::post('center/class/enroll/{id}', 'center\ClassCtrl@enrollReviewee');
 Route::post('center/class/remove/{id}', 'center\ClassCtrl@removeReviewee');
+
+Route::get('center/announcement','center\AnnouncementCtrl@index');
 //..CENTER PAGE
 
 //INSTRUCTOR PAGE
@@ -129,6 +132,8 @@ Route::post('/instructor/question/{quiz_id}/bulk','instructor\QuestionCtrl@bulk'
 Route::post('/instructor/question/{quiz_id}/update','instructor\QuestionCtrl@update');
 Route::post('/instructor/question/{quiz_id}/destroy','instructor\QuestionCtrl@destroy');
 Route::get('/instructor/question/{question_id}/show','instructor\QuestionCtrl@show');
+
+Route::get('instructor/announcement','instructor\AnnouncementCtrl@index');
 //...INSTRUCTOR PAGE
 
 //REVIEWEE PAGE
@@ -149,4 +154,6 @@ Route::get('reviewee/quiz/review/{quiz_id}','reviewee\QuizCtrl@review_quiz');
 
 Route::post('reviewee/quiz/store/time/','reviewee\QuizCtrl@timer');
 Route::post('reviewee/quiz/store/answer/','reviewee\QuizCtrl@answer');
+
+Route::get('reviewee/announcement','reviewee\AnnouncementCtrl@index');
 //..REVIEWEE PAGE

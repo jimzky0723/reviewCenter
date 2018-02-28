@@ -46,9 +46,9 @@ class RevieweeCtrl extends Controller
                     ->orwhere('lname','like',"%$keyword%");
             });
         }
-        $data = $data->orderBy('lname','asc')
-            ->where('level','reviewee')
-            ->orderBy('status','desc')
+        $data = $data->where('level','reviewee')
+            ->orderBy('status','asc')
+            ->orderBy('lname','asc')
             ->paginate(20);
         return view('center.reviewee',[
             'title' => 'List of Students',
@@ -219,5 +219,19 @@ class RevieweeCtrl extends Controller
         $name = $user->fname.' '.$user->lname;
         return redirect('center/reviewee')->with([
             'status' => 'accepted','name' => $name]);
+    }
+
+    public function ignore(Request $req)
+    {
+        $id = $req->currentID;
+
+        $user = User::find($id);
+        $name = $user->fname.' '.$user->lname;
+        User::where('id',$id)
+            ->delete();
+        Reviewee::where('user_id',$id)
+            ->delete();
+        return redirect('center/reviewee')->with([
+            'status' => 'ignored','name' => $name]);
     }
 }

@@ -5,7 +5,7 @@
         <h3>Main Menu</h3>
         <ul class="nav side-menu">
             <li><a href="{{ asset('instructor/home') }}"><i class="fa fa-home"></i> Dashboard</a></li>
-            <li><a href="{{ asset('instructor/announcements') }}"><i class="fa fa-bullhorn"></i> Announcements</a></li>
+            <li><a href="{{ asset('instructor/announcement') }}"><i class="fa fa-bullhorn"></i> Announcements</a></li>
             <li><a href="{{ asset('instructor/class') }}"><i class="fa fa-book"></i> My Subjects</a></li>
         </ul>
     </div>

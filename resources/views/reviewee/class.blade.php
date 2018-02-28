@@ -56,7 +56,9 @@
                                     ->leftJoin('lesson','lesson.id','=','quiz.lesson_id')
                                     ->leftJoin('classes','classes.id','=','lesson.class_id')
                                     ->where('classes.id',$c->class_id)
+                                    ->where('grade.student_id',$c->user_id)
                                     ->sum('grade.percentage');
+
                                 if($finalGrade>0)
                                 {
                                     $finalGrade = number_format($finalGrade / $count_quiz,1);
@@ -76,6 +78,7 @@
                                     $link = url('reviewee/class/'.$c->class_id);
                                 }
                             ?>
+
                             <div class="col-md-4 col-xs-12 widget widget_tally_box">
                                 <div class="x_panel">
                                     <div class="x_content {{ $class_panel }}">

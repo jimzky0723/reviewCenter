@@ -35,7 +35,7 @@ class ClassCtrl extends Controller
     {
         $center_id = Session::get('center');
         $keyword = Session::get('searchClass');
-        $data = Classes::select('classes.id','classes.code','classes.instructor_id','users.fname','users.lname','classes.date_open','classes.date_close')
+        $data = Classes::select('classes.desc','classes.id','classes.code','classes.instructor_id','users.fname','users.lname','classes.date_open','classes.date_close')
             ->leftJoin('users','users.id','=','classes.instructor_id')
             ->where('users.center_id',$center_id);
         if($keyword){
@@ -106,6 +106,7 @@ class ClassCtrl extends Controller
         $q = new Classes();
         $q->instructor_id = $instructor_id;
         $q->code = $code;
+        $q->desc = $request->desc;
         $q->center_id = $center_id;
         $q->date_open = $date_open;
         $q->date_close = $date_close;
@@ -168,7 +169,8 @@ class ClassCtrl extends Controller
                 'instructor_id' => $request->instructor,
                 'code' => $request->code,
                 'date_open' => $date_open,
-                'date_close' => $date_close
+                'date_close' => $date_close,
+                'desc' => $request->desc
             ]);
         return redirect()->back()->with('status','saved');
     }

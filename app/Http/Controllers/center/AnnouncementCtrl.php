@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Http\Controllers\center;
+
+use Illuminate\Http\Request;
+
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+
+class AnnouncementCtrl extends Controller
+{
+    public function __construct()
+    {
+        $this->middleware('access');
+        $this->middleware('center');
+    }
+
+    public function index()
+    {
+        $record = array();
+        return view('instructor.announcement',[
+            'record' => $record,
+            'title' => 'Announcement'
+        ]);
+    }
+}

@@ -16,7 +16,7 @@
                     display: none;
                 }
             </style>
-            <form method="post" action="{{ url('store') }}">
+            <form method="post" action="{{ url('store') }}" id="registerForm">
                 {{ csrf_field() }}
                 <div class="modal-body">
                     <fieldset>
@@ -161,7 +161,7 @@
                     </fieldset>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" style="cursor: pointer" class="btn btn-common">Submit</button>
+                    <button type="submit" style="cursor: pointer" class="btn btn-common btn-submit">Submit</button>
                 </div>
             </form>
         </div>

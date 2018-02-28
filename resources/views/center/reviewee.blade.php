@@ -51,6 +51,13 @@
                     <strong>{{ $name }} is successfully accepted to your center!</strong>
                 </div>
             @endif
+            @if($status === 'ignored')
+                <div class="alert alert-warning alert-dismissible fade in" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                    </button>
+                    <strong>{{ $name }} is successfully ignored to your center!</strong>
+                </div>
+            @endif
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
@@ -76,7 +83,7 @@
                                         <th>ID #</th>
                                         <th>Name</th>
                                         <th>Address / Contact</th>
-                                        <th>Class</th>
+                                        <th># of Subjects</th>
                                         <th>Status</th>
                                     </tr>
                                     </thead>
@@ -103,7 +110,15 @@
                                                 <br />
                                                 <small class="text-danger">{{ $row->contact }} / {{ $row->email }}</small>
                                             </td>
-                                            <td></td>
+                                            <td>
+                                                <?php
+                                                    $count_subj = \App\Reviewee::where('user_id',$row->id)
+                                                        ->count();
+                                                ?>
+                                                <a href="#" class="btn btn-warning btn-sm">
+                                                    <i class="fa fa-book"></i> {{ $count_subj }}
+                                                </a>
+                                            </td>
                                             <td>
                                                 <?php
                                                     $status = ($row->status==='pending') ? 'Pending' : 'Registered';
@@ -111,7 +126,8 @@
                                                 ?>
                                                 <strong class="{{ $class }}">{{ $status }}</strong>
                                                 @if($row->status==='pending')
-                                                    | <a href="#acceptModal" data-id="{{ $row->id }}" data-toggle="modal"> Accept</a>
+                                                    <a class="btn btn-success btn-sm" href="#acceptModal" data-id="{{ $row->id }}" data-toggle="modal"> Accept</a>
+                                                    <a class="btn btn-danger btn-sm" href="#ignoreModal" data-id="{{ $row->id }}" data-toggle="modal"> Ignore</a>
                                                 @endif
                                             </td>
                                         </tr>
@@ -145,11 +161,27 @@
             txt.val(id);
         });
     </script>
+
+    <script>
+        $('a[href="#ignoreModal"]').on('click',function(){
+            var id = $(this).data('id');
+            console.log(id);
+            var txt = $('#ignoreModal').find('#currentID2');
+            txt.val(id);
+        });
+    </script>
 @endsection
 
 @section('modal')
     <form action="{{ url('center/reviewee/accept') }}" method="post">
         {{ csrf_field() }}
         <input type="hidden" id="currentID" name="currentID" />
-        <p class="text-success">Are you sure you want to accept this reviewee?</p>
+        <p class="text-success">Are you sure you want to accept this student?</p>
+@endsection
+
+@section('modal2')
+    <form action="{{ url('center/reviewee/ignore') }}" method="post">
+        {{ csrf_field() }}
+        <input type="hidden" id="currentID2" name="currentID" />
+        <p class="text-danger">Are you sure you want to ignore this student?</p>
 @endsection

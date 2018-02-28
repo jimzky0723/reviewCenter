@@ -27,7 +27,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Add New Class</h2>
+                            <h2>Update Class</h2>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
@@ -39,6 +39,13 @@
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <input name="code" type="text" value="{{ $record->code }}" class="code form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Description <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <textarea name="desc" style="width: 100%;resize: none;" rows="5">{{ $record->desc }}</textarea>
                                     </div>
                                 </div>
                                 <div class="item form-group">

@@ -450,9 +450,11 @@ $status = session('status');
 @include('script.login')
 @include('script.location')
 @include('script.center_list')
+
 @if($status)
 <script>
     $('#statusModal').modal('show');
+
 </script>
 @endif
 </body>

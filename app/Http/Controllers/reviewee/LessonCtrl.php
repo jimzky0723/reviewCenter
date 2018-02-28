@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\reviewee;
 
+use App\Announcement;
 use App\Lesson;
 use App\Quiz;
 use App\Reviewee;
@@ -78,6 +79,15 @@ class LessonCtrl extends Controller
         $q = new RevieweeLesson();
         $q->lesson_id = $lesson_id;
         $q->user_id = $user->id;
+        $q->save();
+
+        $lesson = Lesson::find($lesson_id);
+        $content = '<strong>Congratulations!</strong> You have finished <strong>'.$lesson->title.'</strong>';
+        $q = new Announcement();
+        $q->target = 'reviewee';
+        $q->user_id = $user->id;
+        $q->content = $content;
+        $q->date_created = date('Y-m-d');
         $q->save();
         return redirect('reviewee/class/'.$class_id)->with('status','finish');
     }
