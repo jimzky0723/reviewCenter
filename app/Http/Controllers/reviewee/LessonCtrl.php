@@ -67,6 +67,24 @@ class LessonCtrl extends Controller
 
     }
 
+    public function showReview($lesson_id)
+    {
+        $user = Session::get('access');
+        $check = RevieweeLesson::where('lesson_id', $lesson_id)
+            ->where('user_id', $user->id)
+            ->where('status','open')
+            ->first();
+        if (!$check) {
+            return redirect('reviewee/class')->with('status', 'denied');
+        }
+        $lesson = Lesson::find($lesson_id);
+        return view('reviewee.viewlesson',[
+            'title' => 'Review lesson',
+            'lesson' => $lesson
+        ]);
+
+    }
+
     public function finish($lesson_id)
     {
         $check = self::checkAvailability($lesson_id);
@@ -79,10 +97,11 @@ class LessonCtrl extends Controller
         $q = new RevieweeLesson();
         $q->lesson_id = $lesson_id;
         $q->user_id = $user->id;
+        $q->status = 'close';
         $q->save();
 
         $lesson = Lesson::find($lesson_id);
-        $content = '<strong>Congratulations!</strong> You have finished <strong>'.$lesson->title.'</strong>';
+        $content = 'You have finished <strong>'.$lesson->title.'</strong>.';
         $q = new Announcement();
         $q->target = 'reviewee';
         $q->user_id = $user->id;

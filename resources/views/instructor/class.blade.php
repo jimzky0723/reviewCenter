@@ -43,6 +43,8 @@
                                     <tr>
                                         <th>ID #</th>
                                         <th>Subject Code</th>
+                                        <th>Available Days</th>
+                                        <th>Date Range</th>
                                         <th>Students</th>
                                         <th>Lessons</th>
                                     </tr>
@@ -55,6 +57,13 @@
                                             ->count();
                                         $countLesson = \App\Lesson::where('class_id',$row->id)
                                             ->count();
+                                        $days = \App\classDays::where('class_id',$row->id)->get();
+                                        $tmp = array();
+                                        foreach($days as $day)
+                                        {
+                                            $tmp[] = $day->day;
+                                        }
+                                        $days = implode(',', $tmp);
                                     ?>
                                     <tr>
                                         <td class="text-warning">
@@ -62,7 +71,20 @@
                                             {{ $id }}
                                         </td>
                                         <td class="text-primary">
-                                            {{ $row->code }}
+                                            {{ $row->code }}<br />
+                                            <small class="text-success">{{ $row->desc }}</small>
+                                        </td>
+                                        <td>
+                                            <strong>{{ $days }}</strong><br />
+                                            <small class="text-success">{{ $row->time_in }} - {{ $row->time_out }}</small>
+                                        </td>
+                                        <td>
+                                            @if($row->date_open==='0000-00-00' && $row->date_close==='0000-00-00')
+                                                N/A
+                                            @else
+                                                {{ date('M d, Y',strtotime($row->date_open)) }} -
+                                                {{ date('M d, Y',strtotime($row->date_close)) }}
+                                            @endif
                                         </td>
                                         <td>
                                             <a href="{{ url('instructor/reviewee/'.$row->id) }}" class="btn btn-info btn-sm">

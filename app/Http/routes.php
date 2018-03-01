@@ -143,6 +143,7 @@ Route::get('reviewee/class','reviewee\ClassCtrl@index');
 Route::get('reviewee/class/{class_id}','reviewee\ClassCtrl@show');
 
 Route::get('reviewee/lesson/{lesson_id}','reviewee\LessonCtrl@show');
+Route::get('reviewee/lesson/review/{lesson_id}','reviewee\LessonCtrl@showReview');
 
 Route::get('reviewee/lesson/finish/{lesson_id}','reviewee\LessonCtrl@finish');
 
@@ -156,4 +157,6 @@ Route::post('reviewee/quiz/store/time/','reviewee\QuizCtrl@timer');
 Route::post('reviewee/quiz/store/answer/','reviewee\QuizCtrl@answer');
 
 Route::get('reviewee/announcement','reviewee\AnnouncementCtrl@index');
+Route::get('reviewee/announcement/seen/{id}','reviewee\AnnouncementCtrl@seen');
 //..REVIEWEE PAGE
+

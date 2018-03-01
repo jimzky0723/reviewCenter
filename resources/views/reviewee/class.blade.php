@@ -59,6 +59,14 @@
                                     ->where('grade.student_id',$c->user_id)
                                     ->sum('grade.percentage');
 
+                                $days = \App\classDays::where('class_id',$classes->id)->get();
+                                $tmp = array();
+                                foreach($days as $day)
+                                {
+                                    $tmp[] = $day->day;
+                                }
+                                $days = implode(',', $tmp);
+
                                 if($finalGrade>0)
                                 {
                                     $finalGrade = number_format($finalGrade / $count_quiz,1);
@@ -115,7 +123,9 @@
                                         </div>
                                         <div class="text-center text-info">
                                             @if($date_now <= $classes->date_close)
-                                                Date Available: {{ $daterange }}
+                                                {{ $daterange }}<br />
+                                                <span class="text-success">{{ $days }}</span><br />
+                                                <span class="text-warning">{{ $classes->time_in }} - {{ $classes->time_out }}</span><br />
                                             @else
                                                 @if($classes->date_close==='0000-00-00')
                                                     Always Open <br />

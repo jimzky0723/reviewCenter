@@ -69,6 +69,9 @@
                                                     ?>
                                                     Grade: {{ number_format($grade,1) }}
                                                 </a>
+                                                <a href="{{ url('reviewee/quiz/reviewee/'.$row->id) }}" class="btn btn-success btn-sm">
+                                                    <i class="fa fa-puzzle-piece"> </i> Review Quiz
+                                                </a>
                                             @endif
                                             </div>
                                         </div>
