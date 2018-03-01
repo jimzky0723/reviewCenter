@@ -49,7 +49,7 @@
                                     </div>
                                 </div>
                                 <div class="item form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="province">Province <span class="required">*</span>
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="instructor">Instructor <span class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <select name="instructor" id="instructor" required="required" class="form-control col-md-7 col-xs-12">
@@ -71,7 +71,31 @@
                                         <input name="date_range" id="reservation" class="date-picker form-control col-md-7 col-xs-12" type="text">
                                     </div>
                                 </div>
-
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Days <span class="required"></span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <select name="days[]" class="form-control select2" multiple="multiple">
+                                            <option value="">Select...</option>
+                                            <option value="Mon">Monday</option>
+                                            <option value="Tue">Tuesday</option>
+                                            <option value="Wed">Wednesday</option>
+                                            <option value="Thu">Thursday</option>
+                                            <option value="Fri">Friday</option>
+                                            <option value="Sat">Sat</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Time Open <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-3 col-sm-3 col-xs-6">
+                                        <input name="time_in" id="time_in" class="timepicker form-control col-md-7 col-xs-12" type="text">
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 col-xs-6">
+                                        <input name="time_out" id="time_out" class="timepicker form-control col-md-7 col-xs-12" type="text">
+                                    </div>
+                                </div>
                                 <div class="ln_solid"></div>
                                 <div class="form-group">
                                     <div class="col-md-6 col-md-offset-3">
@@ -90,6 +114,7 @@
 @include('modal.addProfile')
 @section('js')
     @include('script.daterange')
+    @include('script.select2')
     <script src="{{ asset('public/panel') }}/vendors/validator/validator.js"></script>
     <script>
         // initialize the validator function

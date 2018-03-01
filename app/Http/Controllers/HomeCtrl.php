@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Center;
+use App\classDays;
 use App\Classes;
 use App\Province;
 use App\Region;
@@ -88,8 +89,9 @@ class HomeCtrl extends Controller
 
     public function show_subjects($center_id)
     {
+        $data = array();
         $date_now = date('Y-m-d');
-        $subjects = Classes::select('id','code',DB::raw('DATE_FORMAT(date_close,"%b %d, %Y") as date_close'))
+        $subjects = Classes::select('time_in','time_out','id','code',DB::raw('DATE_FORMAT(date_close,"%b %d, %Y") as date_close'))
                 ->where('center_id',$center_id)
                 ->where(function($q) use($date_now){
                     $q = $q->orwhere('date_close','>=',$date_now)
@@ -97,6 +99,30 @@ class HomeCtrl extends Controller
                 })
                 ->orderBy('code','asc')
                 ->get();
-        return $subjects;
+        foreach($subjects as $row){
+            $time = "$row->time_in - $row->time_out";
+            $days = classDays::where('class_id',$row->id)->get();
+            $tmp = array();
+            foreach($days as $day)
+            {
+                $tmp[] = $day->day;
+            }
+            $days = implode(',', $tmp);
+            if(count($tmp)==0)
+            {
+                $days = 'Always Open';
+            }
+            if($time===" - "){
+                $time = 'Whole Day';
+            }
+            $data[] = array(
+                'id' => $row->id,
+                'code' => $row->code,
+                'date_close' => $row->date_close,
+                'time' => $time,
+                'days' => $days
+            );
+        }
+        return $data;
     }
 }

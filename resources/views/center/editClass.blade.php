@@ -79,6 +79,39 @@
                                         <input name="date_range" value="{{ $daterange }}" id="reservation" class="date-picker form-control col-md-7 col-xs-12" type="text">
                                     </div>
                                 </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Days <span class="required"></span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <select name="days[]" class="form-control select2" multiple="multiple">
+                                            <?php
+                                                $mon = \App\Http\Controllers\center\ClassCtrl::checkDay($record->id,'Mon');
+                                                $tue = \App\Http\Controllers\center\ClassCtrl::checkDay($record->id,'Tue');
+                                                $wed = \App\Http\Controllers\center\ClassCtrl::checkDay($record->id,'Wed');
+                                                $thu = \App\Http\Controllers\center\ClassCtrl::checkDay($record->id,'Thu');
+                                                $fri = \App\Http\Controllers\center\ClassCtrl::checkDay($record->id,'Fri');
+                                                $sat = \App\Http\Controllers\center\ClassCtrl::checkDay($record->id,'Sat');
+                                            ?>
+                                            <option value="">Select...</option>
+                                            <option value="Mon" {{ ($mon) ? 'selected':'' }}>Monday</option>
+                                            <option value="Tue" {{ ($tue) ? 'selected':'' }}>Tuesday</option>
+                                            <option value="Wed" {{ ($wed) ? 'selected':'' }}>Wednesday</option>
+                                            <option value="Thu" {{ ($thu) ? 'selected':'' }}>Thursday</option>
+                                            <option value="Fri" {{ ($fri) ? 'selected':'' }}>Friday</option>
+                                            <option value="Sat" {{ ($sat) ? 'selected':'' }}>Sat</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Time Open <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-3 col-sm-3 col-xs-6">
+                                        <input name="time_in" value="{{ $record->time_in }}" id="time_in" class="timepicker form-control col-md-7 col-xs-12" type="text">
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 col-xs-6">
+                                        <input name="time_out" value="{{ $record->time_out }}" id="time_out" class="timepicker form-control col-md-7 col-xs-12" type="text">
+                                    </div>
+                                </div>
                                 <div class="ln_solid"></div>
                                 <div class="form-group">
                                     <div class="col-md-6 col-md-offset-3">
@@ -102,7 +135,35 @@
         <p class="text-danger">Are you sure you want to delete this record?</p>
 @endsection
 @section('js')
+    @include('script.select2')
     @include('script.daterange')
+    <script>
+        var time_in = parseInt("{{ $record->time_in }}");
+        var time_out = parseInt("{{ $record->time_out }}");
+        $('#time_in').timepicker({
+            timeFormat: 'h:mm p',
+            interval: 30,
+            minTime: '7',
+            maxTime: '6:00pm',
+            defaultTime: time_in,
+            startTime: '07:00',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        });
+
+        $('#time_out').timepicker({
+            timeFormat: 'h:mm p',
+            interval: 30,
+            minTime: '7',
+            maxTime: '6:00pm',
+            defaultTime: time_out,
+            startTime: '07:00',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        });
+    </script>
     <script src="{{ asset('public/panel') }}/vendors/validator/validator.js"></script>
     <script>
         // initialize the validator function

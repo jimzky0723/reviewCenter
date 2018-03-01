@@ -69,6 +69,7 @@
                                     <tr>
                                         <th>ID #</th>
                                         <th>Subject Code</th>
+                                        <th>Available Days</th>
                                         <th>Instructor</th>
                                         <th>Date Range</th>
                                         <th>Students</th>
@@ -87,6 +88,13 @@
 
                                             $count_class = \App\Reviewee::where('class_id',$row->id)
                                                 ->count();
+                                            $days = \App\classDays::where('class_id',$row->id)->get();
+                                            $tmp = array();
+                                            foreach($days as $day)
+                                            {
+                                                $tmp[] = $day->day;
+                                            }
+                                            $days = implode(',', $tmp);
                                         ?>
                                         <td>
                                             <i class="fa fa-pencil"></i>
@@ -95,6 +103,10 @@
                                         </td>
                                         <td>{{ $row->code }}<br />
                                             <small class="text-success">{{ $row->desc }}</small>
+                                        </td>
+                                        <td>
+                                            <strong>{{ $days }}</strong><br />
+                                            <small class="text-success">{{ $row->time_in }} - {{ $row->time_out }}</small>
                                         </td>
                                         <td>{{ $fullname }}</td>
                                         <td>

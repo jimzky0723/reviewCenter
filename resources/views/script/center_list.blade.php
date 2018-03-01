@@ -21,7 +21,7 @@
                             content += '<li><label class="input text-success"> ' +
                                 '<input type="checkbox" name="subjects[]" value="'+val.id+'"> ' + val.code +
                                 '</label>' +
-                                '<small> ('+available+') </small>' +
+                                '<small> (<span class="text-primary">'+val.days+', '+val.time+'</span>. '+available+') </small>' +
                                 '</li>'
                         });
                         content += '</ul>';

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\center;
 
+use App\classDays;
 use App\Classes;
 use App\Instructor;
 use App\Reviewee;
@@ -35,7 +36,7 @@ class ClassCtrl extends Controller
     {
         $center_id = Session::get('center');
         $keyword = Session::get('searchClass');
-        $data = Classes::select('classes.desc','classes.id','classes.code','classes.instructor_id','users.fname','users.lname','classes.date_open','classes.date_close')
+        $data = Classes::select('classes.time_in','classes.time_out','classes.desc','classes.id','classes.code','classes.instructor_id','users.fname','users.lname','classes.date_open','classes.date_close')
             ->leftJoin('users','users.id','=','classes.instructor_id')
             ->where('users.center_id',$center_id);
         if($keyword){
@@ -92,6 +93,7 @@ class ClassCtrl extends Controller
      */
     public function store(Request $request)
     {
+
         $instructor_id = $request->instructor;
         $code = $request->code;
         $center_id = Session::get('center');
@@ -108,9 +110,20 @@ class ClassCtrl extends Controller
         $q->code = $code;
         $q->desc = $request->desc;
         $q->center_id = $center_id;
+        $q->time_in = $request->time_in;
+        $q->time_out = $request->time_out;
         $q->date_open = $date_open;
         $q->date_close = $date_close;
         $q->save();
+
+        if(count($request->days)){
+            foreach($request->days as $day){
+                $r = new classDays();
+                $r->class_id = $q->id;
+                $r->day = $day;
+                $r->save();
+            }
+        }
 
         return redirect()->back()->with('status','saved');
     }
@@ -170,8 +183,21 @@ class ClassCtrl extends Controller
                 'code' => $request->code,
                 'date_open' => $date_open,
                 'date_close' => $date_close,
-                'desc' => $request->desc
+                'desc' => $request->desc,
+                'time_in' => $request->time_in,
+                'time_out' => $request->time_out
             ]);
+
+        classDays::where('class_id',$id)->delete();
+        if(count($request->days)){
+            foreach($request->days as $day){
+                $r = new classDays();
+                $r->class_id = $id;
+                $r->day = $day;
+                $r->save();
+            }
+        }
+
         return redirect()->back()->with('status','saved');
     }
 
@@ -234,5 +260,16 @@ class ClassCtrl extends Controller
         Reviewee::where('user_id',$user_id)
             ->where('class_id',$id)
             ->delete();
+    }
+
+    public static function checkDay($class_id,$day)
+    {
+        $check = classDays::where('class_id',$class_id)
+                ->where('day',$day)
+                ->first();
+        if($check){
+            return true;
+        }
+        return false;
     }
 }
