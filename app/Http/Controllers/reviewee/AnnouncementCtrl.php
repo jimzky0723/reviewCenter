@@ -29,14 +29,17 @@ class AnnouncementCtrl extends Controller
                 ->where('user_id',$user->id);
         });
 
+
         $count = $count->orwhere(function($q) use ($user){
-            $q = $q->where('target','center')
-                ->where('center_id',$user->center_id);
+            $q = $q->where('target','reviewee')
+                ->where('user_id',0);
         });
+
+        $count = $count->where('center_id',$center);
 
         $count = $count->orderBy('date_created','desc')
             ->orderBy('id','desc')
-            ->get();
+            ->paginate(10);
         $record = array();
         return view('reviewee.announcement',[
             'record' => $count,
@@ -56,9 +59,11 @@ class AnnouncementCtrl extends Controller
         });
 
         $count = $count->orwhere(function($q) use ($user){
-            $q = $q->where('target','center')
-                ->where('center_id',$user->center_id);
+            $q = $q->where('target','reviewee')
+                ->where('user_id',0);
         });
+
+        $count = $count->where('center_id',$center);
 
         $count = $count->count();
 

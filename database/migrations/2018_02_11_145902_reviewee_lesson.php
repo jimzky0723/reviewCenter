@@ -16,6 +16,7 @@ class RevieweeLesson extends Migration
             $table->increments('id');
             $table->integer('lesson_id');
             $table->integer('user_id');
+            $table->string('status');
             $table->timestamps();
         });
     }

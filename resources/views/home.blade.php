@@ -102,6 +102,7 @@
                 <div class="contents text-center">
                     <h1 class="wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="0.3s">Philippine Exam Review Centers</h1>
                     <p class="lead  wow fadeIn" data-wow-duration="1000ms" data-wow-delay="400ms">PHERC: A Software-As-A-Service for Philippine Exam Review Centers.</p>
+                    <a data-toggle="modal" href="#subscribeModal" class="btn btn-common wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="400ms">Subscribe</a>
                     <a data-toggle="modal" href="#registerModal" class="btn btn-common wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="400ms">Register Now</a>
                 </div>
             </div>
@@ -423,6 +424,7 @@
 $status = session('status');
 ?>
 @include('modal.register')
+@include('modal.subscribe')
 @include('modal.login')
 @include('modal.status')
 <!-- jQuery first, then Tether, then Bootstrap JS. -->
@@ -450,6 +452,7 @@ $status = session('status');
 @include('script.login')
 @include('script.location')
 @include('script.center_list')
+@include('script.sub_location')
 
 @if($status)
 <script>

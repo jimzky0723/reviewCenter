@@ -41,6 +41,9 @@
         .text-strong {
             font-weight: bold;
         }
+        .alert-default {
+            border: 1px solid #ccc;
+        }
     </style>
 </head>
 

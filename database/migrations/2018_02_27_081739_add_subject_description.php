@@ -14,7 +14,7 @@ class AddSubjectDescription extends Migration
     {
         Schema::table('classes', function($table)
         {
-            $table->text('desc')->after('code');
+
         });
     }
 

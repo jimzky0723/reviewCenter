@@ -40,21 +40,24 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>Announcements</h2>
-
+                            <div class="pull-right">
+                                <a href="{{ url('admin/announcement/add') }}" class="btn btn-success"><i class="fa fa-plus"></i> Add New</a>
+                            </div>
+                            <div class="clearfix"></div>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
                             @if(count($record))
-                               @foreach($record as $row)
-                                   <?php
-                                        $user = Session::get('access');
-                                        $check = \App\AnnoucementStatus::where('announcement_id',$row->id)
-                                            ->where('user_id',$user->id)
-                                            ->first();
-                                        $class = 'alert-success';
-                                        if($check){
-                                            $class = 'alert-default';
-                                        }
+                                @foreach($record as $row)
+                                    <?php
+                                    $user = Session::get('access');
+                                    $check = \App\AnnoucementStatus::where('announcement_id',$row->id)
+                                        ->where('user_id',$user->id)
+                                        ->first();
+                                    $class = 'alert-success';
+                                    if($check){
+                                        $class = 'alert-default';
+                                    }
                                     ?>
                                     <div class="alert {{ $class }} alert-dismissible fade in" role="alert">
                                         <strong><h3>{{ date('M d, Y',strtotime($row->date_created)) }}
@@ -67,14 +70,14 @@
                                                 @endif
                                             </h3></strong>
 
-                                            <hr />
-                                            <div class="content">{!!  $row->content  !!}</div>
+                                        <hr />
+                                        <div class="content">{!!  $row->content  !!}</div>
                                     </div>
-                               @endforeach
-                               <hr />
-                               <div class="text-center">
-                                   {{ $record->links() }}
-                               </div>
+                                @endforeach
+                                <hr />
+                                <div class="text-center">
+                                    {{ $record->links() }}
+                                </div>
                             @else
                                 <div class="alert alert-default alert-dismissible fade in" role="alert">
                                     <strong><i class="fa fa-info-circle"></i> No announcement yet!</strong>
@@ -89,23 +92,23 @@
 @endsection
 
 @section('js')
-<script>
-    var link = "{{ url('reviewee/announcement/seen') }}";
-    $('.read').on('click',function(){
-        var id = $(this).data('id');
-        $(this).parent().parent().parent().removeClass('alert-success').addClass('alert-default');
-        $(this).fadeOut();
-        $.ajax({
-            url: link+'/'+id,
-            type: 'GET',
-            success: function(data){
-                if(data>0){
-                    $('.label_announcement').html(data+' New');
-                }else{
-                    $('.label_announcement').addClass('hide');
+    <script>
+        var link = "{{ url('reviewee/announcement/seen') }}";
+        $('.read').on('click',function(){
+            var id = $(this).data('id');
+            $(this).parent().parent().parent().removeClass('alert-success').addClass('alert-default');
+            $(this).fadeOut();
+            $.ajax({
+                url: link+'/'+id,
+                type: 'GET',
+                success: function(data){
+                    if(data>0){
+                        $('.label_announcement').html(data+' New');
+                    }else{
+                        $('.label_announcement').addClass('hide');
+                    }
                 }
-            }
+            });
         });
-    });
-</script>
+    </script>
 @endsection

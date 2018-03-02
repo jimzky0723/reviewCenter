@@ -68,9 +68,7 @@ Route::get('admin/center/{id}','admin\CenterCtrl@edit');
 Route::post('admin/center/update','admin\CenterCtrl@update');
 Route::post('admin/center/delete','admin\CenterCtrl@delete');
 
-Route::get('admin/announcements',function(){
-    echo 'soon';
-});
+Route::get('admin/announcement','admin\AnnouncementCtrl@index');
 //..ADMIN PAGE
 
 //CENTER PAGE
@@ -134,6 +132,8 @@ Route::post('/instructor/question/{quiz_id}/destroy','instructor\QuestionCtrl@de
 Route::get('/instructor/question/{question_id}/show','instructor\QuestionCtrl@show');
 
 Route::get('instructor/announcement','instructor\AnnouncementCtrl@index');
+Route::get('instructor/announcement/add','instructor\AnnouncementCtrl@create');
+Route::post('instructor/announcement/store','instructor\AnnouncementCtrl@store');
 //...INSTRUCTOR PAGE
 
 //REVIEWEE PAGE
@@ -151,6 +151,10 @@ Route::get('reviewee/quiz/{lesson_id}','reviewee\LessonCtrl@quiz');
 
 Route::get('reviewee/quiz/take/{quiz_id}','reviewee\QuizCtrl@take_quiz');
 Route::post('reviewee/quiz/take/{quiz_id}','reviewee\QuizCtrl@get_score');
+
+Route::get('reviewee/quiz/practice/{quiz_id}','reviewee\QuizCtrl@practice_quiz');
+Route::post('reviewee/quiz/practice/{quiz_id}','reviewee\QuizCtrl@practice_score');
+
 Route::get('reviewee/quiz/review/{quiz_id}','reviewee\QuizCtrl@review_quiz');
 
 Route::post('reviewee/quiz/store/time/','reviewee\QuizCtrl@timer');

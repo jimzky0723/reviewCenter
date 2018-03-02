@@ -36,7 +36,10 @@
 
                             <div class="x_content">
                                 <div class="col-sm-12">
-                                    <?php $c=1; ?>
+                                    <?php
+                                        $c=1;
+                                        $x = 0;
+                                    ?>
                                     @foreach($questions as $key => $value)
                                     @if($key === '_token' || $key==='total_item')
                                         <?php continue; ?>
@@ -53,6 +56,10 @@
                                         $check = $ans->value;
                                         $class = ($check==1) ? 'text-success':'text-danger';
                                         $icon = ($check==1) ? 'fa fa-check':'fa fa-times';
+                                        if($check==1)
+                                        {
+                                            $x++;
+                                        }
                                     ?>
                                         <div class="panel panel-primary">
                                             <div class="panel-body">
@@ -68,6 +75,9 @@
                                         </div>
                                     @endforeach
                                     <hr />
+                                    <div class="pull-left">
+                                        <h3>Score: {{ $x }} out of {{ $c-1 }}</h3>
+                                    </div>
                                     <div class="pull-right">
                                         <a href="{{ url('reviewee/quiz/'.$lesson_id) }}" class="btn btn-success">
                                             <i class="fa fa-send"></i> Continue

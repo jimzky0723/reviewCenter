@@ -47,10 +47,32 @@ class QuizCtrl extends Controller
         ]);
     }
 
+    public function practice_quiz($quiz_id)
+    {
+        $user = Session::get('access');
+        //dd(Session::all());
+        $check_quiz = RevieweeQuiz::where('quiz_id',$quiz_id)
+            ->where('user_id',$user->id)
+            ->first();
+        if(!$check_quiz){
+            return redirect('reviewee/quiz/'.$quiz_id);
+        }
+        $quiz = Quiz::find($quiz_id);
+        $questions = Question::where('quiz_id',$quiz_id)
+            ->inRandomOrder()
+            ->get();
+        return view('reviewee.practice_quiz',[
+            'quiz_id' => $quiz_id,
+            'title' => 'Practice Quiz',
+            'quiz' => $quiz,
+            'questions' => $questions
+        ]);
+    }
+
     public function get_score(Request $req,$quiz_id)
     {
-        $student_id = Session::get('access')->id;
-
+        $user = Session::get('access');
+        $student_id = $user->id;
 
         Session::forget('quiz_timer_'.$quiz_id);
         $questions = Question::where('quiz_id',$quiz_id)->get();
@@ -95,6 +117,8 @@ class QuizCtrl extends Controller
         $q->user_id = $student_id;
         $q->content = $content;
         $q->date_created = date('Y-m-d');
+        $q->center_id = $user->center_id;
+
         $q->save();
 
         //check if lesson is available for review
@@ -118,13 +142,36 @@ class QuizCtrl extends Controller
             $q->user_id = $student_id;
             $q->content = $content;
             $q->date_created = date('Y-m-d');
-
+            $q->center_id = $user->center_id;
             $q->save();
         }
 
         Session::put('review_questions',$_POST);
         return redirect('reviewee/quiz/review/'.$quiz_id);
     }
+
+    public function practice_score(Request $req,$quiz_id)
+    {
+        $student_id = Session::get('access')->id;
+
+
+        Session::forget('quiz_timer_'.$quiz_id);
+        $questions = Question::where('quiz_id',$quiz_id)->get();
+        $check = 0;
+        foreach($questions as $row){
+            $item = 'question_'.$row->id;
+            Session::forget($item);
+            $choice = Answers::find($req->$item)->value;
+            if($choice=='1'){
+                $check++;
+            }
+        }
+        $total = ($check/$req->total_item)*50+50;
+
+        Session::put('review_questions',$_POST);
+        return redirect('reviewee/quiz/review/'.$quiz_id);
+    }
+
 
     public function review_quiz($quiz_id)
     {

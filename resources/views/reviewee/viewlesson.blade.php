@@ -21,11 +21,14 @@
                             @if($lesson->file)
                                 Downloadable File : <a class="text-danger text-strong" href="{{ url('view/file/'.$lesson->file) }}" target="_blank">{{ $lesson->file }}</a>
                             @endif
+
+                            @if($title!='Review lesson')
                             <div class="pull-right">
                                 <button data-toggle="modal" data-target="#finishLesson" class="btn btn-success" type="button">
                                     <i class="fa fa-book"></i> Finish Lesson
                                 </button>
                             </div>
+                            @endif
                         </div>
                     </div>
                 </div>

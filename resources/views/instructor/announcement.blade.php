@@ -12,6 +12,12 @@
         .table tr td {
             vertical-align: middle !important;
         }
+        .alert-default a {
+            color: red;
+        }
+        .content {
+            font-size:1.4em;
+        }
     </style>
     <div class="right_col" role="main">
         <div class="">
@@ -33,35 +39,48 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Announcement</h2>
+                            <h2>Announcements</h2>
                             <div class="pull-right">
                                 <a href="{{ url('instructor/announcement/add') }}" class="btn btn-success"><i class="fa fa-plus"></i> Add New</a>
                             </div>
                             <div class="clearfix"></div>
+                            <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
                             @if(count($record))
-                                <table class="table table-striped table-hover">
-                                    <thead>
-                                    <tr>
+                                @foreach($record as $row)
+                                    <?php
+                                    $user = Session::get('access');
+                                    $check = \App\AnnoucementStatus::where('announcement_id',$row->id)
+                                        ->where('user_id',$user->id)
+                                        ->first();
+                                    $class = 'alert-success';
+                                    if($check){
+                                        $class = 'alert-default';
+                                    }
+                                    ?>
+                                    <div class="alert {{ $class }} alert-dismissible fade in" role="alert">
+                                        <strong><h3>{{ date('M d, Y',strtotime($row->date_created)) }}
+                                                @if(!$check)
 
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($record as $row)
+                                                    <button type="button" class="read pull-right btn btn-sm btn-default" data-id="{{ $row->id }}">
+                                                        <i class="fa fa-envelope"></i> Mark As Read
+                                                    </button>
 
-                                    @endforeach
-                                    </tbody>
-                                </table>
+                                                @endif
+                                            </h3></strong>
+
+                                        <hr />
+                                        <div class="content">{!!  $row->content  !!}</div>
+                                    </div>
+                                @endforeach
                                 <hr />
                                 <div class="text-center">
-
+                                    {{ $record->links() }}
                                 </div>
                             @else
-                                <div class="alert alert-warning alert-dismissible fade in" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-                                    </button>
-                                    <strong><i class="fa fa-info-circle"></i> No announcement found!</strong>
+                                <div class="alert alert-default alert-dismissible fade in" role="alert">
+                                    <strong><i class="fa fa-info-circle"></i> No announcement yet!</strong>
                                 </div>
                             @endif
                         </div>
@@ -73,5 +92,23 @@
 @endsection
 
 @section('js')
-
+    <script>
+        var link = "{{ url('reviewee/announcement/seen') }}";
+        $('.read').on('click',function(){
+            var id = $(this).data('id');
+            $(this).parent().parent().parent().removeClass('alert-success').addClass('alert-default');
+            $(this).fadeOut();
+            $.ajax({
+                url: link+'/'+id,
+                type: 'GET',
+                success: function(data){
+                    if(data>0){
+                        $('.label_announcement').html(data+' New');
+                    }else{
+                        $('.label_announcement').addClass('hide');
+                    }
+                }
+            });
+        });
+    </script>
 @endsection
