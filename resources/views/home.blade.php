@@ -286,13 +286,14 @@
 <div class="counters section" data-stellar-background-ratio="0.5">
     <div class="container">
         <div class="row">
+
             <div class="col-sm-6 col-md-3 col-lg-3">
                 <div class="facts-item">
                     <div class="icon">
                         <i class="lnr lnr-home"></i>
                     </div>
                     <div class="fact-count">
-                        <h3><span class="counter">1589</span></h3>
+                        <h3><span class="counter">{{ $countCenter }}</span></h3>
                         <h4>Review Centers</h4>
                     </div>
                 </div>
@@ -303,7 +304,7 @@
                         <i class="lnr lnr-briefcase"></i>
                     </div>
                     <div class="fact-count">
-                        <h3><span class="counter">699</span></h3>
+                        <h3><span class="counter">{{ $countInstructor }}</span></h3>
                         <h4>Instructor</h4>
                     </div>
                 </div>
@@ -314,7 +315,7 @@
                         <i class="lnr lnr-user"></i>
                     </div>
                     <div class="fact-count">
-                        <h3><span class="counter">203</span></h3>
+                        <h3><span class="counter">{{ $countReviewee }}</span></h3>
                         <h4>No. of Reviewer</h4>
                     </div>
                 </div>
@@ -325,7 +326,7 @@
                         <i class="lnr lnr-heart"></i>
                     </div>
                     <div class="fact-count">
-                        <h3><span class="counter">1689</span></h3>
+                        <h3><span class="counter">{{ $countSatisfied }}</span></h3>
                         <h4>Satisfied Reviewer</h4>
                     </div>
                 </div>

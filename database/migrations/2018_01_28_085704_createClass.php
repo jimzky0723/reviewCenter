@@ -20,8 +20,8 @@ class CreateClass extends Migration
             $table->integer('center_id');
             $table->date('date_open');
             $table->date('date_close');
-            $table->string('time_out')->after('desc');
-            $table->string('time_in')->after('desc');
+            $table->string('time_out');
+            $table->string('time_in');
             $table->timestamps();
         });
     }

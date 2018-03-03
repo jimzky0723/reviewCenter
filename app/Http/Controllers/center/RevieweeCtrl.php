@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\center;
 
+use App\Payment;
 use App\Province;
 use App\Reviewee;
 use App\User;
@@ -103,7 +104,7 @@ class RevieweeCtrl extends Controller
         $q->barangay_id = $req->barangay;
         $q->region_id = $region_id;
         $q->level = 'reviewee';
-        $q->status = 'registered';
+        $q->status = 'pending';
         $q->save();
 
         return redirect()->back()->with('status','saved');
@@ -211,6 +212,13 @@ class RevieweeCtrl extends Controller
     public function accept(Request $req)
     {
         $id = $req->currentID;
+
+        $q = new Payment();
+        $q->type = 'reviewee';
+        $q->user_id = $id;
+        $q->payment = $req->amount;
+        $q->save();
+
         User::where('id',$id)
             ->update([
                 'status'=> 'registered'

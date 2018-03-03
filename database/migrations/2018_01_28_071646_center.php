@@ -14,14 +14,17 @@ class Center extends Migration
     {
         Schema::create('center', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('code',100);
             $table->string('desc',100);
+            $table->integer('user_id');
+            $table->string('owner');
+            $table->string('path');
+            $table->string('lat');
+            $table->string('long');
             $table->integer('limit');
             $table->integer('regCode');
             $table->integer('provCode');
             $table->integer('muncityCode');
             $table->integer('barangayCode');
-            $table->integer('user_id');
             $table->timestamps();
         });
     }

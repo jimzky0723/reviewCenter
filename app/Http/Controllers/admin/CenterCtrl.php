@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Center;
+use App\Payment;
 use App\Province;
 use App\User;
 use Illuminate\Http\Request;
@@ -38,7 +39,7 @@ class CenterCtrl extends Controller
     {
         $center = Center::select(
                 'center.id',
-                'code',
+                'owner',
                 'desc',
                 'provCode',
                 'muncityCode',
@@ -58,7 +59,6 @@ class CenterCtrl extends Controller
     public function save(Request $req)
     {
         $data = array(
-            'code' => $req->code,
             'desc' => $req->name,
             'provCode' => $req->province,
             'muncityCode' => $req->muncity
@@ -73,6 +73,7 @@ class CenterCtrl extends Controller
             $data['password'] = $req->password;
             $data['contact'] = $req->contact;
             $data['email'] = $req->email;
+            $data['owner'] = $req->owner;
 
             return redirect()->back()->with([
                     'status' => 'duplicateUsername','data' => $data]);
@@ -87,6 +88,7 @@ class CenterCtrl extends Controller
             $data['password'] = $req->password;
             $data['contact'] = $req->contact;
             $data['email'] = $req->email;
+            $data['owner'] = $req->owner;
 
             return redirect()->back()->with([
                 'status' => 'duplicateEntry','data' => $data]);
@@ -105,21 +107,21 @@ class CenterCtrl extends Controller
             $q->username = $req->username;
             $q->password = bcrypt($req->password);
             $q->level = 'center';
-            $q->status = 'registered';
+            $q->status = 'pending';
             $q->save();
 
-            $user_id = User::where('username',$req->username)->first()->id;
+            $user_id = $q->id;
 
-            $c = new Center();
-            $c->code = $req->code;
-            $c->desc = $req->name;
-            $c->limit = $req->num;
-            $c->regCode = $regCode;
-            $c->provCode = $req->province;
-            $c->muncityCode = $req->muncity;
-            $c->barangayCode = $req->barangay;
-            $c->user_id = $user_id;
-            $c->save();
+            $r = new Center();
+            $r->desc = $req->name;
+            $r->user_id = $user_id;
+            $r->owner = $req->owner;
+            $r->limit = $req->num;
+            $r->regCode = $regCode;
+            $r->provCode = $req->province;
+            $r->muncityCode = $req->muncity;
+            $r->barangayCode = $req->barangay;
+            $r->save();
 
             return redirect()->back()->with('status','saved');
         }
@@ -129,7 +131,6 @@ class CenterCtrl extends Controller
     public function update(Request $req)
     {
         $data = array(
-            'code' => $req->code,
             'desc' => $req->name,
             'provCode' => $req->province,
             'muncityCode' => $req->muncity
@@ -148,6 +149,7 @@ class CenterCtrl extends Controller
             $data['password'] = $req->password;
             $data['contact'] = $req->contact;
             $data['email'] = $req->email;
+            $data['owner'] = $req->owner;
 
             return redirect()->back()->with([
                 'status' => 'duplicateUsername','data' => $data]);
@@ -164,6 +166,7 @@ class CenterCtrl extends Controller
             $data['password'] = $req->password;
             $data['contact'] = $req->contact;
             $data['email'] = $req->email;
+            $data['owner'] = $req->owner;
 
             return redirect()->back()->with([
                 'status' => 'duplicateEntry','data' => $data]);
@@ -186,7 +189,7 @@ class CenterCtrl extends Controller
 
             Center::where('id',$req->currentID)
                 ->update([
-                    'code' => $req->code,
+                    'owner' => $req->owner,
                     'desc' => $req->name,
                     'limit' => $req->num,
                     'regCode' => $regCode,
@@ -211,5 +214,39 @@ class CenterCtrl extends Controller
             ->delete();
         return redirect('admin/center')->with([
             'status' => 'deleted','name' => $name]);
+    }
+
+    public function accept(Request $req)
+    {
+        $id = $req->currentID;
+
+        $q = new Payment();
+        $q->type = 'center';
+        $q->user_id = $id;
+        $q->payment = $req->amount;
+        $q->save();
+
+        User::where('id',$id)
+            ->update([
+                'status'=> 'registered'
+            ]);
+        $user = User::find($id);
+        $name = $user->fname.' '.$user->lname;
+        return redirect('admin/center')->with([
+            'status' => 'accepted','name' => $name]);
+    }
+
+    public function ignore(Request $req)
+    {
+        $id = $req->currentID;
+
+        $user = User::find($id);
+        $name = $user->fname.' '.$user->lname;
+        User::where('id',$id)
+            ->delete();
+        Center::where('user_id',$id)
+            ->delete();
+        return redirect('admin/center')->with([
+            'status' => 'ignored','name' => $name]);
     }
 }

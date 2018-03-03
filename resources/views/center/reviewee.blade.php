@@ -120,14 +120,13 @@
                                                 </a>
                                             </td>
                                             <td>
-                                                <?php
-                                                    $status = ($row->status==='pending') ? 'Pending' : 'Registered';
-                                                    $class = ($row->status==='pending') ? 'text-danger' : 'text-success';
-                                                ?>
-                                                <strong class="{{ $class }}">{{ $status }}</strong>
                                                 @if($row->status==='pending')
-                                                    <a class="btn btn-success btn-sm" href="#acceptModal" data-id="{{ $row->id }}" data-toggle="modal"> Accept</a>
-                                                    <a class="btn btn-danger btn-sm" href="#ignoreModal" data-id="{{ $row->id }}" data-toggle="modal"> Ignore</a>
+                                                    <a class="btn btn-success btn-sm" href="#acceptModal" data-id="{{ $row->id }}" data-toggle="modal">
+                                                        <i class="fa fa-money"></i> Pay</a>
+                                                    <a class="btn btn-danger btn-sm" href="#ignoreModal" data-id="{{ $row->id }}" data-toggle="modal">
+                                                        <i class="fa fa-trash"></i> Ignore</a>
+                                                @else
+                                                    <strong class="text-success">Registered</strong>
                                                 @endif
                                             </td>
                                         </tr>
@@ -176,7 +175,10 @@
     <form action="{{ url('center/reviewee/accept') }}" method="post">
         {{ csrf_field() }}
         <input type="hidden" id="currentID" name="currentID" />
-        <p class="text-success">Are you sure you want to accept this student?</p>
+        <div class="form-group">
+            <label>Amount</label>
+            <input class="form-control" type="text" required name="amount" placeholder="0.00" />
+        </div>
 @endsection
 
 @section('modal2')

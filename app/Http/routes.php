@@ -13,6 +13,7 @@
 
 Route::get('/', 'HomeCtrl@index');
 Route::post('/store', 'HomeCtrl@store');
+Route::post('/subscribe', 'HomeCtrl@subscribe');
 Route::get('/subjects/{center_id}', 'HomeCtrl@show_subjects');
 
 //PARAMETERS
@@ -67,6 +68,8 @@ Route::post('admin/center/save','admin\CenterCtrl@save');
 Route::get('admin/center/{id}','admin\CenterCtrl@edit');
 Route::post('admin/center/update','admin\CenterCtrl@update');
 Route::post('admin/center/delete','admin\CenterCtrl@delete');
+Route::post('admin/center/accept', 'admin\CenterCtrl@accept');
+Route::post('admin/center/ignore', 'admin\CenterCtrl@ignore');
 
 Route::get('admin/announcement','admin\AnnouncementCtrl@index');
 //..ADMIN PAGE

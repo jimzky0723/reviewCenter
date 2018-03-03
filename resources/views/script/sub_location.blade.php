@@ -4,40 +4,40 @@
     var barangay = "{{ isset($data['barangayCode']) ? $data['barangayCode']: '' }}";
 
     if(province){
-        filterProvince(province);
+        filterProvince2(province);
     }
 
     if(muncity)
     {
-        $('#muncity').val(muncity);
-        filterMuncity(muncity);
+        $('#muncity2').val(muncity);
+        filterMuncity2(muncity);
     }
 
     if(barangay)
     {
-        $('#barangay').val(barangay);
+        $('#barangay2').val(barangay);
     }
 
     $('#province2').on('change',function(){
         $('.loading').show();
         var provCode = $(this).val();
-        filterProvince(provCode);
+        filterProvince2(provCode);
     });
 
     $('#muncity2').on('change',function(){
         $('.loading').show();
         var muncityCode = $(this).val();
-        filterMuncity(muncityCode);
+        filterMuncity2(muncityCode);
     });
 
-    function filterProvince(provCode)
+    function filterProvince2(provCode)
     {
         $('#muncity2').empty()
             .append($('<option>', {
                 value: "",
                 text : "Select Municipality / City..."
             }));
-        var data = getMuncity(provCode);
+        var data = getMuncity2(provCode);
         jQuery.each(data, function(i,val){
             $('#muncity2').append($('<option>', {
                 value: val.muncityCode,
@@ -52,14 +52,14 @@
             }));
     }
 
-    function filterMuncity(muncityCode)
+    function filterMuncity2(muncityCode)
     {
         $('#barangay2').empty()
             .append($('<option>', {
                 value: "",
                 text : "Select Barangay..."
             }));
-        var data = getBarangay(muncityCode);
+        var data = getBarangay2(muncityCode);
         jQuery.each(data, function(i,val){
             $('#barangay2').append($('<option>', {
                 value: val.code,
@@ -69,7 +69,7 @@
         });
     }
 
-    function getMuncity(provCode)
+    function getMuncity2(provCode)
     {
         var url = "{{ url('location/muncity') }}";
         var tmp;
@@ -86,7 +86,7 @@
 
     }
 
-    function getBarangay(muncityCode)
+    function getBarangay2(muncityCode)
     {
         var url = "{{ url('location/barangay') }}";
         var tmp;

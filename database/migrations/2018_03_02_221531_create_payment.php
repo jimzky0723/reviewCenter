@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAnnouncement extends Migration
+class CreatePayment extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,11 @@ class CreateAnnouncement extends Migration
      */
     public function up()
     {
-        Schema::create('announcement', function (Blueprint $table) {
+        Schema::create('payment', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('target');
+            $table->string('type');
             $table->integer('user_id');
-            $table->integer('center_id');
-            $table->integer('subject_id');
-            $table->text('content');
-            $table->date('date_created');
-            $table->integer('created_by');
+            $table->double('payment');
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ class CreateAnnouncement extends Migration
      */
     public function down()
     {
-        Schema::drop('announcement');
+        //
     }
 }

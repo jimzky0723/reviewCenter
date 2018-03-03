@@ -23,19 +23,31 @@
                         <legend>Basic Information</legend>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <input type="text" name="name" class="form-control" placeholder="Enter name of review center" required data-error="Please enter your firstname">
+                                <input type="text" name="name" class="form-control" placeholder="Name of review center" required>
                                 <div class="help-block with-errors"></div>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <input type="text" name="need" class="form-control" placeholder="No. of Reviewees Needed" required data-error="Please enter your middlename">
+                                <input type="text" name="need" class="form-control" placeholder="No. of Reviewees Needed" required>
                                 <div class="help-block with-errors"></div>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <input type="text" name="owner" class="form-control" placeholder="Name of Owner" required data-error="Please enter your lastname">
+                                <input type="text" name="owner" class="form-control" placeholder="Name of Owner" required>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input type="text" name="contact" class="form-control" placeholder="Contact" required>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input type="text" name="email" class="form-control" placeholder="Email" required>
                                 <div class="help-block with-errors"></div>
                             </div>
                         </div>

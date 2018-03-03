@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Center;
 use App\classDays;
 use App\Classes;
+use App\Grade;
 use App\Province;
 use App\Region;
 use App\Reviewee;
@@ -24,21 +25,36 @@ class HomeCtrl extends Controller
 
     public function index()
     {
-        $centers = Center::orderBy('code','asc')->get();
+        $centers = Center::select('center.*')
+            ->leftJoin('users','users.id','=','center.user_id')
+            ->where('users.status','registered')
+            ->orderBy('desc','asc')->get();
+
         $provinces = Province::orderBy('desc','asc')->get();
         $registered = Center::select('region.regCode','region.desc')
                 ->leftJoin('region','region.regCode','=','center.regCode')
+                ->leftJoin('users','users.id','=','center.user_id')
+                ->where('users.status','registered')
                 ->orderBy('region.desc','asc')
                 ->groupBy('center.regCode')
                 ->get();
         //dd($regions);
+        $satisfied = Grade::where('percentage','>=',75)
+                ->groupBy('student_id')
+                ->get();
+
         $data = array(
             'provinces' => Province::orderBy('desc','asc')->get()
         );
+
         return view('home',[
             'centers' => $centers,
             'provinces' =>$provinces,
-            'registered' => $registered
+            'registered' => $registered,
+            'countCenter' => count($centers),
+            'countInstructor' => User::where('level','instructor')->where('status','registered')->count(),
+            'countReviewee' => User::where('level','reviewee')->where('status','registered')->count(),
+            'countSatisfied' => count($satisfied)
         ]);
     }
 
@@ -76,14 +92,17 @@ class HomeCtrl extends Controller
         $user_id = User::where('username',$req->username)
                 ->first()
                 ->id;
-        foreach($req->subjects as $class_id){
-            $data[] =  [
-                'user_id' => $user_id,
-                'center_id' => $req->center,
-                'class_id' => $class_id
-            ];
+        if($req->subjects){
+            foreach($req->subjects as $class_id){
+                $data[] =  [
+                    'user_id' => $user_id,
+                    'center_id' => $req->center,
+                    'class_id' => $class_id
+                ];
+            }
+            Reviewee::insert($data);
         }
-        Reviewee::insert($data);
+
         return redirect()->back()->with('status','saved');
     }
 
@@ -124,5 +143,42 @@ class HomeCtrl extends Controller
             );
         }
         return $data;
+    }
+
+    public function subscribe(Request $req)
+    {
+
+        $regCode = Province::where('provCode',$req->province)
+            ->first()
+            ->regCode;
+
+        $q = new User();
+        $q->fname = $req->name;
+        $q->contact = $req->contact;
+        $q->email = $req->email;
+        $q->barangay_id = $req->barangay;
+        $q->muncity_id = $req->muncity;
+        $q->province_id = $req->province;
+        $q->region_id = $regCode;
+        $q->username = $req->username;
+        $q->password = bcrypt($req->password);
+        $q->level = 'center';
+        $q->status = 'pending';
+        $q->save();
+
+        $user_id = $q->id;
+
+        $r = new Center();
+        $r->desc = $req->name;
+        $r->user_id = $user_id;
+        $r->owner = $req->owner;
+        $r->limit = $req->need;
+        $r->regCode = $regCode;
+        $r->provCode = $req->province;
+        $r->muncityCode = $req->muncity;
+        $r->barangayCode = $req->barangay;
+        $r->save();
+
+        return redirect()->back()->with('status','saved');
     }
 }

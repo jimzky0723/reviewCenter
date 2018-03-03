@@ -5,7 +5,7 @@
     $data = session('data');
 
     if(!$data){
-        $data['code'] = $center->code;
+        $data['owner'] = $center->owner;
         $data['desc'] = $center->desc;
         $data['num'] = $center->limit;
         $data['username'] = $center->username;
@@ -54,17 +54,38 @@
                                 <input type="hidden" name="currentID" value="{{ $center->id }}" />
                                 <input type="hidden" name="userID" value="{{ $center->user_id }}" />
                                 <div class="item form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="code">Code <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input autocomplete="off" id="code" class="form-control col-md-7 col-xs-12" value="{{ $data['code'] }}" name="code" required="required" type="text">
-                                    </div>
-                                </div>
-                                <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name of Review Center <span class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <input autocomplete="off" type="text" id="name" name="name" value="{{ $data['desc'] }}" required="required" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="max">Reviewers Needed <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="number" id="num" value="{{ ($data['num']) ? $data['num']: 1 }}" name="num" min="1" required="required" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="code">Name of Owner <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input autocomplete="off" id="owner" class="form-control col-md-7 col-xs-12" value="{{ $data['owner'] }}" name="owner" required="required" type="text">
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="contact">Contact <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input id="contact" value="{{ $data['contact'] }}" class="form-control col-md-7 col-xs-12" name="contact" required="required" type="text">
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Email <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="email" value="{{ $data['email'] }}" id="email" name="email" required="required" class="form-control col-md-7 col-xs-12">
                                     </div>
                                 </div>
                                 <hr />
@@ -103,13 +124,7 @@
                                     </div>
                                 </div>
                                 <hr />
-                                <div class="item form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="max">Reviewers Needed <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="number" id="num" value="{{ ($data['num']) ? $data['num']: 1 }}" name="num" min="1" required="required" class="form-control col-md-7 col-xs-12">
-                                    </div>
-                                </div>
+
                                 <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="username">Username<span class="required">*</span>
                                     </label>
@@ -124,21 +139,6 @@
                                         <input id="password" placeholder="Password Unchanged..." class="form-control col-md-7 col-xs-12" name="password" type="password">
                                     </div>
                                 </div>
-                                <div class="item form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="contact">Contact <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input id="contact" value="{{ $data['contact'] }}" class="form-control col-md-7 col-xs-12" name="contact" required="required" type="text">
-                                    </div>
-                                </div>
-                                <div class="item form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Email <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="email" value="{{ $data['email'] }}" id="email" name="email" required="required" class="form-control col-md-7 col-xs-12">
-                                    </div>
-                                </div>
-
                                 <div class="ln_solid"></div>
                                 <div class="form-group">
                                     <div class="col-md-6 col-md-offset-3">
