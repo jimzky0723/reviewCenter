@@ -18,8 +18,8 @@ class CreateAnnouncement extends Migration
             $table->integer('user_id');
             $table->integer('center_id');
             $table->integer('subject_id');
+            $table->string('title');
             $table->text('content');
-            $table->date('date_created');
             $table->integer('created_by');
             $table->timestamps();
         });

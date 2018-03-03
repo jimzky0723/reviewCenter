@@ -4,16 +4,12 @@
         <br />
         <h3>Main Menu</h3>
         <ul class="nav side-menu">
-            <li><a href="{{ asset('reviewee/home') }}"><i class="fa fa-home"></i> Dashboard</a></li>
             <?php
-                $count = \App\Http\Controllers\reviewee\AnnouncementCtrl::countAnnoucement();
-                $less = \App\Http\Controllers\reviewee\AnnouncementCtrl::countAnnouncementStatus();
-                $count = $count - $less;
+                $count = \App\Http\Controllers\reviewee\HomeCtrl::countAnnouncement();
             ?>
-            <li>
-                <a href="{{ asset('reviewee/announcement') }}"><i class="fa fa-bullhorn"></i> Announcements
+            <li><a href="{{ asset('reviewee/home') }}"><i class="fa fa-home"></i> Dashboard
                 @if($count>0)
-                    <span class="label_announcement label label-success pull-right">{{ $count }} New</span>
+                    <span class="badge pull-right">{{ $count }} New</span>
                 @endif
                 </a>
             </li>

@@ -3,6 +3,7 @@
     <?php
     $status = session('status');
     $data = session('data');
+
     ?>
     <div class="right_col" role="main">
         <div class="">
@@ -17,6 +18,13 @@
                     <strong>1 announcement added!</strong>
                 </div>
             @endif
+            @if($status === 'updated')
+                <div class="alert alert-success alert-dismissible fade in" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                    </button>
+                    <strong>Successfully updated!</strong>
+                </div>
+            @endif
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
@@ -25,19 +33,35 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <form enctype="multipart/form-data" class="form-horizontal form-label-left form-submit" novalidate action="{{ url('instructor/announcement/store') }}" method="post">
+                            <?php
+                                if($type=='add')
+                                {
+                                    $link = url('admin/announcement/store');
+                                }else{
+                                    $link = url('admin/announcement/update');
+                                }
+                            ?>
+                            <form class="form-horizontal form-label-left form-submit" novalidate action="{{ $link }}" method="post">
                                 {{ csrf_field() }}
+                                <input type="hidden" name="currentID" value="@if($record){{ $record->id }}@endif" />
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Header / Title <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input autocomplete="off" type="text" name="title" value="@if($record){{ $record->title }}@endif" required="required" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
                                 <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Content <span class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <textarea required="required" name="contents" id="descr" class="ckeditor" style="display:none;"></textarea>
+                                        <textarea required="required" name="contents" class="ckeditor" style="display:none;">@if($record){{ $record->content }}@endif</textarea>
                                     </div>
                                 </div>
                                 <div class="ln_solid"></div>
                                 <div class="form-group">
                                     <div class="col-md-6 col-md-offset-3">
-                                        <a href="{{ url('instructor/announcement') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Back</a>
+                                        <a href="{{ url('admin/announcement') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Back</a>
                                         <button type="submit" class="btn btn-success"><i class="fa fa-send"></i> Submit</button>
                                     </div>
                                 </div>
@@ -51,6 +75,7 @@
 @endsection
 
 @section('js')
+    @include('script.select2')
     <script src="{{ asset('public/panel') }}/vendors/validator/validator.js"></script>
     <script src="{{ asset('public/panel') }}/vendors/ckeditor/ckeditor.js"></script>
     <script>

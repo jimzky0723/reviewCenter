@@ -116,7 +116,6 @@ class QuizCtrl extends Controller
         $q->target = 'reviewee';
         $q->user_id = $student_id;
         $q->content = $content;
-        $q->date_created = date('Y-m-d');
         $q->center_id = $user->center_id;
 
         $q->save();
@@ -141,7 +140,6 @@ class QuizCtrl extends Controller
             $q->target = 'reviewee';
             $q->user_id = $student_id;
             $q->content = $content;
-            $q->date_created = date('Y-m-d');
             $q->center_id = $user->center_id;
             $q->save();
         }

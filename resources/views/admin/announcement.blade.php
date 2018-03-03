@@ -12,9 +12,7 @@
         .table tr td {
             vertical-align: middle !important;
         }
-        .alert-default a {
-            color: red;
-        }
+
         .content {
             font-size:1.4em;
         }
@@ -32,7 +30,7 @@
                 <div class="alert alert-success alert-dismissible fade in" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
                     </button>
-                    <strong>{{ $name }} is successfully deleted!</strong>
+                    <strong>Successfully deleted!</strong>
                 </div>
             @endif
             <div class="row">
@@ -50,24 +48,16 @@
                             @if(count($record))
                                 @foreach($record as $row)
                                     <?php
-                                    $user = Session::get('access');
-                                    $check = \App\AnnoucementStatus::where('announcement_id',$row->id)
-                                        ->where('user_id',$user->id)
-                                        ->first();
-                                    $class = 'alert-success';
-                                    if($check){
-                                        $class = 'alert-default';
-                                    }
+                                    $class = 'alert-default';
                                     ?>
                                     <div class="alert {{ $class }} alert-dismissible fade in" role="alert">
-                                        <strong><h3>{{ date('M d, Y',strtotime($row->date_created)) }}
-                                                @if(!$check)
-
-                                                    <button type="button" class="read pull-right btn btn-sm btn-default" data-id="{{ $row->id }}">
-                                                        <i class="fa fa-envelope"></i> Mark As Read
-                                                    </button>
-
-                                                @endif
+                                        <strong><h3>{{ $row->title }} <small class="text-success">{{ date('M d, Y h:i A',strtotime($row->updated_at)) }}</small>
+                                                <button type="button" class="remove pull-right btn btn-sm btn-danger" data-target="#deleteModal" data-toggle="modal" data-id="{{ $row->id }}">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                                <a href="{{ url('admin/announcement/edit/'.$row->id) }}" class="edit pull-right btn btn-sm btn-info">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
                                             </h3></strong>
 
                                         <hr />
@@ -91,8 +81,19 @@
     </div>
 @endsection
 
+@section('modal')
+    <form action="{{ url('admin/announcement/delete') }}" method="post">
+        {{ csrf_field() }}
+        <input type="hidden" name="currentID" id="announcement_id"/>
+        <p class="text-danger">Are you sure you want to delete this announcement?</p>
+@endsection
 @section('js')
     <script>
+        $('.remove').on('click',function(){
+            var id = $(this).data('id');
+            $('#announcement_id').val(id);
+        });
+
         var link = "{{ url('reviewee/announcement/seen') }}";
         $('.read').on('click',function(){
             var id = $(this).data('id');

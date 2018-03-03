@@ -4,7 +4,14 @@
         <br />
         <h3>Main Menu</h3>
         <ul class="nav side-menu">
-            <li><a href="{{ asset('instructor/home') }}"><i class="fa fa-home"></i> Dashboard</a></li>
+            <?php
+                $count = \App\Http\Controllers\instructor\HomeCtrl::countAnnouncement();
+            ?>
+            <li><a href="{{ asset('instructor/home') }}"><i class="fa fa-home"></i> Dashboard
+                @if($count>0)
+                    <span class="badge pull-right">{{ $count }} New</span>
+                @endif
+                </a></li>
             <li><a href="{{ asset('instructor/announcement') }}"><i class="fa fa-bullhorn"></i> Announcements</a></li>
             <li><a href="{{ asset('instructor/class') }}"><i class="fa fa-book"></i> My Subjects</a></li>
         </ul>

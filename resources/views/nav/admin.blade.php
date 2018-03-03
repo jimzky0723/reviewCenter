@@ -7,10 +7,11 @@
             <li><a href="{{ asset('admin/home') }}"><i class="fa fa-home"></i> Dashboard</a></li>
             <li><a href="{{ asset('admin/center') }}"><i class="fa fa-building"></i> Review Centers</a></li>
             <li><a href="{{ asset('admin/announcement') }}"><i class="fa fa-bullhorn"></i> Announcements</a></li>
+            <li><a href="{{ asset('admin/payment') }}"><i class="fa fa-money"></i> Payment Status</a></li>
         </ul>
     </div>
     <div class="menu_section">
-        <h3>Instructors and Reviewees</h3>
+        <h3>Instructors and Students</h3>
         <ul class="nav side-menu">
             <li><a href="#"><i class="fa fa-user"></i> Instructors</a></li>
             <li><a href="#"><i class="fa fa-group"></i> Reviewee</a></li>

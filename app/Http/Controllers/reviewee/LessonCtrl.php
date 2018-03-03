@@ -106,7 +106,6 @@ class LessonCtrl extends Controller
         $q->target = 'reviewee';
         $q->user_id = $user->id;
         $q->content = $content;
-        $q->date_created = date('Y-m-d');
         $q->center_id = $user->center_id;
         $q->save();
         return redirect('reviewee/class/'.$class_id)->with('status','finish');

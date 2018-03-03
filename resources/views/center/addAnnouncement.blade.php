@@ -15,7 +15,7 @@
                 <div class="alert alert-success alert-dismissible fade in" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
                     </button>
-                    <strong>An announcement added!</strong>
+                    <strong>1 announcement added!</strong>
                 </div>
             @endif
             @if($status === 'updated')
@@ -36,27 +36,14 @@
                             <?php
                             if($type=='add')
                             {
-                                $link = url('instructor/announcement/store');
+                                $link = url('center/announcement/store');
                             }else{
-                                $link = url('instructor/announcement/update');
+                                $link = url('center/announcement/update');
                             }
                             ?>
                             <form class="form-horizontal form-label-left form-submit" novalidate action="{{ $link }}" method="post">
                                 {{ csrf_field() }}
                                 <input type="hidden" name="currentID" value="@if($record){{ $record->id }}@endif" />
-                                @if(!$record)
-                                <div class="item form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Target Subject <span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <select name="targets[]" class="form-control select2" multiple="multiple" required>
-                                            @foreach($class as $row)
-                                            <option value="{{$row->id}}">{{ $row->code }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                @endif
                                 <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Header / Title <span class="required">*</span>
                                     </label>
@@ -74,7 +61,7 @@
                                 <div class="ln_solid"></div>
                                 <div class="form-group">
                                     <div class="col-md-6 col-md-offset-3">
-                                        <a href="{{ url('instructor/announcement') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Back</a>
+                                        <a href="{{ url('center/announcement') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Back</a>
                                         <button type="submit" class="btn btn-success"><i class="fa fa-send"></i> Submit</button>
                                     </div>
                                 </div>

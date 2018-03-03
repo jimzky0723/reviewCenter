@@ -72,10 +72,17 @@ Route::post('admin/center/accept', 'admin\CenterCtrl@accept');
 Route::post('admin/center/ignore', 'admin\CenterCtrl@ignore');
 
 Route::get('admin/announcement','admin\AnnouncementCtrl@index');
+Route::get('admin/announcement/add','admin\AnnouncementCtrl@create');
+Route::get('admin/announcement/edit/{id}','admin\AnnouncementCtrl@edit');
+Route::post('admin/announcement/store','admin\AnnouncementCtrl@store');
+Route::post('admin/announcement/update','admin\AnnouncementCtrl@update');
+Route::post('admin/announcement/delete','admin\AnnouncementCtrl@delete
+');
 //..ADMIN PAGE
 
 //CENTER PAGE
 Route::get('center/home', 'center\HomeCtrl@index');
+Route::get('center/home/read/{announcement_id}', 'center\HomeCtrl@read');
 
 Route::get('center/instructor', 'center\InstructorCtrl@index');
 Route::get('center/instructor/add', 'center\InstructorCtrl@add');
@@ -96,10 +103,17 @@ Route::post('center/class/enroll/{id}', 'center\ClassCtrl@enrollReviewee');
 Route::post('center/class/remove/{id}', 'center\ClassCtrl@removeReviewee');
 
 Route::get('center/announcement','center\AnnouncementCtrl@index');
+Route::get('center/announcement/add','center\AnnouncementCtrl@create');
+Route::get('center/announcement/edit/{id}','center\AnnouncementCtrl@edit');
+Route::post('center/announcement/store','center\AnnouncementCtrl@store');
+Route::post('center/announcement/update','center\AnnouncementCtrl@update');
+Route::post('center/announcement/delete','center\AnnouncementCtrl@delete');
 //..CENTER PAGE
 
 //INSTRUCTOR PAGE
 Route::get('instructor/home','instructor\HomeCtrl@index');
+Route::get('instructor/home/read/{announcement_id}', 'instructor\HomeCtrl@read');
+
 Route::get('instructor/class','instructor\ClassCtrl@index');
 Route::get('instructor/reviewee/{id}','instructor\ClassCtrl@reviewee');
 Route::post('instructor/reviewee/search/{id}','instructor\ClassCtrl@searchReviewee');
@@ -136,11 +150,15 @@ Route::get('/instructor/question/{question_id}/show','instructor\QuestionCtrl@sh
 
 Route::get('instructor/announcement','instructor\AnnouncementCtrl@index');
 Route::get('instructor/announcement/add','instructor\AnnouncementCtrl@create');
+Route::get('instructor/announcement/edit/{id}','instructor\AnnouncementCtrl@edit');
 Route::post('instructor/announcement/store','instructor\AnnouncementCtrl@store');
+Route::post('instructor/announcement/update','instructor\AnnouncementCtrl@update');
+Route::post('instructor/announcement/delete','instructor\AnnouncementCtrl@delete');
 //...INSTRUCTOR PAGE
 
 //REVIEWEE PAGE
 Route::get('reviewee/home','reviewee\HomeCtrl@index');
+Route::get('reviewee/home/read/{announcement_id}', 'reviewee\HomeCtrl@read');
 
 Route::get('reviewee/class','reviewee\ClassCtrl@index');
 Route::get('reviewee/class/{class_id}','reviewee\ClassCtrl@show');

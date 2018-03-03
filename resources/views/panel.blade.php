@@ -44,6 +44,9 @@
         .alert-default {
             border: 1px solid #ccc;
         }
+        .badge {
+            background: #2fa597 !important;
+        }
     </style>
 </head>
 
