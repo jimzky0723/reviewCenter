@@ -18,11 +18,14 @@
                 </div>
 
                 <div class="title_right">
+                    <form action="{{ url('admin/center') }}" method="post">
+                        {{ csrf_field() }}
                     <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search for...">
+                            <input type="text" name="keyword" class="form-control" value="{{ Session::get('centerKeyword') }}" placeholder="Search for...">
                             <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">Go!</button>
+                      <button class="btn btn-default" type="submit">Go!</button>
+                    </form>
                     </span>
                         </div>
                     </div>
@@ -71,8 +74,7 @@
                                         <th>Location</th>
                                         <th>Contact</th>
                                         <th>Limit</th>
-                                        <th>Instructors</th>
-                                        <th>Students</th>
+                                        <th>Current<br/>Students</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
@@ -100,23 +102,22 @@
                                         </td>
                                         <td>{{ $center->limit }}</td>
                                         <?php
-                                            $no_instructor = \App\User::where('center_id',$center->id)
-                                                ->where('level','instructor')
-                                                ->count();
                                             $no_reviewee = \App\User::where('center_id',$center->id)
                                                 ->where('level','reviewee')
                                                 ->count();
+                                            $expired = date('M d, Y',strtotime($center->date_expired));
                                         ?>
-                                        <td>{{ $no_instructor }}</td>
+
                                         <td>{{ $no_reviewee }}</td>
                                         <td>
-                                            @if($user->status==='pending')
-                                                <a class="btn btn-success btn-sm" href="#acceptModal" data-id="{{ $user->id }}" data-toggle="modal">
+                                            @if($center->status==='inactive')
+                                                <a class="btn btn-success btn-sm" href="#acceptModal" data-month="{{ $center->no_month }}" data-id="{{ $user->id }}" data-toggle="modal">
                                                     <i class="fa fa-money"></i> Pay</a>
                                                 <a class="btn btn-danger btn-sm" href="#ignoreModal" data-id="{{ $user->id }}" data-toggle="modal">
                                                     <i class="fa fa-trash"></i> Remove</a>
                                             @else
-                                                <strong class="text-success">Registered</strong>
+                                                <strong class="text-success">Registered</strong><br />
+                                                <font class="text-danger">Expired on {{ $expired }}</font>
                                             @endif
                                         </td>
                                     </tr>
@@ -147,8 +148,13 @@
     <script>
         $('a[href="#acceptModal"]').on('click',function(){
             var id = $(this).data('id');
+            var no_month = $(this).data('month');
             var txt = $('#acceptModal').find('#currentID');
+            var valid = $('#acceptModal').find('select[name="no_month"]');
+
             txt.val(id);
+            valid.val(no_month);
+            console.log(no_month);
         });
     </script>
 
@@ -166,6 +172,16 @@
     <form action="{{ url('admin/center/accept') }}" method="post">
         {{ csrf_field() }}
         <input type="hidden" id="currentID" name="currentID" />
+        <div class="form-group">
+            <label>No. of Months</label>
+            <select name="no_month" class="form-control" required>
+                <option value="">Subscription validity...</option>
+                <option value="1">1 Month</option>
+                <option value="3">3 Months</option>
+                <option value="6">6 Months</option>
+                <option value="12">1 Year</option>
+            </select>
+        </div>
         <div class="form-group">
             <label>Amount</label>
             <input class="form-control" type="text" name="amount" required placeholder="0.00" />

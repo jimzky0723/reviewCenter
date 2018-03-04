@@ -110,15 +110,23 @@ class HomeCtrl extends Controller
     {
         $data = array();
         $date_now = date('Y-m-d');
-        $subjects = Classes::select('time_in','time_out','id','code',DB::raw('DATE_FORMAT(date_close,"%b %d, %Y") as date_close'))
+
+        $subjects = Classes::select('max','time_in','time_out','id','code',DB::raw('DATE_FORMAT(date_close,"%b %d, %Y") as date_close'))
                 ->where('center_id',$center_id)
                 ->where(function($q) use($date_now){
                     $q = $q->orwhere('date_close','>=',$date_now)
                             ->orwhere('date_close','=','0000-00-00');
                 })
+
                 ->orderBy('code','asc')
                 ->get();
         foreach($subjects as $row){
+            $count = Reviewee::where('class_id',$row->id)->count();
+            $check = $row->max - $count;
+            if($check<=0)
+            {
+                continue;
+            }
             $time = "$row->time_in - $row->time_out";
             $days = classDays::where('class_id',$row->id)->get();
             $tmp = array();
@@ -139,7 +147,8 @@ class HomeCtrl extends Controller
                 'code' => $row->code,
                 'date_close' => $row->date_close,
                 'time' => $time,
-                'days' => $days
+                'days' => $days,
+                'available' => $check
             );
         }
         return $data;
@@ -147,7 +156,6 @@ class HomeCtrl extends Controller
 
     public function subscribe(Request $req)
     {
-
         $regCode = Province::where('provCode',$req->province)
             ->first()
             ->regCode;
@@ -173,12 +181,21 @@ class HomeCtrl extends Controller
         $r->user_id = $user_id;
         $r->owner = $req->owner;
         $r->limit = $req->need;
+        $r->no_month = $req->no_month;
+        $r->status = 'inactive';
         $r->regCode = $regCode;
         $r->provCode = $req->province;
         $r->muncityCode = $req->muncity;
         $r->barangayCode = $req->barangay;
         $r->save();
 
-        return redirect()->back()->with('status','saved');
+        $center_id = $r->id;
+
+        User::where('id',$user_id)
+            ->update([
+                'center_id' => $center_id
+            ]);
+
+        return redirect()->back()->with('status','subscribed');
     }
 }

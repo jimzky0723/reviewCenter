@@ -23,12 +23,7 @@ class ClassCtrl extends Controller
 
     public function search(Request $req)
     {
-        if($req->keyword){
-            Session::put('searchClass',$req->keyword);
-        }else{
-            Session::forget('searchClass');
-        }
-
+        Session::put('searchClass',$req->keyword);
         return self::index();
     }
 
@@ -36,7 +31,7 @@ class ClassCtrl extends Controller
     {
         $center_id = Session::get('center');
         $keyword = Session::get('searchClass');
-        $data = Classes::select('classes.time_in','classes.time_out','classes.desc','classes.id','classes.code','classes.instructor_id','users.fname','users.lname','classes.date_open','classes.date_close')
+        $data = Classes::select('classes.max','classes.time_in','classes.time_out','classes.desc','classes.id','classes.code','classes.instructor_id','users.fname','users.lname','classes.date_open','classes.date_close')
             ->leftJoin('users','users.id','=','classes.instructor_id')
             ->where('users.center_id',$center_id);
         if($keyword){
@@ -109,6 +104,7 @@ class ClassCtrl extends Controller
         $q->instructor_id = $instructor_id;
         $q->code = $code;
         $q->desc = $request->desc;
+        $q->max = $request->max;
         $q->center_id = $center_id;
         $q->time_in = $request->time_in;
         $q->time_out = $request->time_out;
@@ -181,6 +177,7 @@ class ClassCtrl extends Controller
             ->update([
                 'instructor_id' => $request->instructor,
                 'code' => $request->code,
+                'max' => $request->max,
                 'date_open' => $date_open,
                 'date_close' => $date_close,
                 'desc' => $request->desc,
@@ -246,12 +243,22 @@ class ClassCtrl extends Controller
 
     public function enrollReviewee(Request $req, $id)
     {
-        $user_id = $req->user_id;
-        $q = new Reviewee();
-        $q->user_id = $user_id;
-        $q->center_id = Session::get('center');
-        $q->class_id = $id;
-        $q->save();
+        $max = Classes::find($id)->max;
+        $min = Reviewee::where('class_id',$id)->count();
+        $total = $max-$min;
+        if($total>0)
+        {
+            $user_id = $req->user_id;
+            $q = new Reviewee();
+            $q->user_id = $user_id;
+            $q->center_id = Session::get('center');
+            $q->class_id = $id;
+            $q->save();
+            return 'saved';
+        }else{
+            return 'limit';
+        }
+
     }
 
     public function removeReviewee(Request $req, $id)

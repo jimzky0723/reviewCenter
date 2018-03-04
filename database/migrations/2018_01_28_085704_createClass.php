@@ -17,6 +17,7 @@ class CreateClass extends Migration
             $table->integer('instructor_id');
             $table->string('code');
             $table->text('desc');
+            $table->integer('limit');
             $table->integer('center_id');
             $table->date('date_open');
             $table->date('date_close');

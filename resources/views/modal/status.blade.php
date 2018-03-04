@@ -19,6 +19,8 @@
                 <div class="status-info text-danger">Oops! Username is already taken! Please try again.</div>
                 @elseif($status==='saved')
                     <div class="status-info text-success"><center>Successfully registered! Please pay the down payment to activate your account. Thank you!</center></div>
+                @elseif($status==='subscribed')
+                    <div class="status-info text-success"><center>Successfully subscribed! Please pay the modules to activate your account. Thank you!</center></div>
                 @endif
             </div>
             <div class="modal-footer">

@@ -41,6 +41,11 @@
                         btn.attr('disabled',false);
                         error = errorMsg('Your account is not yet activated!');
                         $('.username').siblings('.help-block').html(error);
+                    }else if(data==='inactive'){
+                        btn.html('LOGIN');
+                        btn.attr('disabled',false);
+                        error = errorMsg('Your review center is INACTIVE.');
+                        $('.username').siblings('.help-block').html(error);
                     }else{
                         btn.html('LOGIN');
                         btn.attr('disabled',false);

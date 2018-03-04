@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 
 class CenterCtrl extends Controller
 {
@@ -21,12 +22,24 @@ class CenterCtrl extends Controller
 
     public function index()
     {
-        $centers = Center::orderBy('desc','asc')
+        $keyword = Session::get('centerKeyword');
+        $centers = Center::select('center.*');
+
+        if($keyword){
+            $centers = $centers->where('desc','like',"%$keyword%");
+        }
+        $centers = $centers->orderBy('desc','asc')
             ->paginate(15);
         return view('admin.centers',[
             'centers' => $centers,
             'title' => 'List of Review Centers'
         ]);
+    }
+
+    public function search(Request $req)
+    {
+        Session::put('centerKeyword',$req->keyword);
+        return self::index();
     }
 
     public function add()
@@ -225,6 +238,17 @@ class CenterCtrl extends Controller
         $q->user_id = $id;
         $q->payment = $req->amount;
         $q->save();
+
+        $date_subscribed = date('Y-m-d');
+        $no = Center::where('user_id',$id)->first()->no_month;
+        $date_expired = date('Y-m-d',strtotime("+$no month"));
+
+        Center::where('user_id',$id)
+            ->update([
+                'date_subscribed' => $date_subscribed,
+                'date_expired'=> $date_expired,
+                'status' => 'active'
+            ]);
 
         User::where('id',$id)
             ->update([

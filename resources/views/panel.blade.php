@@ -1,6 +1,23 @@
 <?php
     $user = Session::get('access');
     $title = isset($title) ? $title : 'Panel | '.$user->level;
+    $img = 'admin.jpg';
+    if($user->level==='center'){
+        $img = 'center.jpg';
+    }else if($user->level==='instructor'){
+        if($user->sex=='Male'){
+            $img = 'teacher_2.jpg';
+        }else if($user->sex=='Female'){
+            $img = 'teacher_1.jpg';
+        }
+    }else if($user->level==='reviewee'){
+        if($user->sex=='Male'){
+            $img = 'student_2.jpg';
+        }else if($user->sex=='Female'){
+            $img = 'student_1.jpg';
+        }
+    }
+    $status = session('status');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -57,7 +74,7 @@
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="{{ asset('admin/home') }}" class="site_title"><img src="{{ url('public/img/small_logo.png') }}" width="35"> <span>PHERC</span></a>
+                    <a href="{{ asset('validate') }}" class="site_title"><img src="{{ url('public/img/small_logo.png') }}" width="35"> <span>PHERC</span></a>
                 </div>
 
                 <div class="clearfix"></div>
@@ -65,7 +82,7 @@
                 <!-- menu profile quick info -->
                 <div class="profile">
                     <div class="profile_pic">
-                        <img src="{{ asset('public/panel') }}/images/img.jpg" alt="..." class="img-circle profile_img">
+                        <img src="{{ asset('public/panel') }}/images/{{$img}}" alt="..." class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
                         <span>Welcome,</span>
@@ -109,7 +126,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <img src="{{ asset('public/panel') }}/images/img.jpg" alt="">{{ $user->fname }} {{ $user->lname }}
+                                <img src="{{ asset('public/panel') }}/images/{{ $img }}" alt="">{{ $user->fname }} {{ $user->lname }}
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -129,6 +146,10 @@
         @include('modal.delete')
         @include('modal.accept')
         @include('modal.deleteFile')
+
+        @if($user->level==='reviewee')
+            @include('modal.feedback')
+        @endif
         <!-- /page content -->
 
         <!-- footer content -->
@@ -154,5 +175,11 @@
 <!-- Custom Theme Scripts -->
 <script src="{{ asset('public/panel') }}/js/custom.min.js"></script>
 @yield('js')
+
+@if($status==='feedbackSent')
+<script>
+    $('#feedbackStatusModal').modal('show');
+</script>
+@endif
 </body>
 </html>

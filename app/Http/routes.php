@@ -63,6 +63,8 @@ Route::get('location/barangay/{muncityCode}','LocationCtrl@barangay');
 Route::get('admin/home', 'admin\HomeCtrl@index');
 
 Route::get('admin/center', 'admin\CenterCtrl@index');
+Route::post('admin/center', 'admin\CenterCtrl@search');
+
 Route::get('admin/center/add', 'admin\CenterCtrl@add');
 Route::post('admin/center/save','admin\CenterCtrl@save');
 Route::get('admin/center/{id}','admin\CenterCtrl@edit');
@@ -101,6 +103,7 @@ Route::resource('center/class', 'center\ClassCtrl');
 Route::get('center/class/enroll/{id}', 'center\ClassCtrl@enroll');
 Route::post('center/class/enroll/{id}', 'center\ClassCtrl@enrollReviewee');
 Route::post('center/class/remove/{id}', 'center\ClassCtrl@removeReviewee');
+Route::post('center/class/search', 'center\ClassCtrl@search');
 
 Route::get('center/announcement','center\AnnouncementCtrl@index');
 Route::get('center/announcement/add','center\AnnouncementCtrl@create');
@@ -183,5 +186,7 @@ Route::post('reviewee/quiz/store/answer/','reviewee\QuizCtrl@answer');
 
 Route::get('reviewee/announcement','reviewee\AnnouncementCtrl@index');
 Route::get('reviewee/announcement/seen/{id}','reviewee\AnnouncementCtrl@seen');
+
+Route::post('reviewee/feedback/store','reviewee\FeedbackCtrl@store');
 //..REVIEWEE PAGE
 

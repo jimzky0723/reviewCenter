@@ -49,6 +49,13 @@
                                     </div>
                                 </div>
                                 <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Limit <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="number" min="1" value="{{ $record->max }}" name="max" class="form-control col-md-7 col-xs-12" required="required">
+                                    </div>
+                                </div>
+                                <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="province">Province <span class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
@@ -102,16 +109,40 @@
                                         </select>
                                     </div>
                                 </div>
+
                                 <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Time Open <span class="required">*</span>
                                     </label>
                                     <div class="col-md-3 col-sm-3 col-xs-6">
-                                        <input name="time_in" value="{{ $record->time_in }}" id="time_in" class="timepicker form-control col-md-7 col-xs-12" type="text">
+                                        <select name="time_in" class="time_in form-control col-md-7 col-xs-12" type="text">
+                                            @for($i=7;$i<=18;$i++)
+                                                <?php
+                                                $date = date('M d, Y '.$i.':00');
+                                                $time = date('h:i A',strtotime($date));
+                                                $date = date('M d, Y '.$i.':30');
+                                                $time2 = date('h:i A',strtotime($date));
+                                                ?>
+                                                <option {{($time==$record->time_in) ? 'selected': '' }}>{{ $time }}</option>
+                                                <option {{($time2==$record->time_in) ? 'selected': '' }}>{{ $time2 }}</option>
+                                            @endfor
+                                        </select>
                                     </div>
                                     <div class="col-md-3 col-sm-3 col-xs-6">
-                                        <input name="time_out" value="{{ $record->time_out }}" id="time_out" class="timepicker form-control col-md-7 col-xs-12" type="text">
+                                        <select name="time_out" class="time_out form-control col-md-7 col-xs-12" type="text">
+                                            @for($i=7;$i<=18;$i++)
+                                                <?php
+                                                $date = date('M d, Y '.$i.':00');
+                                                $time = date('h:i A',strtotime($date));
+                                                $date = date('M d, Y '.$i.':30');
+                                                $time2 = date('h:i A',strtotime($date));
+                                                ?>
+                                                    <option {{($time==$record->time_out) ? 'selected': '' }}>{{ $time }}</option>
+                                                    <option {{($time2==$record->time_out) ? 'selected': '' }}>{{ $time2 }}</option>
+                                            @endfor
+                                        </select>
                                     </div>
                                 </div>
+
                                 <div class="ln_solid"></div>
                                 <div class="form-group">
                                     <div class="col-md-6 col-md-offset-3">
@@ -138,31 +169,46 @@
     @include('script.select2')
     @include('script.daterange')
     <script>
-        var time_in = parseInt("{{ $record->time_in }}");
-        var time_out = parseInt("{{ $record->time_out }}");
-        $('#time_in').timepicker({
-            timeFormat: 'h:mm p',
-            interval: 30,
-            minTime: '7',
-            maxTime: '6:00pm',
-            defaultTime: time_in,
-            startTime: '07:00',
-            dynamic: false,
-            dropdown: true,
-            scrollbar: true
-        });
+        var time_in = "{{ $record->time_in }}";
+        var time_out = "{{ $record->time_out }}";
+        if(time_in){
+            changeTime(parseInt(time_in)+1,time_out);
+        }
+        $('.time_in').on('change', function() {
+            var time = parseInt(this.value)+1;
+            changeTime(time,'');
+        })
 
-        $('#time_out').timepicker({
-            timeFormat: 'h:mm p',
-            interval: 30,
-            minTime: '7',
-            maxTime: '6:00pm',
-            defaultTime: time_out,
-            startTime: '07:00',
-            dynamic: false,
-            dropdown: true,
-            scrollbar: true
-        });
+        function changeTime(time,time_out)
+        {
+            var a = 'AM';
+            var tmp ='';
+            var content = '';
+            for(time;time<=18;time++)
+            {
+                tmp = time;
+                if(time>11){
+                    a = 'PM';
+                }
+                if(time>12){
+                    tmp = time-12;
+                }
+                var time1 = tmp+':00 '+a;
+                var time2 = tmp+':30 '+a;
+                if(!time_out)
+                {
+                    time_out = tmp;
+                    if(time_out>12){
+                        time_out = time_out-12;
+                    }
+                    time_out = time_out+':00 '+a;
+                }
+                content += '<option>'+time1+'</option>'
+                content += '<option>'+time2+'</option>'
+            }
+            console.log(time_out);
+            $('.time_out').html(content).val(time_out);
+        }
     </script>
     <script src="{{ asset('public/panel') }}/vendors/validator/validator.js"></script>
     <script>

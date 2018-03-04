@@ -30,7 +30,9 @@ class HomeCtrl extends Controller
             ->where('announcement.center_id',$user->center_id)
             ->where('target','reviewee')
             ->orderBy('updated_at','desc')
+            ->groupBy('announcement.id')
             ->paginate(10);
+
         return view('reviewee.home',[
             'title' => 'Welcome '.$user->fname,
             'countAnnouncement' => self::countAnnouncement(),
@@ -48,6 +50,7 @@ class HomeCtrl extends Controller
             })
             ->where('announcement.center_id',$user->center_id)
             ->where('target','reviewee')
+            ->groupBy('announcement.id')
             ->count();
         $y = AnnoucementStatus::where('user_id',$user->id)->count();
         $count = $x - $y;

@@ -21,6 +21,10 @@ class Center extends Migration
             $table->string('lat');
             $table->string('long');
             $table->integer('limit');
+            $table->integer('no_month');
+            $table->date('date_subscribed');
+            $table->date('date_expired');
+            $table->string('status');
             $table->integer('regCode');
             $table->integer('provCode');
             $table->integer('muncityCode');

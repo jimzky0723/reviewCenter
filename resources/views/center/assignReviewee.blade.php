@@ -47,7 +47,11 @@
                                 Enroll Student:<small class="text-strong text-primary">{{ $className }}</small></h2>
                             <div class="clearfix"></div>
                         </div>
+                        <div class="alert alert-danger hide show_limit">
+                            <i class="fa fa-warning"></i> Oops! This subject reach the max limit of students.
+                        </div>
                         <div class="x_content">
+
                             <div class="" role="tabpanel" data-example-id="togglable-tabs">
                                 <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
                                     <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Current Students</a>

@@ -31,7 +31,7 @@
 
                 <a href="{{ asset('center/reviewee') }}"><i class="fa fa-group"></i> Students
                     @if($users>0)
-                        <span class="label label-success pull-right">{{ $users }} Pending</span>
+                        <span class="badge pull-right">{{ $users }} Pending</span>
                     @endif
                 </a>
             </li>

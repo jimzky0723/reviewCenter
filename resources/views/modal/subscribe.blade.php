@@ -51,6 +51,18 @@
                                 <div class="help-block with-errors"></div>
                             </div>
                         </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <select name="no_month" class="form-control" required>
+                                    <option value="">Subscription validity...</option>
+                                    <option value="1">1 Month</option>
+                                    <option value="3">3 Months</option>
+                                    <option value="6">6 Months</option>
+                                    <option value="12">1 Year</option>
+                                </select>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
                     </fieldset>
 
                     <fieldset>

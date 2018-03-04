@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePayment extends Migration
+class CreateFeedback extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,11 @@ class CreatePayment extends Migration
      */
     public function up()
     {
-        Schema::create('payment', function (Blueprint $table) {
+        Schema::create('feedback', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('type');
             $table->integer('user_id');
-            $table->double('payment');
+            $table->integer('satisfaction');
+            $table->text('contents');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreatePayment extends Migration
      */
     public function down()
     {
-        Schema::drop('payment');
+        Schema::drop('feedback');
     }
 }

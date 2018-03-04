@@ -84,6 +84,7 @@
                                         <th>Name</th>
                                         <th>Address / Contact</th>
                                         <th># of Subjects</th>
+                                        <th>Payment Status</th>
                                         <th>Status</th>
                                     </tr>
                                     </thead>
@@ -118,6 +119,15 @@
                                                 <a href="#" class="btn btn-warning btn-sm">
                                                     <i class="fa fa-book"></i> {{ $count_subj }}
                                                 </a>
+                                            </td>
+                                            <td>
+                                                <?php
+                                                    $payment = \App\Payment::where('user_id',$row->id)
+                                                        ->sum('payment');
+                                                ?>
+                                                    <a href="#" class="btn btn-info btn-sm">
+                                                        <i class="fa fa-money"></i> {{ number_format($payment) }}
+                                                    </a>
                                             </td>
                                             <td>
                                                 @if($row->status==='pending')

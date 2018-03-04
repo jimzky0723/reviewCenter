@@ -13,10 +13,10 @@
                         content += '<ul>';
                         $.each(data, function(key,val){
                             console.log(val);
-                            var available = 'Open until '+val.date_close;
-                            if(val.date_close==null)
+                            var available = val.available+' slot available!';
+                            if(val.available>1)
                             {
-                                available = 'Always open';
+                                available = val.available+' slots available!';
                             }
                             content += '<li><label class="input text-success"> ' +
                                 '<input type="checkbox" name="subjects[]" value="'+val.id+'"> ' + val.code +

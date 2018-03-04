@@ -72,6 +72,7 @@
                                         <th>Available Days</th>
                                         <th>Instructor</th>
                                         <th>Date Range</th>
+                                        <th>Limit</th>
                                         <th>Students</th>
                                     </tr>
                                     </thead>
@@ -116,6 +117,9 @@
                                                 {{ date('M d, Y',strtotime($row->date_open)) }} -
                                                 {{ date('M d, Y',strtotime($row->date_close)) }}
                                             @endif
+                                        </td>
+                                        <td>
+                                            {{ $row->max }}
                                         </td>
                                         <td>
                                             <a href="{{ url('center/class/enroll/'.$row->id) }}">

@@ -12,12 +12,21 @@
                 _token: "{{ csrf_token() }}"
             },
             success: function(data){
-                console.log(data);
-                var interval = setTimeout(function(){
+                if(data=='saved')
+                {
+                    var interval = setTimeout(function(){
+                        $('.loading').hide();
+                        form.parent().parent().fadeOut(300);
+                        clearInterval(interval);
+                    },500);
+                }else{
                     $('.loading').hide();
-                    form.parent().parent().fadeOut(300);
-                    clearInterval(interval);
-                },500);
+                    $('.show_limit').removeClass('hide');
+                    var interval = setTimeout(function(){
+                        $('.show_limit').addClass('hide');
+                    },5000);
+                }
+
 
             }
         });

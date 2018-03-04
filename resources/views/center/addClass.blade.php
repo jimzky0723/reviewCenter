@@ -49,6 +49,13 @@
                                     </div>
                                 </div>
                                 <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Limit <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="number" min="1" value="1" name="max" class="form-control col-md-7 col-xs-12" required="required">
+                                    </div>
+                                </div>
+                                <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="instructor">Instructor <span class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
@@ -90,10 +97,32 @@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Time Open <span class="required">*</span>
                                     </label>
                                     <div class="col-md-3 col-sm-3 col-xs-6">
-                                        <input name="time_in" id="time_in" class="timepicker form-control col-md-7 col-xs-12" type="text">
+                                        <select name="time_in" class="time_in form-control col-md-7 col-xs-12" type="text">
+                                            @for($i=7;$i<=18;$i++)
+                                            <?php
+                                                $date = date('M d, Y '.$i.':00');
+                                                $time = date('h:i A',strtotime($date));
+                                                $date = date('M d, Y '.$i.':30');
+                                                $time2 = date('h:i A',strtotime($date));
+                                            ?>
+                                            <option>{{ $time }}</option>
+                                            <option>{{ $time2 }}</option>
+                                            @endfor
+                                        </select>
                                     </div>
                                     <div class="col-md-3 col-sm-3 col-xs-6">
-                                        <input name="time_out" id="time_out" class="timepicker form-control col-md-7 col-xs-12" type="text">
+                                        <select name="time_out" class="time_out form-control col-md-7 col-xs-12" type="text">
+                                            @for($i=7;$i<=18;$i++)
+                                                <?php
+                                                $date = date('M d, Y '.$i.':00');
+                                                $time = date('h:i A',strtotime($date));
+                                                $date = date('M d, Y '.$i.':30');
+                                                $time2 = date('h:i A',strtotime($date));
+                                                ?>
+                                                <option>{{ $time }}</option>
+                                                <option>{{ $time2 }}</option>
+                                            @endfor
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="ln_solid"></div>
@@ -144,5 +173,29 @@
 
             return false;
         });
+    </script>
+    <script>
+        $('.time_in').on('change', function() {
+            var time = parseInt(this.value)+1;
+            var a = 'AM';
+            var tmp ='';
+            $('.time_out').empty();
+            var content = '';
+            for(time;time<=18;time++)
+            {
+                tmp = time;
+                if(time>11){
+                    a = 'PM';
+                }
+                if(time>12){
+                    tmp = time-12;
+                }
+                var time1 = tmp+':00 '+a;
+                var time2 = tmp+':30 '+a;
+                content += '<option>'+time1+'</option>'
+                content += '<option>'+time2+'</option>'
+            }
+            $('.time_out').html(content);
+        })
     </script>
 @endsection
