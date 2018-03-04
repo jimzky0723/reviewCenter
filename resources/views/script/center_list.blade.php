@@ -12,17 +12,24 @@
                         $('.show_subjects').removeClass('hide');
                         content += '<ul>';
                         $.each(data, function(key,val){
-                            console.log(val);
-                            var available = val.available+' slot available!';
-                            if(val.available>1)
-                            {
-                                available = val.available+' slots available!';
+                            if(val.available==0){
+                                content += '<li><label class="input text-success"> ' +
+                                    '<input type="checkbox" disabled> ' + val.code +
+                                    '</label>' +
+                                    '<small> (<span class="text-primary">Close</span>)</small>' +
+                                    '</li>';
+                            }else{
+                                var available = val.available+' slot available!';
+                                if(val.available>1)
+                                {
+                                    available = val.available+' slots available!';
+                                }
+                                content += '<li><label class="input text-success"> ' +
+                                    '<input type="checkbox" name="subjects[]" value="'+val.id+'"> ' + val.code +
+                                    '</label>' +
+                                    '<small> (<span class="text-primary">'+val.days+', '+val.time+'</span>. '+available+') </small>' +
+                                    '</li>';
                             }
-                            content += '<li><label class="input text-success"> ' +
-                                '<input type="checkbox" name="subjects[]" value="'+val.id+'"> ' + val.code +
-                                '</label>' +
-                                '<small> (<span class="text-primary">'+val.days+', '+val.time+'</span>. '+available+') </small>' +
-                                '</li>'
                         });
                         content += '</ul>';
                         $('.list_subjects').html(content);

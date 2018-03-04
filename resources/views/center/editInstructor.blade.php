@@ -41,6 +41,16 @@
                                 {{ csrf_field() }}
                                 <input type="hidden" name="currentID" value="{{ $user->id }}" />
                                 <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fname">Status <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <select name="status" class="form-control" required>
+                                            <option {{ ($user->status==='registered') ? 'selected': '' }} value="registered">Active</option>
+                                            <option {{ ($user->status==='pending') ? 'selected': '' }} value="pending">Inactive</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fname">First Name <span class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">

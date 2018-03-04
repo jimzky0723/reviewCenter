@@ -142,7 +142,8 @@ class InstructorCtrl extends Controller
             'province_id' => $req->province,
             'muncity_id' => $req->muncity,
             'barangay_id' => $req->barangay,
-            'region_id' => $region_id
+            'region_id' => $region_id,
+            'status' => $req->status
         );
         if($req->password)
         {

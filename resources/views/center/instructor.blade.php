@@ -71,6 +71,7 @@
                                         <th>Name</th>
                                         <th>Address / Contact</th>
                                         <th>Class</th>
+                                        <th>Status</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -99,10 +100,17 @@
                                         </td>
                                         <td>
                                             <ul style="margin-left: -25px;">
-                                                @foreach($classes as $row)
-                                                <li>{{ $row->code }}</li>
+                                                @foreach($classes as $r)
+                                                <li>{{ $r->code }}</li>
                                                 @endforeach
                                             </ul>
+                                        </td>
+                                        <td>
+                                            @if($row->status=='registered')
+                                                <font class="text-strong text-success">Registered</font>
+                                            @else
+                                                <font class="text-strong text-danger">Pending</font>
+                                            @endif
                                         </td>
                                     </tr>
                                     @endforeach

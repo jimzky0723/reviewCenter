@@ -61,12 +61,16 @@ class CenterCtrl extends Controller
                 'users.username',
                 'users.contact',
                 'users.email',
-                'users.id as user_id'
+                'users.id as user_id',
+                'center.status'
             )
             ->leftJoin('users','users.id','=','center.user_id')
             ->where('center.id',$id)
             ->first();
-        return view('admin.editCenter',['center'=>$center]);
+        return view('admin.editCenter',[
+            'center'=>$center,
+            'title' => 'Edit Center'
+        ]);
     }
 
     public function save(Request $req)
@@ -171,6 +175,7 @@ class CenterCtrl extends Controller
             $data['contact'] = $req->contact;
             $data['email'] = $req->email;
             $data['owner'] = $req->owner;
+            $data['status'] = $req->status;
 
             return redirect()->back()->with([
                 'status' => 'duplicateUsername','data' => $data]);
@@ -188,6 +193,7 @@ class CenterCtrl extends Controller
             $data['contact'] = $req->contact;
             $data['email'] = $req->email;
             $data['owner'] = $req->owner;
+            $data['status'] = $req->status;
 
             return redirect()->back()->with([
                 'status' => 'duplicateEntry','data' => $data]);
@@ -195,6 +201,12 @@ class CenterCtrl extends Controller
 
         if(!$check && !$validateCenter)
         {
+            $status = $req->status;
+            if($status==='active'){
+                $status = 'registered';
+            }else{
+                $status = 'pending';
+            }
             $password = isset($req->password) ? bcrypt($req->password) : User::find($req->userID)->password;
             User::where('id',$req->userID)
                 ->update([
@@ -205,7 +217,8 @@ class CenterCtrl extends Controller
                     'barangay_id' => $req->barangay,
                     'muncity_id' => $req->muncity,
                     'province_id' => $req->province,
-                    'region_id' => $regCode
+                    'region_id' => $regCode,
+                    'status' => $status
                 ]);
 
             Center::where('id',$req->currentID)
@@ -216,7 +229,8 @@ class CenterCtrl extends Controller
                     'regCode' => $regCode,
                     'provCode' => $req->province,
                     'muncityCode' => $req->muncity,
-                    'barangayCode' => $req->barangay
+                    'barangayCode' => $req->barangay,
+                    'status' => $req->status
                 ]);
 
             return redirect()->back()->with('status','saved');

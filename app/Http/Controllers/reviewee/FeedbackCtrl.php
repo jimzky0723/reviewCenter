@@ -22,6 +22,7 @@ class FeedbackCtrl extends Controller
         $user = Session::get('access');
         $q = new Feedback();
         $q->user_id = $user->id;
+        $q->type = 'feedback';
         $q->satisfaction = $req->satisfaction;
         $q->contents = $req->contents;
         $q->save();

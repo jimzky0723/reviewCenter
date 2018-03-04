@@ -14,6 +14,7 @@
         $data['provCode'] = $center->provCode;
         $data['muncityCode'] = $center->muncityCode;
         $data['barangayCode'] = $center->barangayCode;
+        $data['status'] = $center->status;
     }
     ?>
     <div class="right_col" role="main">
@@ -53,6 +54,16 @@
                                 {{ csrf_field() }}
                                 <input type="hidden" name="currentID" value="{{ $center->id }}" />
                                 <input type="hidden" name="userID" value="{{ $center->user_id }}" />
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fname">Status <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <select name="status" class="form-control" required>
+                                            <option {{ ($data['status']==='active') ? 'selected': '' }} value="active">Active</option>
+                                            <option {{ ($data['status']==='inactive') ? 'selected': '' }} value="inactive">Inactive</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name of Review Center <span class="required">*</span>
                                     </label>

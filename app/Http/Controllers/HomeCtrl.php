@@ -124,10 +124,10 @@ class HomeCtrl extends Controller
         foreach($subjects as $row){
             $count = Reviewee::where('class_id',$row->id)->count();
             $check = $row->max - $count;
-            if($check<=0)
-            {
-                continue;
-            }
+//            if($check<=0)
+//            {
+//                continue;
+//            }
             $time = "$row->time_in - $row->time_out";
             $days = classDays::where('class_id',$row->id)->get();
             $tmp = array();

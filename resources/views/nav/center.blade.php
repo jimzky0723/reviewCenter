@@ -18,16 +18,25 @@
     </div>
     <div class="menu_section">
         <h3>Instructors and Reviewees</h3>
+        <?php
+        $center_id = Session::get('center');
+        $users = \App\User::where('center_id',$center_id)
+            ->where('level','reviewee')
+            ->where('status','pending')
+            ->count();
+        $user2 = \App\User::where('center_id',$center_id)
+            ->where('level','instructor')
+            ->where('status','pending')
+            ->count();
+        ?>
         <ul class="nav side-menu">
-            <li><a href="{{ asset('center/instructor') }}"><i class="fa fa-user"></i> Instructors</a></li>
+            <li><a href="{{ asset('center/instructor') }}"><i class="fa fa-user"></i> Instructors
+                    @if($user2>0)
+                        <span class="badge pull-right">{{ $user2 }} Pending</span>
+                    @endif
+                </a></li>
             <li>
-                <?php
-                    $center_id = Session::get('center');
-                    $users = \App\User::where('center_id',$center_id)
-                        ->where('level','reviewee')
-                        ->where('status','pending')
-                        ->count();
-                ?>
+
 
                 <a href="{{ asset('center/reviewee') }}"><i class="fa fa-group"></i> Students
                     @if($users>0)
