@@ -117,6 +117,45 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Testimonials</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <div class="dashboard-widget-content">
+
+                                <ul class="list-unstyled timeline widget">
+                                    @foreach($testimony as $row)
+                                        <li>
+                                            <div class="block">
+                                                <div class="block_content">
+                                                    <h2 class="title">
+                                                        <a>{{ $row->fname }} {{ $row->lname }}
+                                                            @if($row->heart)
+                                                                <i class="fa fa-heart text-danger"></i><small>+1 Satisfied</small>
+                                                            @endif
+                                                        </a>
+                                                    </h2>
+                                                    <div class="byline">
+                                                        <span>{{ date('M d, Y h:i A',strtotime($row->created_at)) }}</span>
+                                                    </div>
+                                                    <p class="excerpt">{!! nl2br($row->contents) !!}
+                                                    </p>
+
+                                                </div>
+                                            </div>
+                                        </li>
+                                    @endforeach
+
+                                </ul>
+                                @if(count($feedback)==0)
+                                    <div class="alert alert-warning">No Feedbacks!</div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
 

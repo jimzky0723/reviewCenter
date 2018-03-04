@@ -196,5 +196,6 @@ Route::get('reviewee/announcement','reviewee\AnnouncementCtrl@index');
 Route::get('reviewee/announcement/seen/{id}','reviewee\AnnouncementCtrl@seen');
 
 Route::post('reviewee/feedback/store','reviewee\FeedbackCtrl@store');
+Route::post('reviewee/testimonial/store','reviewee\FeedbackCtrl@testimonyStore');
 //..REVIEWEE PAGE
 

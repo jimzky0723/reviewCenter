@@ -23,9 +23,8 @@ class HomeCtrl extends Controller
 
     public function index()
     {
-        $feedback = Feedback::select('users.fname','users.lname','feedback.created_at','feedback.contents','feedback.satisfaction as heart')
+        $feedback = Feedback::select('feedback.type','users.fname','users.lname','feedback.created_at','feedback.contents','feedback.satisfaction as heart')
             ->leftJoin('users','users.id','=','feedback.user_id')
-            ->where('feedback.type','feedback')
             ->orderBy('feedback.created_at','desc')
             ->paginate(10);
 

@@ -14,7 +14,8 @@
                 </a>
             </li>
             <li><a href="{{ asset('reviewee/class') }}"><i class="fa fa-book"></i> My Subjects</a></li>
-            <li><a href="#feedbackModal" data-toggle="modal"><i class="fa fa-book"></i> Feedback</a></li>
+            <li><a href="#feedbackModal" data-toggle="modal"><i class="fa fa-envelope"></i> Feedback</a></li>
+            <li><a href="#testimonialModal" data-toggle="modal"><i class="fa fa-envelope-o"></i> Testimonial</a></li>
         </ul>
     </div>
     <div class="menu_section">

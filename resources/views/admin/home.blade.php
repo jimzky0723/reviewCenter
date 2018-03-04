@@ -130,9 +130,8 @@
                                                         <div class="byline">
                                                             <span>{{ date('M d, Y h:i A',strtotime($row->created_at)) }}</span>
                                                         </div>
-                                                        <p class="excerpt">{!! nl2br($row->contents) !!}
-                                                        </p>
-
+                                                        <p class="excerpt">{!! nl2br($row->contents) !!} </p>
+                                                        <span class="text-primary">~ {{ $row->type }}</span>
                                                     </div>
                                                 </div>
                                             </li>

@@ -29,4 +29,16 @@ class FeedbackCtrl extends Controller
 
         return redirect()->back()->with('status','feedbackSent');
     }
+
+    public function testimonyStore(Request $req)
+    {
+        $user = Session::get('access');
+        $q = new Feedback();
+        $q->user_id = $user->id;
+        $q->type = 'testimony';
+        $q->contents = $req->contents;
+        $q->save();
+
+        return redirect()->back()->with('status','testimonySent');
+    }
 }

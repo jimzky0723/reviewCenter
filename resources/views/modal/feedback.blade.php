@@ -3,7 +3,7 @@
         <div class="modal-content">
             <form action="{{ url('reviewee/feedback/store') }}" method="post">
             <div class="modal-header">
-                <h3>Feedback / Testimonials</h3>
+                <h3>Feedback</h3>
             </div>
             <div class="modal-body">
                 {{ csrf_field() }}
@@ -49,21 +49,14 @@
 <div class="modal fade" tabindex="-1" role="dialog" id="testimonialModal">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
-            <form action="{{ url('reviewee/feedback/store') }}" method="post">
+            <form action="{{ url('reviewee/testimonial/store') }}" method="post">
                 <div class="modal-header">
-                    <h3>Feedback / Testimonials</h3>
+                    <h3>Testimonials</h3>
                 </div>
                 <div class="modal-body">
                     {{ csrf_field() }}
                     <div class="form-group">
-                        <label>Are you satisfied?</label>
-                        <select name="satisfaction" required class="form-control">
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Your Feedback</label>
+                        <label>Your Testimony</label>
                         <textarea name="contents" class="form-control" style="resize: none;" rows="5"></textarea>
                     </div>
                 </div>
@@ -84,7 +77,7 @@
                     <h3>Sent</h3>
                 </div>
                 <div class="modal-body text-success" style="font-size: 1.3em">
-                    <strong>Thank you for your feedback.</strong>
+                    <strong>Thank you for your testimony.</strong>
                 </div>
                 <div class="modal-footer">
 

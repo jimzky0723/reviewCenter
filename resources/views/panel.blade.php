@@ -181,5 +181,10 @@
     $('#feedbackStatusModal').modal('show');
 </script>
 @endif
+@if($status==='testimonySent')
+<script>
+    $('#testimonialStatusModal').modal('show');
+</script>
+@endif
 </body>
 </html>
