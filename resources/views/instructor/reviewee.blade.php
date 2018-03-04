@@ -92,7 +92,12 @@
                                                     ->where('lesson.class_id',$classID)
                                                     ->where('grade.student_id',$row->id)
                                                     ->sum('grade.percentage');
-                                            $grade = number_format($total_socre / $count_quiz,1);
+                                            if($total_socre > 0){
+                                                $grade = number_format($total_socre / $count_quiz,1);
+                                            }else{
+                                                $grade = 0;
+                                            }
+
                                             $class = ($grade > 74) ? 'text-success':'text-danger';
                                             $value = ($grade > 74) ? 'Passed':'Failed';
                                             if($grade==0)

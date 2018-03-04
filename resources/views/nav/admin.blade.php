@@ -14,7 +14,6 @@
                 @endif
                 </a></li>
             <li><a href="{{ asset('admin/announcement') }}"><i class="fa fa-bullhorn"></i> Announcements</a></li>
-            <li><a href="{{ asset('admin/payment') }}"><i class="fa fa-money"></i> Payment Status</a></li>
         </ul>
     </div>
     <div class="menu_section">

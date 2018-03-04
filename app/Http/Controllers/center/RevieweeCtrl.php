@@ -219,6 +219,7 @@ class RevieweeCtrl extends Controller
         $q->type = 'reviewee';
         $q->user_id = $id;
         $q->payment = $req->amount;
+        $q->remarks = 'Down Payment for Account Activation';
         $q->save();
 
         User::where('id',$id)

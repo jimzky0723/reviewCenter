@@ -246,6 +246,7 @@ class CenterCtrl extends Controller
         $q->user_id = $id;
         $q->no_month = $req->no_month;
         $q->payment = $req->amount;
+        $q->remarks = 'Subscription';
         $q->save();
 
         $date_subscribed = date('Y-m-d');

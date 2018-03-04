@@ -56,7 +56,7 @@ return [
             'driver' => 'mysql',
             'host' => 'localhost',
             'port' => '3306',
-            'database' => 'jim_center',
+            'database' => 'jim_center2',
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8',

@@ -71,8 +71,6 @@
                                         <th>Name</th>
                                         <th>Address / Contact</th>
                                         <th>Class</th>
-                                        <th>Lessons</th>
-                                        <th>Quizzes</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -84,10 +82,7 @@
                                             $age = \App\Http\Controllers\Parameter::getAge($row->dob);
                                             $muncity = \App\Muncity::where('muncityCode',$row->muncity_id)->first()->desc;
                                             $province = \App\Province::where('provCode',$row->province_id)->first()->desc;
-                                            $countClass = \App\Classes::where('instructor_id',$row->id)->count();
-                                            $countLesson = \App\Lesson::leftJoin('classes','classes.id','=','lesson.class_id')
-                                                    ->where('classes.instructor_id',$row->id)
-                                                    ->count();
+                                            $classes = \App\Classes::where('instructor_id',$row->id)->get();
                                         ?>
                                         <td>
                                             <i class="fa fa-pencil"></i>
@@ -102,9 +97,13 @@
                                             <br />
                                             <small class="text-danger">{{ $row->contact }} / {{ $row->email }}</small>
                                         </td>
-                                        <td>{{ $countClass }}</td>
-                                        <td>{{ $countLesson }}</td>
-                                        <td></td>
+                                        <td>
+                                            <ul style="margin-left: -25px;">
+                                                @foreach($classes as $row)
+                                                <li>{{ $row->code }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </td>
                                     </tr>
                                     @endforeach
                                     </tbody>
