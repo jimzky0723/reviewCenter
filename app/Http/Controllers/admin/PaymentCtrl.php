@@ -35,4 +35,40 @@ class PaymentCtrl extends Controller
         }
         return $data;
     }
+
+    public function pay(Request $req)
+    {
+        $center_id = $req->currentID;
+        $center = Center::find($center_id);
+        $no_month = $req->no_month;
+        if($no_month>0){
+            $date = $center->date_expired;
+            $newdate = strtotime("+$no_month month",strtotime($date));
+            $newdate = date('Y-m-d',$newdate);
+            Center::where('id',$center_id)
+                ->update([
+                    'date_expired' => $newdate,
+                    'no_month' => $no_month
+                ]);
+            $q = new Payment();
+            $q->type = 'center';
+            $q->user_id = $center->user_id;
+            $q->payment = $req->amount;
+            $q->no_month = $no_month;
+            $q->remarks = $req->remarks;
+            $q->save();
+
+            return redirect()->back()->with('status','paid');
+        }else{
+            $q = new Payment();
+            $q->type = 'center';
+            $q->user_id = $center->user_id;
+            $q->payment = $req->amount;
+            $q->no_month = $no_month;
+            $q->remarks = $req->remarks;
+            $q->save();
+
+            return redirect()->back()->with('status','paid');
+        }
+    }
 }

@@ -26,7 +26,7 @@
                 </div>
                 <div class="form-group">
                     <label>Remarks:</label>
-                    <input type="text" name="remarks" class="form-control" placeholder="" required />
+                    <input type="text" name="remarks" class="form-control" placeholder="Remarks of the transactions..." required />
                 </div>
             </div>
             <div class="modal-footer">

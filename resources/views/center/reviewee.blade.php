@@ -55,6 +55,13 @@
                     <strong>{{ $name }} is successfully ignored to your center!</strong>
                 </div>
             @endif
+            @if($status === 'paid')
+                <div class="alert alert-success alert-dismissible fade in" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                    </button>
+                    <strong>Successfully paid!</strong>
+                </div>
+            @endif
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
@@ -122,7 +129,7 @@
                                                     $payment = \App\Payment::where('user_id',$row->id)
                                                         ->sum('payment');
                                                 ?>
-                                                    <a href="#" class="btn btn-info btn-sm">
+                                                    <a href="#paymentModal" data-toggle="modal" data-id="{{ $row->id }}" class="btn btn-info btn-sm">
                                                         <i class="fa fa-money"></i> {{ number_format($payment) }}
                                                     </a>
                                             </td>
@@ -157,6 +164,7 @@
             </div>
         </div>
     </div>
+    @include('modal.paymentReviewee')
 @endsection
 
 @section('js')
@@ -196,6 +204,35 @@
                     });
                     content += '</table>';
                     $('#subjectModal .subject_grade').html(content);
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $('a[href="#paymentModal"]').on('click',function(){
+            var id = $(this).data('id');
+            var link = "{{ url('center/reviewee/payment/history') }}/"+id;
+            $.ajax({
+                url: link,
+                type: 'GET',
+                success: function(data){
+                    var content = '<table class="table table-striped table-hover">';
+                    content += '<tr>' +
+                        '<th>Date Paid</td>' +
+                        '<th>Amount</td>' +
+                        '<th>Remarks</td>' +
+                        '</tr>';
+                    jQuery.each(data, function(i,val){
+                        content += '<tr>' +
+                            '<td>'+val.date+'</td>' +
+                            '<td>'+val.amount+'</td>' +
+                            '<td class="text-danger"><small>'+val.remarks+'</small></td>' +
+                            '</tr>';
+                    });
+                    content += '</table>';
+                    $('#paymentModal .payment_history').html(content);
+                    $('#currentID').val(id);
                 }
             });
         });

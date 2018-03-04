@@ -81,6 +81,7 @@ Route::post('admin/announcement/update','admin\AnnouncementCtrl@update');
 Route::post('admin/announcement/delete','admin\AnnouncementCtrl@delete');
 
 Route::get('admin/center/payment/history/{center_id}','admin\PaymentCtrl@history');
+Route::post('admin/center/pay','admin\PaymentCtrl@pay');
 //..ADMIN PAGE
 
 //CENTER PAGE
@@ -114,6 +115,9 @@ Route::get('center/announcement/edit/{id}','center\AnnouncementCtrl@edit');
 Route::post('center/announcement/store','center\AnnouncementCtrl@store');
 Route::post('center/announcement/update','center\AnnouncementCtrl@update');
 Route::post('center/announcement/delete','center\AnnouncementCtrl@delete');
+
+Route::get('center/reviewee/payment/history/{user_id}','center\PaymentCtrl@history');
+Route::post('center/reviewee/pay','center\PaymentCtrl@pay');
 //..CENTER PAGE
 
 //INSTRUCTOR PAGE
