@@ -4,6 +4,7 @@ namespace App\Http\Controllers\center;
 
 use App\AnnoucementStatus;
 use App\Announcement;
+use App\Feedback;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -24,10 +25,17 @@ class HomeCtrl extends Controller
         $announcement = Announcement::where('target','center')
                 ->orderBy('updated_at','desc')
                 ->paginate(10);
+        $feedback = Feedback::select('users.fname','users.lname','feedback.created_at','feedback.contents','feedback.satisfaction as heart')
+                ->leftJoin('users','users.id','=','feedback.user_id')
+                ->where('users.center_id',$user->center_id)
+                ->orderBy('feedback.created_at','desc')
+                ->limit(10)
+                ->get();
         return view('center.home',[
             'title' => 'Welcome '.$user->fname,
             'countAnnouncement' => self::countAnnouncement(),
-            'announcement' => $announcement
+            'announcement' => $announcement,
+            'feedback' => $feedback
         ]);
     }
 

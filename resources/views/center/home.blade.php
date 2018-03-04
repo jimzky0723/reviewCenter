@@ -26,7 +26,7 @@
             <div class="clearfix"></div>
 
             <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="col-md-8 col-sm-8 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>Announcements @if($countAnnouncement>0)<small class="badge">{{ $countAnnouncement }} New</small>@endif</h2>
@@ -72,6 +72,47 @@
                                 </div>
                                 @if(count($announcement)==0)
                                     <div class="alert alert-warning">No Announcements!</div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Feedbacks</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <div class="dashboard-widget-content">
+
+                                <ul class="list-unstyled timeline widget">
+                                    @foreach($feedback as $row)
+                                        <li>
+                                            <div class="block">
+                                                <div class="block_content">
+                                                    <h2 class="title">
+                                                        <a>{{ $row->fname }} {{ $row->lname }}
+                                                            @if($row->heart)
+                                                                <i class="fa fa-heart text-danger"></i><small>+1 Satisfied</small>
+                                                            @endif
+                                                        </a>
+                                                    </h2>
+                                                    <div class="byline">
+                                                        <span>{{ date('M d, Y h:i A',strtotime($row->created_at)) }}</span>
+                                                    </div>
+                                                    <p class="excerpt">{!! nl2br($row->contents) !!}
+                                                    </p>
+
+                                                </div>
+                                            </div>
+                                        </li>
+                                    @endforeach
+
+                                </ul>
+                                @if(count($feedback)==0)
+                                    <div class="alert alert-warning">No Feedbacks!</div>
                                 @endif
                             </div>
                         </div>

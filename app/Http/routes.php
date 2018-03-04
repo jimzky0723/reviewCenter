@@ -61,6 +61,7 @@ Route::get('location/barangay/{muncityCode}','LocationCtrl@barangay');
 
 //ADMIN PAGE
 Route::get('admin/home', 'admin\HomeCtrl@index');
+Route::get('admin/home/chart', 'admin\HomeCtrl@chart');
 
 Route::get('admin/center', 'admin\CenterCtrl@index');
 Route::post('admin/center', 'admin\CenterCtrl@search');

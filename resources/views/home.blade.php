@@ -164,42 +164,23 @@
             <div class="col-lg-8 col-md-12 col-xs-12">
                 <div class="container">
                     <div class="row">
+                        <?php
+                            $announcements = \App\Announcement::where('target','center')
+                                ->orderBy('created_at','desc')
+                                ->limit(4)
+                                ->get();
+                        ?>
+                        @foreach($announcements as $row)
                         <div class="col-lg-6 col-sm-6 col-xs-12 box-item">
-                    <span class="icon">
-                      <i class="lnr lnr-calendar-full"></i>
-                    </span>
+                            <span class="icon">
+                              <i class="lnr lnr-calendar-full"></i>
+                            </span>
                             <div class="text">
-                                <h4>January 20, 2018</h4>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                                <h4>{{ date('M d, Y',strtotime($row->created_at)) }}</h4>
+                                {!! nl2br($row->content) !!}
                             </div>
                         </div>
-                        <div class="col-lg-6 col-sm-6 col-xs-12 box-item">
-                    <span class="icon">
-                      <i class="lnr lnr-calendar-full"></i>
-                    </span>
-                            <div class="text">
-                                <h4>January 04, 2018</h4>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-sm-6 col-xs-12 box-item">
-                    <span class="icon">
-                      <i class="lnr lnr-calendar-full"></i>
-                    </span>
-                            <div class="text">
-                                <h4>December 27, 2017</h4>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-sm-6 col-xs-12 box-item">
-                    <span class="icon">
-                      <i class="lnr lnr-calendar-full"></i>
-                    </span>
-                            <div class="text">
-                                <h4>November 26, 2017</h4>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -229,15 +210,7 @@
                     <a class="filter active btn btn-common" data-filter="all">
                         All
                     </a>
-                    {{--<a class="filter btn btn-common" data-filter=".luzon">--}}
-                        {{--Luzon--}}
-                    {{--</a>--}}
-                    {{--<a class="filter btn btn-common" data-filter=".visayas">--}}
-                        {{--Visayas--}}
-                    {{--</a>--}}
-                    {{--<a class="filter btn btn-common" data-filter=".mindanao">--}}
-                        {{--Mindanao--}}
-                    {{--</a>--}}
+
                     @foreach($registered as $row)
                     <a class="filter btn btn-common" data-filter=".{{ $row->regCode }}">
                         {{ $row->desc }}
@@ -316,7 +289,7 @@
                     </div>
                     <div class="fact-count">
                         <h3><span class="counter">{{ $countReviewee }}</span></h3>
-                        <h4>No. of Reviewer</h4>
+                        <h4>No. of Students</h4>
                     </div>
                 </div>
             </div>
@@ -327,7 +300,7 @@
                     </div>
                     <div class="fact-count">
                         <h3><span class="counter">{{ $countSatisfied }}</span></h3>
-                        <h4>Satisfied Reviewer</h4>
+                        <h4>Satisfied Students</h4>
                     </div>
                 </div>
             </div>

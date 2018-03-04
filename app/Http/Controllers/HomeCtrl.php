@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Center;
 use App\classDays;
 use App\Classes;
+use App\Feedback;
 use App\Grade;
 use App\Province;
 use App\Region;
@@ -39,8 +40,8 @@ class HomeCtrl extends Controller
                 ->groupBy('center.regCode')
                 ->get();
         //dd($regions);
-        $satisfied = Grade::where('percentage','>=',75)
-                ->groupBy('student_id')
+        $satisfied = Feedback::where('satisfaction',1)
+                ->groupBy('user_id')
                 ->get();
 
         $data = array(
