@@ -33,7 +33,7 @@
                                 @endif
                                 @foreach($lessons as $lesson)
                                 <?php
-                                    $current_date = date('Y-m-d');
+                                    $current_date = date('Y-m-d H:i:s');
                                 ?>
                                 <div class="col-md-4 col-sm-4 col-xs-12 profile_details">
                                     <div class="well profile_view">

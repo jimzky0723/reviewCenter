@@ -17,6 +17,8 @@ class CreatePayment extends Migration
             $table->string('type');
             $table->integer('user_id');
             $table->double('payment');
+            $table->integer('no_month');
+            $table->string('remarks');
             $table->timestamps();
         });
     }

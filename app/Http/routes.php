@@ -78,8 +78,9 @@ Route::get('admin/announcement/add','admin\AnnouncementCtrl@create');
 Route::get('admin/announcement/edit/{id}','admin\AnnouncementCtrl@edit');
 Route::post('admin/announcement/store','admin\AnnouncementCtrl@store');
 Route::post('admin/announcement/update','admin\AnnouncementCtrl@update');
-Route::post('admin/announcement/delete','admin\AnnouncementCtrl@delete
-');
+Route::post('admin/announcement/delete','admin\AnnouncementCtrl@delete');
+
+Route::get('admin/center/payment/history/{center_id}','admin\PaymentCtrl@history');
 //..ADMIN PAGE
 
 //CENTER PAGE
@@ -98,6 +99,8 @@ Route::resource('center/reviewee', 'center\RevieweeCtrl');
 Route::post('center/reviewee/accept', 'center\RevieweeCtrl@accept');
 Route::post('center/reviewee/ignore', 'center\RevieweeCtrl@ignore');
 Route::post('center/reviewee/search', 'center\RevieweeCtrl@search');
+
+Route::get('center/reviewee/subject/{id}', 'center\RevieweeCtrl@subject');
 
 Route::resource('center/class', 'center\ClassCtrl');
 Route::get('center/class/enroll/{id}', 'center\ClassCtrl@enroll');

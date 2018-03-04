@@ -5,10 +5,7 @@
     $name = session('name');
     ?>
     <style>
-        .title-info {
-            text-decoration: dotted;
-            font-weight: bold;
-        }
+
         .table tr td {
             vertical-align: middle !important;
         }
@@ -116,7 +113,7 @@
                                                     $count_subj = \App\Reviewee::where('user_id',$row->id)
                                                         ->count();
                                                 ?>
-                                                <a href="#" class="btn btn-warning btn-sm">
+                                                <a href="#subjectModal" data-toggle="modal" data-id="{{ $row->id }}" class="btn btn-warning btn-sm">
                                                     <i class="fa fa-book"></i> {{ $count_subj }}
                                                 </a>
                                             </td>
@@ -177,6 +174,30 @@
             console.log(id);
             var txt = $('#ignoreModal').find('#currentID2');
             txt.val(id);
+        });
+    </script>
+
+    <script>
+        $('a[href="#subjectModal"]').on('click',function(){
+            var id = $(this).data('id');
+            var link = "{{ url('center/reviewee/subject/') }}/"+id;
+            $.ajax({
+                url: link,
+                type: 'GET',
+                success: function (data) {
+                    var name = data.name;
+                    $('#subjectModal .name_reviewee').html(name);
+                    var content = '<table class="table table-hover table-striped">';
+                    jQuery.each(data.subjects, function(i,val){
+                        content += '<tr>' +
+                            '<td>'+val.name+'</td>' +
+                            '<td>'+val.grade+'</td>' +
+                            '</tr>';
+                    });
+                    content += '</table>';
+                    $('#subjectModal .subject_grade').html(content);
+                }
+            });
         });
     </script>
 @endsection

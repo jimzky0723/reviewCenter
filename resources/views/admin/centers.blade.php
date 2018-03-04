@@ -76,6 +76,7 @@
                                         <th>Limit</th>
                                         <th>Current<br/>Students</th>
                                         <th>Status</th>
+                                        <th>Payment<br>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -120,6 +121,15 @@
                                                 <font class="text-danger">Expired on {{ $expired }}</font>
                                             @endif
                                         </td>
+                                        <td>
+                                            <?php
+                                            $payment = \App\Payment::where('user_id',$center->user_id)
+                                                ->sum('payment');
+                                            ?>
+                                            <a href="#paymentModal" data-toggle="modal" data-id="{{ $center->id }}" class="btn btn-info btn-sm">
+                                                <i class="fa fa-money"></i> {{ number_format($payment) }}
+                                            </a>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -141,8 +151,9 @@
             </div>
         </div>
     </div>
-    @endsection
 
+    @include('modal.payment')
+    @endsection
 
 @section('js')
     <script>
@@ -166,6 +177,36 @@
             txt.val(id);
         });
     </script>
+
+    <script>
+        $('a[href="#paymentModal"]').on('click',function(){
+            var id = $(this).data('id');
+            var link = "{{ url('admin/center/payment/history') }}/"+id;
+            $.ajax({
+                url: link,
+                type: 'GET',
+                success: function(data){
+                    var content = '<table class="table table-striped table-hover">';
+                    content += '<tr>' +
+                        '<th>Date Paid</td>' +
+                        '<th>Amount</td>' +
+                        '<th>Months of Subscription</td>' +
+                        '<th>Remarks</td>' +
+                        '</tr>'
+                    jQuery.each(data, function(i,val){
+                        content += '<tr>' +
+                            '<td><a href="#" class="payment_date"> '+val.date+'</a></td>' +
+                            '<td>'+val.amount+'</td>' +
+                            '<td>'+val.no_month+'</td>' +
+                            '<td class="text-danger"><small>'+val.remarks+'</small></td>' +
+                            '</tr>';
+                    });
+                    content += '</table>';
+                    $('#paymentModal .payment_history').html(content);
+                }
+            });
+        });
+    </script>
 @endsection
 
 @section('modal')
@@ -186,11 +227,11 @@
             <label>Amount</label>
             <input class="form-control" type="text" name="amount" required placeholder="0.00" />
         </div>
-        @endsection
+@endsection
 
-        @section('modal2')
-            <form action="{{ url('admin/center/ignore') }}" method="post">
-                {{ csrf_field() }}
-                <input type="hidden" id="currentID2" name="currentID" />
-                <p class="text-danger">Are you sure you want to ignore this student?</p>
+@section('modal2')
+    <form action="{{ url('admin/center/ignore') }}" method="post">
+        {{ csrf_field() }}
+        <input type="hidden" id="currentID2" name="currentID" />
+        <p class="text-danger">Are you sure you want to ignore this center?</p>
 @endsection

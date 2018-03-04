@@ -116,6 +116,7 @@ class QuizCtrl extends Controller
         $q->target = 'reviewee';
         $q->user_id = $student_id;
         $q->content = $content;
+        $q->title = 'Finished Quiz';
         $q->center_id = $user->center_id;
 
         $q->save();
@@ -140,6 +141,7 @@ class QuizCtrl extends Controller
             $q->target = 'reviewee';
             $q->user_id = $student_id;
             $q->content = $content;
+            $q->title = 'Finished Quiz';
             $q->center_id = $user->center_id;
             $q->save();
         }

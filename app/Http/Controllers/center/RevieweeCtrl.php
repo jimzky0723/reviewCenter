@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\center;
 
+use App\Classes;
+use App\Grade;
 use App\Payment;
 use App\Province;
 use App\Reviewee;
@@ -241,5 +243,44 @@ class RevieweeCtrl extends Controller
             ->delete();
         return redirect('center/reviewee')->with([
             'status' => 'ignored','name' => $name]);
+    }
+
+    public function subject($id)
+    {
+        $user = User::find($id);
+        $name = "$user->fname $user->lname";
+
+        $subjects = Reviewee::where('user_id',$id)
+                ->get();
+        $tmp = array();
+        foreach($subjects as $row){
+            $grade = Grade::leftJoin('quiz','quiz.id','=','grade.quiz_id')
+                    ->leftJoin('lesson','lesson.id','=','quiz.lesson_id')
+                    ->where('grade.student_id',$id)
+                    ->where('lesson.class_id',$row->class_id)
+                    ->sum('grade.percentage');
+            $total = Grade::leftJoin('quiz','quiz.id','=','grade.quiz_id')
+                ->leftJoin('lesson','lesson.id','=','quiz.lesson_id')
+                ->where('grade.student_id',$id)
+                ->where('lesson.class_id',$row->class_id)
+                ->count();
+            if($grade!=0)
+            {
+                $grade = number_format($grade / $total,1);
+            }else{
+                $grade = 'No Grade';
+            }
+
+            $code = Classes::find($row->class_id)->desc;
+            $tmp[] = array(
+                'name' => $code,
+                'grade'=> $grade
+            );
+        }
+        $data  = array(
+            'name' => $name,
+            'subjects' => $tmp
+        );
+        return $data;
     }
 }

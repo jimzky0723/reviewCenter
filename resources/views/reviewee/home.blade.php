@@ -56,7 +56,11 @@
                                                         <a>@if($row->subject_id)<font class="text-info">{{ \App\Classes::find($row->subject_id)->code }}</font> - @endif{{ $row->title }}</a>
                                                     </h2>
                                                     <div class="byline">
+                                                        @if($creator)
                                                         <span>{{ date('M d, Y h:i A',strtotime($row->updated_at)) }}</span> by <a>{{ $creator->fname }} {{ $creator->lname }}</a>
+                                                        @else
+                                                        <span>{{ date('M d, Y h:i A',strtotime($row->updated_at)) }}</span>
+                                                        @endif
                                                     </div>
                                                     <p class="excerpt">{!! $row->content !!}
                                                     </p>

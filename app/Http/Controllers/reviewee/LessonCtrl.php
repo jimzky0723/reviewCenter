@@ -24,7 +24,7 @@ class LessonCtrl extends Controller
     public function checkAvailability($lesson_id)
     {
         $lesson = Lesson::find($lesson_id);
-        $current_date = date('Y-m-d');
+        $current_date = date('Y-m-d H:i:s');
         $class_id = $lesson->class_id;
         if($current_date < $lesson->date_open)
         {
@@ -105,6 +105,7 @@ class LessonCtrl extends Controller
         $q = new Announcement();
         $q->target = 'reviewee';
         $q->user_id = $user->id;
+        $q->title = 'Finished Lesson';
         $q->content = $content;
         $q->center_id = $user->center_id;
         $q->save();

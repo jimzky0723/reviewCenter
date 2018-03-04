@@ -51,7 +51,8 @@ class HomeCtrl extends Controller
             ->where('announcement.center_id',$user->center_id)
             ->where('target','reviewee')
             ->groupBy('announcement.id')
-            ->count();
+            ->get();
+        $x = count($x);
         $y = AnnoucementStatus::where('user_id',$user->id)->count();
         $count = $x - $y;
         return $count;

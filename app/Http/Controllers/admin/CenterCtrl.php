@@ -131,10 +131,18 @@ class CenterCtrl extends Controller
             $r->owner = $req->owner;
             $r->limit = $req->num;
             $r->regCode = $regCode;
+            $r->status = 'inactive';
             $r->provCode = $req->province;
             $r->muncityCode = $req->muncity;
             $r->barangayCode = $req->barangay;
             $r->save();
+
+            $center_id = $r->id;
+
+            User::where('id',$user_id)
+                ->update([
+                    'center_id' => $center_id
+                ]);
 
             return redirect()->back()->with('status','saved');
         }
@@ -236,17 +244,19 @@ class CenterCtrl extends Controller
         $q = new Payment();
         $q->type = 'center';
         $q->user_id = $id;
+        $q->no_month = $req->no_month;
         $q->payment = $req->amount;
         $q->save();
 
         $date_subscribed = date('Y-m-d');
-        $no = Center::where('user_id',$id)->first()->no_month;
+        $no = $req->no_month;
         $date_expired = date('Y-m-d',strtotime("+$no month"));
 
         Center::where('user_id',$id)
             ->update([
                 'date_subscribed' => $date_subscribed,
                 'date_expired'=> $date_expired,
+                'no_month' => $req->no_month,
                 'status' => 'active'
             ]);
 
