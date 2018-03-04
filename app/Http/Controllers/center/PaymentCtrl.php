@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\center;
 
 use App\Payment;
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -37,11 +38,16 @@ class PaymentCtrl extends Controller
         $user_id = $req->currentID;
 
         $q = new Payment();
-        $q->type = 'center';
+        $q->type = 'reviewee';
         $q->user_id = $user_id;
         $q->payment = $req->amount;
         $q->remarks = $req->remarks;
         $q->save();
+
+        User::where('id',$user_id)
+            ->update([
+                'status' => 'registered'
+            ]);
 
         return redirect()->back()->with('status','paid');
     }

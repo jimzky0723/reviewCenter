@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Center;
 use App\Payment;
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -48,7 +49,8 @@ class PaymentCtrl extends Controller
             Center::where('id',$center_id)
                 ->update([
                     'date_expired' => $newdate,
-                    'no_month' => $no_month
+                    'no_month' => $no_month,
+                    'status'=> 'active'
                 ]);
             $q = new Payment();
             $q->type = 'center';
@@ -57,6 +59,11 @@ class PaymentCtrl extends Controller
             $q->no_month = $no_month;
             $q->remarks = $req->remarks;
             $q->save();
+
+            User::where('id',$center->user_id)
+                ->update([
+                    'status' => 'registered'
+                ]);
 
             return redirect()->back()->with('status','paid');
         }else{
@@ -67,6 +74,11 @@ class PaymentCtrl extends Controller
             $q->no_month = $no_month;
             $q->remarks = $req->remarks;
             $q->save();
+
+            User::where('id',$center->user_id)
+                ->update([
+                    'status' => 'registered'
+                ]);
 
             return redirect()->back()->with('status','paid');
         }

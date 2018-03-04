@@ -181,7 +181,8 @@ class RevieweeCtrl extends Controller
             'province_id' => $req->province,
             'muncity_id' => $req->muncity,
             'barangay_id' => $req->barangay,
-            'region_id' => $region_id
+            'region_id' => $region_id,
+            'status' => $req->status
         );
         if($req->password)
         {
@@ -219,7 +220,7 @@ class RevieweeCtrl extends Controller
         $q->type = 'reviewee';
         $q->user_id = $id;
         $q->payment = $req->amount;
-        $q->remarks = 'Down Payment for Account Activation';
+        $q->remarks = 'Account Activation';
         $q->save();
 
         User::where('id',$id)
