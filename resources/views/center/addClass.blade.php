@@ -105,8 +105,8 @@
                                                 $date = date('M d, Y '.$i.':30');
                                                 $time2 = date('h:i A',strtotime($date));
                                             ?>
-                                            <option>{{ $time }}</option>
-                                            <option>{{ $time2 }}</option>
+                                            <option data-time="{{ $i }}">{{ $time }}</option>
+                                            <option data-time="{{ $i }}">{{ $time2 }}</option>
                                             @endfor
                                         </select>
                                     </div>
@@ -179,6 +179,9 @@
             var time = parseInt(this.value)+1;
             var a = 'AM';
             var tmp ='';
+            if(time>=1 && time<=7){
+                time = time + 12;
+            }
             $('.time_out').empty();
             var content = '';
             for(time;time<=18;time++)

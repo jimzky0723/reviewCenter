@@ -184,6 +184,9 @@
             var a = 'AM';
             var tmp ='';
             var content = '';
+            if(time>=1 && time<=7){
+                time = time + 12;
+            }
             for(time;time<=18;time++)
             {
                 tmp = time;
