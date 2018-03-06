@@ -71,6 +71,7 @@
                                         <th>Name</th>
                                         <th>Address / Contact</th>
                                         <th>Class</th>
+                                        <th>Specialty</th>
                                         <th>Status</th>
                                     </tr>
                                     </thead>
@@ -84,6 +85,7 @@
                                             $muncity = \App\Muncity::where('muncityCode',$row->muncity_id)->first()->desc;
                                             $province = \App\Province::where('provCode',$row->province_id)->first()->desc;
                                             $classes = \App\Classes::where('instructor_id',$row->id)->get();
+                                            $specialty = \App\SpecialtyInstructor::where('instructor_id',$row->id)->get();
                                         ?>
                                         <td>
                                             <i class="fa fa-pencil"></i>
@@ -102,6 +104,13 @@
                                             <ul style="margin-left: -25px;">
                                                 @foreach($classes as $r)
                                                 <li>{{ $r->code }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <ul style="margin-left: -25px;">
+                                                @foreach($specialty as $r)
+                                                    <li>{{ \App\Specialty::find($r->specialty_id)->specialty }}</li>
                                                 @endforeach
                                             </ul>
                                         </td>

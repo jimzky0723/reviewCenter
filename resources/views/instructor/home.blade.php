@@ -58,6 +58,13 @@
                                                     </div>
                                                     <p class="excerpt">{!! $row->content !!}
                                                     </p>
+                                                    @if($row->file)
+                                                        <div class="attach">
+                                                            <font class="text-primary"><i class="fa fa-paperclip"></i> Attached File</font> :
+                                                            <a href="{{ url('view/file/'.$row->file) }}" target="_blank" class="text-danger">{{ $row->file }}</a>
+                                                        </div>
+                                                        <br/>
+                                                    @endif
                                                     @if(!$check)
                                                         <a href="#" class="btn btn-sm btn-warning read" data-id="{{ $row->id }}">Mark as Read</a>
                                                     @endif

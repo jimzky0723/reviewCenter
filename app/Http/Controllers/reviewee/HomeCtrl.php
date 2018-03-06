@@ -27,8 +27,11 @@ class HomeCtrl extends Controller
                 $q = $q->orwhere('announcement.user_id',0)
                         ->orwhere('announcement.user_id',$user->id);
             })
+            ->where(function($q){
+                $q = $q->orwhere('target','both')
+                    ->orwhere('target','reviewee');
+            })
             ->where('announcement.center_id',$user->center_id)
-            ->where('target','reviewee')
             ->orderBy('updated_at','desc')
             ->groupBy('announcement.id')
             ->paginate(10);

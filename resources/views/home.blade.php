@@ -234,13 +234,16 @@
 
                             <a class="overlay">
                                 <div class="info">
-                                    {{ $row->desc }}<br />
-                                    Capacity: {{ $row->limit }} Students<br />
+                                    Name: {{ $row->desc }}
                                     <?php
-                                        $count = \App\Reviewee::where('center_id',$row->id)->count();
-                                        $available = $row->limit - $count;
+                                        $muncity = \App\Muncity::where('muncityCode',$row->muncityCode)->first()->desc;
+                                        $province = \App\Province::where('provCode',$row->provCode)->first()->desc;
+                                        $user = \App\User::where('center_id',$row->id)
+                                            ->where('level','reviewee')
+                                            ->count();
                                     ?>
-                                    Available: {{ $available }} Slots<br />
+                                    <br />Address: {{ $muncity }}, {{ $province }}
+                                    <br />Enrolled: {{ $user }} Student{{ ($user>1) ? 's':'' }}
                                 </div>
                             </a>
                         </div>

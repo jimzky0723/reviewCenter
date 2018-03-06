@@ -5,6 +5,7 @@ namespace App\Http\Controllers\center;
 use App\Center;
 use App\Instructor;
 use App\Province;
+use App\SpecialtyInstructor;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -61,7 +62,7 @@ class InstructorCtrl extends Controller
 
     public function save(Request $req)
     {
-//        dd($_POST);
+        //dd($_POST);
         $center_id = Session::get('center');
         $check = User::where('username',$req->username)->first();
         if($check)
@@ -91,6 +92,16 @@ class InstructorCtrl extends Controller
         $q->level = 'instructor';
         $q->status = 'registered';
         $q->save();
+
+        $instructor_id = $q->id;
+
+        foreach($req->specialty as $row)
+        {
+            $r = new SpecialtyInstructor();
+            $r->instructor_id = $instructor_id;
+            $r->specialty_id = $row;
+            $r->save();
+        }
 
         return redirect()->back()->with('status','saved');
     }
@@ -152,6 +163,16 @@ class InstructorCtrl extends Controller
 
         User::where('id',$id)
             ->update($data);
+
+        SpecialtyInstructor::where('instructor_id',$id)->delete();
+        foreach($req->specialty as $row)
+        {
+            $r = new SpecialtyInstructor();
+            $r->instructor_id = $id;
+            $r->specialty_id = $row;
+            $r->save();
+        }
+
         return redirect()->back()->with('status','saved');
     }
 

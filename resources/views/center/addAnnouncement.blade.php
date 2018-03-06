@@ -25,6 +25,13 @@
                     <strong>Successfully updated!</strong>
                 </div>
             @endif
+            @if($status === 'remove')
+                <div class="alert alert-success alert-dismissible fade in" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                    </button>
+                    <strong>Successfully removed!</strong>
+                </div>
+            @endif
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
@@ -41,7 +48,7 @@
                                 $link = url('center/announcement/update');
                             }
                             ?>
-                            <form class="form-horizontal form-label-left form-submit" novalidate action="{{ $link }}" method="post">
+                            <form class="form-horizontal form-label-left form-submit" novalidate action="{{ $link }}" method="post" enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 <input type="hidden" name="currentID" value="@if($record){{ $record->id }}@endif" />
                                 <div class="item form-group">
@@ -49,6 +56,21 @@
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <input autocomplete="off" type="text" name="title" value="@if($record){{ $record->title }}@endif" required="required" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Attach File <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="file" accept="application/pdf" value="" name="file" class="form-control col-md-7 col-xs-12">
+                                        @if($record->file)
+                                            <br />
+                                            <div class="attach">
+                                                <font class="text-primary"><i class="fa fa-paperclip"></i> Attached File</font> :
+                                                <a href="{{ url('view/file/'.$record->file) }}" target="_blank" class="text-warning">{{ $record->file }}</a>
+                                                <a href="#deleteFileModal" data-toggle="modal"> <span class="text-danger"><i class="fa fa-times"></i> Remove</span></a>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="item form-group">
@@ -73,7 +95,11 @@
         </div>
     </div>
 @endsection
-
+@section('modal2')
+    <?php $tmp_id = ($record) ? $record->id: ''?>
+    <form action="{{ url('announcement/destroy/file/'.$tmp_id) }}" method="GET">
+        <p class="text-danger">Are you sure you want to delete this file?<br><br><strong>Note : Make sure you save the update first before removing this file!</strong></p>
+        @endsection
 @section('js')
     @include('script.select2')
     <script src="{{ asset('public/panel') }}/vendors/validator/validator.js"></script>

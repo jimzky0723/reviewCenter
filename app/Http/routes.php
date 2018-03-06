@@ -117,6 +117,8 @@ Route::post('center/announcement/store','center\AnnouncementCtrl@store');
 Route::post('center/announcement/update','center\AnnouncementCtrl@update');
 Route::post('center/announcement/delete','center\AnnouncementCtrl@delete');
 
+Route::get('announcement/destroy/file/{id}','center\AnnouncementCtrl@destroyFile');
+
 Route::get('center/reviewee/payment/history/{user_id}','center\PaymentCtrl@history');
 Route::post('center/reviewee/pay','center\PaymentCtrl@pay');
 //..CENTER PAGE

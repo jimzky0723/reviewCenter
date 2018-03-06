@@ -120,20 +120,25 @@
                                     </div>
                                 </div>
                                 <div class="item form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="username">Username<span class="required">*</span>
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Specialty <span class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input autocomplete="off" id="username" data-id="{{ $user->id }}" value="{{ $user->username }}" class="form-control col-md-7 col-xs-12" name="username" required="required" type="text">
-                                        <span class="text-danger username-block hide"><strong>Username already taken!</strong></span>
+                                        <select name="specialty[]" class="form-control select2" multiple="multiple">
+                                            <?php
+                                            $specialty = \App\Specialty::orderBy('specialty','asc')->get();
+                                            ?>
+                                            @foreach($specialty as $row)
+                                                <?php
+                                                    $check = \App\SpecialtyInstructor::where('instructor_id',$user->id)
+                                                                ->where('specialty_id',$row->id)
+                                                                ->first();
+                                                ?>
+                                                <option {{ ($check) ? 'selected':'' }} value="{{$row->id}}">{{ $row->specialty }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="item form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password">Password<span class="required">*</span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input id="password" class="form-control col-md-7 col-xs-12" placeholder="Password Unchanged..." name="password" type="password">
-                                    </div>
-                                </div>
+
                                 <hr />
                                 <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="province">Province <span class="required">*</span>
@@ -169,6 +174,22 @@
                                         </select>
                                     </div>
                                 </div>
+                                <hr />
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="username">Username<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input autocomplete="off" id="username" data-id="{{ $user->id }}" value="{{ $user->username }}" class="form-control col-md-7 col-xs-12" name="username" required="required" type="text">
+                                        <span class="text-danger username-block hide"><strong>Username already taken!</strong></span>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password">Password<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input id="password" class="form-control col-md-7 col-xs-12" placeholder="Password Unchanged..." name="password" type="password">
+                                    </div>
+                                </div>
                                 <div class="ln_solid"></div>
                                 <div class="form-group">
                                     <div class="col-md-6 col-md-offset-3">
@@ -196,6 +217,7 @@
 @endsection
 
 @section('js')
+    @include('script.select2')
     @include('script.location')
     @include('script.date')
     @include('script.profile')

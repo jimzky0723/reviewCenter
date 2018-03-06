@@ -181,7 +181,6 @@ class HomeCtrl extends Controller
         $r->desc = $req->name;
         $r->user_id = $user_id;
         $r->owner = $req->owner;
-        $r->limit = $req->need;
         $r->no_month = $req->no_month;
         $r->status = 'inactive';
         $r->regCode = $regCode;

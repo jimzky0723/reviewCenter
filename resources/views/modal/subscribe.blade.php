@@ -29,12 +29,6 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <input type="text" name="need" class="form-control" placeholder="No. of Students Needed" required>
-                                <div class="help-block with-errors"></div>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
                                 <input type="text" name="owner" class="form-control" placeholder="Name of Owner" required>
                                 <div class="help-block with-errors"></div>
                             </div>

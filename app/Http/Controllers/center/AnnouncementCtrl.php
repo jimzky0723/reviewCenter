@@ -4,6 +4,7 @@ namespace App\Http\Controllers\center;
 
 use App\Announcement;
 use App\Center;
+use App\Http\Controllers\FileCtrl;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -53,6 +54,21 @@ class AnnouncementCtrl extends Controller
 
     public function update(Request $req)
     {
+        $title = $req->title;
+        $file = $req->file('file');
+        if($file){
+            $filetype = $file->getClientOriginalExtension();
+            $origin = $file->getClientOriginalName();
+            $path = 'public/upload';
+            $filename = urlencode($title).'.'.$filetype;
+            $file->move($path,$filename);
+
+            Announcement::where('id',$req->currentID)
+                ->update([
+                    'file' => $filename
+                ]);
+        }
+
         Announcement::where('id',$req->currentID)
             ->update([
                 'content' => $req->contents,
@@ -63,12 +79,25 @@ class AnnouncementCtrl extends Controller
 
     public function store(Request $req)
     {
+        $title = $req->title;
+        $file = $req->file('file');
+        $filename = '';
+        if($file)
+        {
+            $filetype = $file->getClientOriginalExtension();
+            $origin = $file->getClientOriginalName();
+            $path = 'public/upload';
+            $filename = urlencode($title).'.'.$filetype;
+            $file->move($path,$filename);
+        }
+
         $user = Session::get('access');
         $center_id = Center::where('user_id',$user->id)->first()->id;
         $q = new Announcement();
-        $q->target = 'instructor';
+        $q->target = 'both';
         $q->center_id = $center_id;
         $q->content = $req->contents;
+        $q->file = $filename;
         $q->created_by = $user->id;
         $q->title = $req->title;
         $q->save();
@@ -81,5 +110,16 @@ class AnnouncementCtrl extends Controller
         $id = $req->currentID;
         Announcement::where('id',$id)->delete();
         return redirect()->back()->with('status','deleted');
+    }
+
+    public function destroyFile($id)
+    {
+        $file = Announcement::find($id)->file;
+        FileCtrl::removeFile($file);
+        Announcement::where("id",$id)
+            ->update([
+                'file'=> ''
+            ]);
+        return redirect()->back()->with('status','remove');
     }
 }

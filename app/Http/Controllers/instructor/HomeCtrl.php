@@ -21,7 +21,10 @@ class HomeCtrl extends Controller
     public function index()
     {
         $user = Session::get('access');
-        $announcement = Announcement::where('target','instructor')
+        $announcement = Announcement::where(function($q){
+                $q = $q->orwhere('target','both')
+                    ->orwhere('target','instructor');
+            })
             ->where('center_id',$user->center_id)
             ->orderBy('updated_at','desc')
             ->paginate(10);
