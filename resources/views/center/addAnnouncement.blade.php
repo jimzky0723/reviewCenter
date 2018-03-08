@@ -63,7 +63,7 @@
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <input type="file" accept="application/pdf" value="" name="file" class="form-control col-md-7 col-xs-12">
-                                        @if($record->file)
+                                        @if($record && $record->file)
                                             <br />
                                             <div class="attach">
                                                 <font class="text-primary"><i class="fa fa-paperclip"></i> Attached File</font> :
