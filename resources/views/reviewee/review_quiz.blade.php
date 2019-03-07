@@ -64,7 +64,7 @@
                                         <div class="panel panel-primary">
                                             <div class="panel-body">
                                                 <span class="question">
-                                                    {{ $c++ }}. {{ $question }}
+                                                    {{ $c++ }}. {!! nl2br($question) !!}
                                                 </span>
                                                 <div class="choices">
                                                     <hr />

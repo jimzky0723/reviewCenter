@@ -30,8 +30,25 @@
             font-size: 1.2em;
             cursor: pointer;
         }
+        .countdown {
+            border: 1px solid #ccc;
+            width: 100px;
+            padding: 5px;
+            text-align: center;
+            position: fixed;
+            bottom: 10px;
+            right: -10px;
+            z-index: 9999;
+            background: #fff;
+        }
     </style>
+
     <div class="right_col" role="main">
+        <div class="countdown">
+            <span class="timer timer-up">
+                {{ (Session::get('quiz_timer_'.$quiz_id)) ? Session::get('quiz_timer_'.$quiz_id) : $quiz->minute.':00' }}
+            </span>
+        </div>
         <div class="">
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -64,7 +81,7 @@
                                     <div class="panel panel-primary">
                                         <div class="panel-body">
                                             <span class="question">
-                                                {{ $c++ }}. {{ $row->question }}
+                                                {{ $c++ }}. {!! nl2br($row->question) !!}
                                             </span>
                                             <span class="answer {{ ($question) ? '':'hide' }}">
                                                 @if($question)
@@ -75,7 +92,7 @@
                                                 <hr />
                                                 @foreach($choices as $ch)
                                                     <label class="item">
-                                                        <input type="radio" {{ ($question==$ch->id) ? 'checked':'' }} data-question="question_{{ $row->id }}" data-answer="{{ $ch->id }}" name="question_{{ $row->id }}" value="{{ $ch->id }}" class="choice">
+                                                        <input type="radio" required {{ ($question==$ch->id) ? 'checked':'' }} data-question="question_{{ $row->id }}" data-answer="{{ $ch->id }}" name="question_{{ $row->id }}" value="{{ $ch->id }}" class="choice">
                                                         {{ $ch->choice }}
                                                     </label>
                                                     <br />

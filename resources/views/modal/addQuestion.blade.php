@@ -12,16 +12,16 @@
                     <textarea required="required" name="question" class="form-control" rows="5" style="resize: none"></textarea>
                 </div>
                 <div class="form-group">
-                    <input type="text" required="required" name="answer" class="form-control" placeholder="Enter Answer" />
+                    <input type="text" required="required" name="answer" class="form-control" placeholder="Enter Answer" autocomplete="off" />
                 </div>
                 <div class="form-group">
-                    <input type="text" required="required" name="choice2" class="form-control" placeholder="Enter another choice" />
+                    <input type="text" required="required" name="choice2" class="form-control" placeholder="Enter another choice" autocomplete="off" />
                 </div>
                 <div class="form-group">
-                    <input type="text" required="required" name="choice3" class="form-control" placeholder="Enter another choice" />
+                    <input type="text" required="required" name="choice3" class="form-control" placeholder="Enter another choice" autocomplete="off" />
                 </div>
                 <div class="form-group">
-                    <input type="text" required="required" name="choice4" class="form-control" placeholder="Enter another choice" />
+                    <input type="text" required="required" name="choice4" class="form-control" placeholder="Enter another choice" autocomplete="off" />
                 </div>
             </div>
             <div class="modal-footer">
@@ -73,16 +73,16 @@
                         <textarea required="required" name="question" id="question" class="form-control" rows="5" style="resize: none"></textarea>
                     </div>
                     <div class="form-group">
-                        <input type="text" required="required" id="answer" value="" name="answer" class="form-control" placeholder="Enter Answer" />
+                        <input type="text" required="required" id="answer" autocomplete="off" value="" name="answer" class="form-control" placeholder="Enter Answer" />
                     </div>
                     <div class="form-group">
-                        <input type="text" required="required" id="choice2" value="" name="choice2" class="form-control" placeholder="Enter another choice" />
+                        <input type="text" required="required" id="choice2" autocomplete="off" value="" name="choice2" class="form-control" placeholder="Enter another choice" />
                     </div>
                     <div class="form-group">
-                        <input type="text" required="required" id="choice3" value="" name="choice3" class="form-control" placeholder="Enter another choice" />
+                        <input type="text" required="required" id="choice3" autocomplete="off" value="" name="choice3" class="form-control" placeholder="Enter another choice" />
                     </div>
                     <div class="form-group">
-                        <input type="text" required="required" id="choice4" value="" name="choice4" class="form-control" placeholder="Enter another choice" />
+                        <input type="text" required="required" id="choice4" autocomplete="off" value="" name="choice4" class="form-control" placeholder="Enter another choice" />
                     </div>
                 </div>
                 <div class="modal-footer">

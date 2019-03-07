@@ -58,7 +58,7 @@
                                         <div class="panel panel-primary">
                                             <div class="panel-body">
                                             <span class="question">
-                                                {{ $c++ }}. {{ $row->question }}
+                                                {{ $c++ }}. {!! nl2br($row->question) !!}
                                             </span>
                                                 <span class="answer {{ ($question) ? '':'hide' }}">
                                                 @if($question)
@@ -69,7 +69,7 @@
                                                     <hr />
                                                     @foreach($choices as $ch)
                                                         <label class="item">
-                                                            <input type="radio" {{ ($question==$ch->id) ? 'checked':'' }} data-question="question_{{ $row->id }}" data-answer="{{ $ch->id }}" name="question_{{ $row->id }}" value="{{ $ch->id }}" class="choice">
+                                                            <input type="radio" required {{ ($question==$ch->id) ? 'checked':'' }} data-question="question_{{ $row->id }}" data-answer="{{ $ch->id }}" name="question_{{ $row->id }}" value="{{ $ch->id }}" class="choice">
                                                             {{ $ch->choice }}
                                                         </label>
                                                         <br />

@@ -90,7 +90,7 @@
                                         <td>{{ $c }}</td>
                                         <td>
                                             <a href="#updateQuestion" data-toggle="modal" data-id="{{ $row->id }}">
-                                            {{ $row->question }}</a></td>
+                                            {!! nl2br($row->question) !!}</a></td>
                                         @foreach($choices as $choice)
                                             <td class="{{ ($choice->value==1) ? $class: '' }}">{{ $choice->choice }}</td>
                                         @endforeach

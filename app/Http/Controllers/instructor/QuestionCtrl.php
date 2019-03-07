@@ -69,7 +69,13 @@ class QuestionCtrl extends Controller
     }
     public function convert_unique($id,$string)
     {
-        return $id.'_'.urlencode($string);
+        $str = self::string_limit_words($string,10);
+        return $id.'_'.urlencode($str);
+    }
+
+    function string_limit_words($string, $word_limit) {
+        $words = explode(' ', $string);
+        return implode(' ', array_slice($words, 0, $word_limit));
     }
 
     public function bulk(Request $req,$quiz_id)
